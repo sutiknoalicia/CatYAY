@@ -1,13 +1,8 @@
 import { FontFamilies } from "@/helpers/FontFamiles";
 import { normalize } from "@/helpers/useScaling";
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 type TransportType = "flight" | "ferry" | "train" | "bus";
 
@@ -22,18 +17,18 @@ type TransitRouteProps = {
 };
 
 export function TransitRoute({ transits }: TransitRouteProps) {
-  const getTransportImage = (type: TransportType): ImageSourcePropType => {
+  const getTransportIcon = (type: TransportType): string => {
     switch (type) {
       case "flight":
-        return require("@/assets/images/plane-grey.png");
+        return "airplane-sharp";
       case "ferry":
-        return require("@/assets/images/ferry-grey.png");
+        return "boat";
       case "train":
-        return require("@/assets/images/train-grey.png");
+        return "train";
       case "bus":
-        return require("@/assets/images/bus-grey.png");
+        return "bus";
       default:
-        return require("@/assets/images/circle-grey.png");
+        return "ellipse";
     }
   };
 
@@ -53,14 +48,12 @@ export function TransitRoute({ transits }: TransitRouteProps) {
             <React.Fragment key={`transport-${index}`}>
               <View style={styles.iconWrapper}>
                 {index === locations.length - 1 ? (
-                  <Image
-                    source={require("@/assets/images/pin-grey.png")}
-                    style={styles.icon}
-                  />
+                  <Ionicons name="pin" size={normalize(36)} color="#E5E6E7" />
                 ) : (
-                  <Image
-                    source={getTransportImage(transits[index].transportType)}
-                    style={styles.icon}
+                  <Ionicons
+                    name={getTransportIcon(transits[index].transportType)}
+                    size={normalize(36)}
+                    color="#E5E6E7"
                   />
                 )}
               </View>
@@ -98,10 +91,6 @@ const styles = StyleSheet.create({
   iconWrapper: {
     width: normalize(36),
     alignItems: "center",
-  },
-  icon: {
-    width: normalize(36),
-    height: normalize(36),
   },
   line: {
     flex: 1,

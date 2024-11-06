@@ -1,6 +1,7 @@
-import { View, Text, Image, ImageSourcePropType } from "react-native";
+import { View, Text } from "react-native";
 import { FontFamilies } from "@/helpers/FontFamiles";
 import { normalize } from "@/helpers/useScaling";
+import { Ionicons } from "@expo/vector-icons";
 
 export type WeatherInfo = {
   location: string;
@@ -12,16 +13,14 @@ interface WeatherCardProps {
   destinations: WeatherInfo[];
 }
 
-const weatherImages: Record<WeatherInfo["condition"], ImageSourcePropType> = {
-  sunny: require("@/assets/images/sunny.png"),
-  rainy: require("@/assets/images/rainy.png"),
-  cloudy: require("@/assets/images/cloudy.png"),
+const weatherIcons: Record<WeatherInfo["condition"], string> = {
+  sunny: "sunny-outline",
+  rainy: "rainy-outline",
+  cloudy: "cloudy-outline",
 };
 
-const getWeatherIcon = (
-  condition: WeatherInfo["condition"]
-): ImageSourcePropType => {
-  return weatherImages[condition] || weatherImages.sunny;
+const getWeatherIcon = (condition: WeatherInfo["condition"]): string => {
+  return weatherIcons[condition] || weatherIcons.sunny;
 };
 
 export default function WeatherCard({ destinations }: WeatherCardProps) {
@@ -71,15 +70,13 @@ export default function WeatherCard({ destinations }: WeatherCardProps) {
               >
                 {dest.location}
               </Text>
-              <Image
-                source={getWeatherIcon(dest.condition)}
-                style={{
-                  width: normalize(24),
-                  height: normalize(24),
-                  marginVertical: normalize(8),
-                }}
-                resizeMode="contain"
-              />
+              <View style={{ marginVertical: normalize(8) }}>
+                <Ionicons
+                  name={getWeatherIcon(dest.condition)}
+                  size={normalize(24)}
+                  color={"#303436"}
+                />
+              </View>
               <Text
                 style={{
                   fontSize: normalize(16),

@@ -1,5 +1,6 @@
 import { Image, Text, View } from "react-native";
 import { normalize } from "@/helpers/useScaling";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
 type TicketHeaderProps = {
   type: "departing" | "return";
@@ -32,8 +33,10 @@ export function TicketHeader({
           alignItems: "center",
         }}
       >
-        <Image
-          source={require("@/assets/images/plane-jade.png")}
+        <Ionicons
+          name="airplane-sharp"
+          size={normalize(20)}
+          color="#006564"
           style={{ marginRight: 16 }}
         />
         <Text style={{ fontSize: normalize(16) }}>
@@ -46,8 +49,10 @@ export function TicketHeader({
           alignItems: "center",
         }}
       >
-        <Image
-          source={require("@/assets/images/calendar-jade.png")}
+        <FontAwesome
+          name="calendar"
+          size={normalize(20)}
+          color="#006564"
           style={{ marginRight: 16 }}
         />
         <Text style={{ fontSize: normalize(16) }}>{date}</Text>

@@ -1,5 +1,4 @@
 import {
-  Image,
   Text,
   TouchableOpacity,
   View,
@@ -8,9 +7,10 @@ import {
 } from "react-native";
 import { FontFamilies } from "@/helpers/FontFamiles";
 import { normalize } from "@/helpers/useScaling";
+import { Ionicons } from "@expo/vector-icons";
 
 type TicketCardProps = {
-  transportType: "plane" | "ferry" | "train";
+  transportType: "plane" | "ferry" | "train" | "bus";
   identifier: string;
   duration: string;
   departureTime: string;
@@ -44,19 +44,6 @@ export function TicketCard({
   style,
   variant = "ticket",
 }: TicketCardProps) {
-  const getJourneyImage = (type: any) => {
-    switch (type) {
-      case "flight":
-        return require("@/assets/images/plane-journey.png");
-      case "ferry":
-        return require("@/assets/images/ferry-journey.png");
-      case "train":
-        return require("@/assets/images/train-journey.png");
-      default:
-        return require("@/assets/images/plane-journey.png");
-    }
-  };
-
   return (
     <View
       style={[
@@ -108,7 +95,7 @@ export function TicketCard({
             marginVertical: 20,
           }}
         >
-          <View>
+          <View style={{ marginRight: 16 }}>
             <Text style={{ fontSize: normalize(18), marginBottom: 4 }}>
               {departureTime}
             </Text>
@@ -127,11 +114,32 @@ export function TicketCard({
               justifyContent: "center",
               alignItems: "center",
               flex: 1,
+              flexDirection: "row",
             }}
           >
-            <Image source={getJourneyImage(transportType)} />
+            <Ionicons
+              name={
+                transportType === "train"
+                  ? "train"
+                  : transportType === "ferry"
+                  ? "boat"
+                  : transportType === "bus"
+                  ? "bus"
+                  : "airplane"
+              }
+              size={normalize(24)}
+              color="#006564"
+            />
+            <View
+              style={{
+                flex: 1,
+                height: 1,
+                backgroundColor: "#E5E6E7",
+              }}
+            />
+            <Ionicons name="ellipse" size={normalize(8)} color="#E5E6E7" />
           </View>
-          <View style={{ alignItems: "flex-end" }}>
+          <View style={{ marginLeft: 16, alignItems: "flex-end" }}>
             <Text style={{ fontSize: normalize(18), marginBottom: 4 }}>
               {arrivalTime}
             </Text>
@@ -171,13 +179,11 @@ export function TicketCard({
             >
               View Details
             </Text>
-            <Image
-              source={require("@/assets/images/chevron-up.png")}
-              style={{
-                justifyContent: "center",
-                width: normalize(16),
-                height: normalize(16),
-              }}
+            <Ionicons
+              name="chevron-up"
+              size={normalize(16)}
+              color="#116F9A"
+              style={{ justifyContent: "center" }}
             />
           </TouchableOpacity>
         </View>
