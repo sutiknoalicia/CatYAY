@@ -50,7 +50,7 @@ export default function HomeScreen() {
           style={{
             fontSize: 24,
             lineHeight: 22,
-            fontFamily: FontFamilies.SofiaProRegular,
+            fontFamily: FontFamilies.GTWalsheimRegular,
           }}
         >Hello Mr Howard!</Text>
       </View>
