@@ -1,4 +1,4 @@
-import { TicketCard } from "../../views/ticketing/TicketCard";
+import { TicketCard } from "@/views/ticketing/TicketCard";
 import { View } from "react-native";
 
 export default function TicketScreen() {
