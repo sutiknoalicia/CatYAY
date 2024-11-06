@@ -16,6 +16,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import PassengerModal from "../../components/PassengerModal.js";
 import { useRouter } from "expo-router";
 import Carousel from "react-native-reanimated-carousel";
+import { FontFamilies } from "@/helpers/FontFamiles";
+import { normalize } from "@/helpers/useScaling";
 
 const DiscountCodeModal = ({ visible, onClose, onConfirm }) => {
   const [discountCode, setDiscountCode] = useState("");
@@ -231,15 +233,15 @@ export default function FlightBookingScreen() {
   ];
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <View style={{ flex: 1, backgroundColor: "#fff"}}>
       <StatusBar barStyle="dark-content" />
-      <ScrollView>
+      <View>
         {/* Hero Section with Carousel */}
-        <View style={{ height: 280 }}>
+        <View style={{ height: normalize(230) }}>
           <Carousel
             loop
             width={width}
-            height={280}
+            height={normalize(230)}
             autoPlay={false}
             data={carouselImages}
             renderItem={({ index }) => {
@@ -277,19 +279,8 @@ export default function FlightBookingScreen() {
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <AntDesign name="user" size={24} color="#666" />
-            <Text style={{ color: "#666" }}>Hello WeChat user!</Text>
+            <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(20), color: "#666" }}>Hello Mr Howard!</Text>
           </View>
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              borderColor: "#006E6D",
-              paddingVertical: 6,
-              paddingHorizontal: 12,
-              borderRadius: 20,
-            }}
-          >
-            <Text style={{ color: "#006E6D" }}>Login / Register</Text>
-          </TouchableOpacity>
         </View>
 
         {/* Booking Form */}
@@ -304,6 +295,7 @@ export default function FlightBookingScreen() {
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
+            marginBottom: normalize(48),
           }}
         >
           <View style={{ flexDirection: "row", marginBottom: 24 }}>
@@ -321,8 +313,9 @@ export default function FlightBookingScreen() {
             >
               <Text
                 style={{
+                  fontFamily: FontFamilies.GTWalsheimRegular,
                   color: tripType === "single" ? "#006E6D" : "#666",
-                  fontSize: 16,
+                  fontSize: normalize(16),
                 }}
               >
                 Single Trip
@@ -342,11 +335,12 @@ export default function FlightBookingScreen() {
             >
               <Text
                 style={{
+                  fontFamily: FontFamilies.GTWalsheimRegular,
                   color: tripType === "multiple" ? "#006E6D" : "#666",
-                  fontSize: 16,
+                  fontSize: normalize(16),
                 }}
               >
-                Multi-way Trip
+                Return
               </Text>
             </TouchableOpacity>
           </View>
@@ -365,8 +359,8 @@ export default function FlightBookingScreen() {
               onPress={() => handleAirportPress("from")}
               style={{ flex: 1 }}
             >
-              <Text style={{ color: "#666", marginBottom: 8 }}>From</Text>
-              <Text style={{ fontSize: 18 }}>
+              <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "#666", marginBottom: 8 }}>From</Text>
+              <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(18) }}>
                 {fromAirport
                   ? `${fromAirport.name} (${fromAirport.code})`
                   : "Please Choose"}
@@ -400,11 +394,11 @@ export default function FlightBookingScreen() {
               style={{ flex: 1, alignItems: "flex-end" }}
             >
               <Text
-                style={{ color: "#666", marginBottom: 8, textAlign: "right" }}
+                style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "#666", marginBottom: 8, textAlign: "right" }}
               >
                 To
               </Text>
-              <Text style={{ fontSize: 18, textAlign: "right" }}>
+              <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(18), textAlign: "right" }}>
                 {toAirport ? `${toAirport.name}` : "Please Choose"}
               </Text>
             </TouchableOpacity>
@@ -416,15 +410,16 @@ export default function FlightBookingScreen() {
               <TouchableOpacity onPress={() => showDatePicker("departure")}>
                 <Text
                   style={{
+                    fontFamily: FontFamilies.GTWalsheimRegular,
                     color: "#666",
                     marginBottom: 4,
                     marginHorizontal: 12,
-                    fontSize: 12,
+                    fontSize: normalize(14),
                   }}
                 >
                   Departure Date
                 </Text>
-                <Text style={{ fontSize: 16, marginHorizontal: 12 }}>
+                <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(18), marginHorizontal: 12 }}>
                   {selectedDepartureDate
                     ? selectedDepartureDate.toLocaleDateString()
                     : "Please Choose"}
@@ -437,17 +432,19 @@ export default function FlightBookingScreen() {
                   <View style={{ alignItems: "flex-end" }}>
                     <Text
                       style={{
+                        fontFamily: FontFamilies.GTWalsheimRegular,
                         color: "#666",
                         marginBottom: 4,
                         marginHorizontal: 12,
-                        fontSize: 12,
+                        fontSize: normalize(14),
                       }}
                     >
                       Return Date
                     </Text>
                     <Text
                       style={{
-                        fontSize: 16,
+                        fontFamily: FontFamilies.GTWalsheimRegular,
+                        fontSize: normalize(18),
                         marginHorizontal: 12,
                       }}
                     >
@@ -464,11 +461,11 @@ export default function FlightBookingScreen() {
           {/* Passengers */}
           <TouchableOpacity onPress={() => setPassengerModalVisible(true)}>
             <Text
-              style={{ color: "#666", marginBottom: 8, marginHorizontal: 12 }}
+              style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "#666", marginBottom: 8, marginHorizontal: 12 }}
             >
               Cabins and Passengers
             </Text>
-            <Text style={{ fontSize: 18, marginHorizontal: 12 }}>
+            <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(18), marginHorizontal: 12 }}>
               {cabinClass}，{adults} Adults {children} Childrens {infants}{" "}
               Infants
             </Text>
@@ -483,7 +480,7 @@ export default function FlightBookingScreen() {
             }}
             onPress={() => setDiscountCodeModalVisible(true)}
           >
-            <Text style={{ color: "#006E6D", marginRight: 8 }}>
+            <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "#006E6D", marginRight: 8 }}>
               Discount Code
             </Text>
             <AntDesign name="right" size={16} color="#006E6D" />
@@ -494,18 +491,18 @@ export default function FlightBookingScreen() {
             <TouchableOpacity
               style={{
                 backgroundColor: "#2C4B44",
-                padding: 16,
+                padding: normalize(12),
                 borderRadius: 4,
                 alignItems: "center",
                 marginHorizontal: 12,
               }}
               onPress={() => router.push("/(tabs)/ticket")}
             >
-              <Text style={{ color: "white", fontSize: 12 }}>Search</Text>
+              <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "white", fontSize: normalize(20) }}>Search</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </View>
       <AirportSelectionModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}

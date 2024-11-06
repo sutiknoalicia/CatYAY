@@ -38,6 +38,17 @@ export default function TicketLayout() {
           }}
         />
         <Stack.Screen
+          name="landingPage"
+          options={{
+            title: "Choose Flights",
+            headerTintColor: "#444A54",
+            headerTitleStyle: {
+              fontSize: normalize(16),
+            },
+            headerLeft: () => <BackButton />,
+          }}
+        />
+        <Stack.Screen
           name="success"
           options={{
             headerShown: false,
