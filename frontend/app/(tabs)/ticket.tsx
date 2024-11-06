@@ -3,7 +3,7 @@ import { View } from "react-native";
 
 export default function TicketScreen() {
   const flightTicket = {
-    transportType: "plane",
+    transportType: "plane" as "plane",
     identifier: "CX 5624",
     duration: "5h",
     departureTime: "10:01",
@@ -19,7 +19,7 @@ export default function TicketScreen() {
   };
 
   const trainTicket = {
-    transportType: "train",
+    transportType: "train" as "train",
     identifier: "TR 203",
     duration: "2h 30m",
     departureTime: "09:00",
@@ -35,7 +35,7 @@ export default function TicketScreen() {
   };
 
   const ferryTicket = {
-    transportType: "ferry",
+    transportType: "ferry" as "ferry",
     identifier: "FR 108",
     duration: "45m",
     departureTime: "14:00",
@@ -57,6 +57,7 @@ export default function TicketScreen() {
         paddingVertical: 100,
         flex: 1,
         backgroundColor: "#fff",
+        gap: 20,
       }}
     >
       <TicketCard {...flightTicket} />
