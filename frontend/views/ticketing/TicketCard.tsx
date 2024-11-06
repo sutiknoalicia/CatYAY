@@ -77,14 +77,15 @@ export function TicketCard({
           borderTopLeftRadius: 8,
           borderBottomLeftRadius: 8,
           paddingVertical: 8,
-          paddingHorizontal: normalize(20),
+          paddingHorizontal: 20,
+          justifyContent: "space-between",
         }}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text
             style={{
               color: "rgba(68, 74, 84, 0.8)",
-              fontSize: normalize(12),
+              fontSize: normalize(10),
               alignItems: "flex-start",
             }}
           >
@@ -93,7 +94,7 @@ export function TicketCard({
           <Text
             style={{
               color: "rgba(68, 74, 84, 0.8)",
-              fontSize: normalize(12),
+              fontSize: normalize(10),
               alignItems: "flex-end",
             }}
           >
@@ -104,16 +105,16 @@ export function TicketCard({
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            marginVertical: normalize(20),
+            marginVertical: 20,
           }}
         >
           <View>
-            <Text style={{ fontSize: 20, marginBottom: 4 }}>
+            <Text style={{ fontSize: normalize(18), marginBottom: 4 }}>
               {departureTime}
             </Text>
             <Text
               style={{
-                fontSize: normalize(20),
+                fontSize: normalize(18),
                 color: "#006564",
                 fontFamily: FontFamilies.GTWalsheimBold,
               }}
@@ -131,10 +132,12 @@ export function TicketCard({
             <Image source={getJourneyImage(transportType)} />
           </View>
           <View style={{ alignItems: "flex-end" }}>
-            <Text style={{ fontSize: 20, marginBottom: 4 }}>{arrivalTime}</Text>
+            <Text style={{ fontSize: normalize(18), marginBottom: 4 }}>
+              {arrivalTime}
+            </Text>
             <Text
               style={{
-                fontSize: normalize(20),
+                fontSize: normalize(18),
                 color: "#006564",
                 fontFamily: FontFamilies.GTWalsheimBold,
               }}
@@ -144,12 +147,12 @@ export function TicketCard({
           </View>
         </View>
         <View>
-          <Text style={{ color: "#5E967E", fontSize: normalize(12) }}>
+          <Text style={{ color: "#5E967E", fontSize: normalize(10) }}>
             Carbon emissions: {carbonEmissions}kg C
             <Text>
               O
               <Text
-                style={{ fontSize: normalize(10), lineHeight: normalize(10) }}
+                style={{ fontSize: normalize(8), lineHeight: normalize(8) }}
               >
                 2
               </Text>
@@ -162,7 +165,7 @@ export function TicketCard({
             <Text
               style={{
                 color: "#116F9A",
-                fontSize: normalize(12),
+                fontSize: normalize(10),
                 fontWeight: "bold",
               }}
             >
@@ -170,7 +173,11 @@ export function TicketCard({
             </Text>
             <Image
               source={require("@/assets/images/chevron-up.png")}
-              style={{ justifyContent: "center" }}
+              style={{
+                justifyContent: "center",
+                width: normalize(16),
+                height: normalize(16),
+              }}
             />
           </TouchableOpacity>
         </View>
@@ -181,22 +188,28 @@ export function TicketCard({
           backgroundColor: "#006564",
           borderTopRightRadius: 8,
           borderBottomRightRadius: 8,
-          paddingVertical: variant === "journey" ? normalize(8) : normalize(16),
-          paddingHorizontal: normalize(8),
+          paddingVertical: variant === "journey" ? 8 : 16,
+          paddingHorizontal: 8,
           justifyContent: variant === "journey" ? "center" : "space-between",
           alignItems: "center",
-          gap: variant === "journey" ? normalize(4) : normalize(8),
+          gap: variant === "journey" ? 4 : 8,
         }}
       >
-        <Text style={{ color: "#E6E7E8", fontSize: 10 }}>{transportClass}</Text>
+        <Text style={{ color: "#E6E7E8", fontSize: normalize(8) }}>
+          {transportClass}
+        </Text>
         {variant === "ticket" && (
-          <Text style={{ color: "#E6E7E8", fontSize: 12 }}>From</Text>
+          <Text style={{ color: "#E6E7E8", fontSize: normalize(10) }}>
+            From
+          </Text>
         )}
-        <Text style={{ color: "#fff", fontSize: 14 }}>{currency}</Text>
+        <Text style={{ color: "#fff", fontSize: normalize(12) }}>
+          {currency}
+        </Text>
         <Text
           style={{
             color: "#fff",
-            fontSize: 16,
+            fontSize: normalize(14),
             fontWeight: "bold",
             textAlign: "center",
             paddingHorizontal: 4,
@@ -220,7 +233,7 @@ export function TicketCard({
             }}
             onPress={onSelect}
           >
-            <Text style={{ fontSize: normalize(12), color: "#fff" }}>
+            <Text style={{ fontSize: normalize(10), color: "#fff" }}>
               Select
             </Text>
           </TouchableOpacity>

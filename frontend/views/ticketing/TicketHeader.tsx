@@ -1,5 +1,5 @@
-// TicketHeader.tsx
 import { Image, Text, View } from "react-native";
+import { normalize } from "@/helpers/useScaling";
 
 type TicketHeaderProps = {
   type: "departing" | "return";
@@ -15,12 +15,12 @@ export function TicketHeader({
   date,
 }: TicketHeaderProps) {
   return (
-    <View style={{ marginHorizontal: 20, marginVertical: 32 }}>
+    <View style={{ marginHorizontal: 20, marginVertical: normalize(32) }}>
       <Text
         style={{
-          fontSize: 24,
+          fontSize: normalize(24),
           color: "rgba(68, 74, 84, 0.74)",
-          marginBottom: 32,
+          marginBottom: normalize(32),
         }}
       >
         Select {type} service
@@ -28,7 +28,7 @@ export function TicketHeader({
       <View
         style={{
           flexDirection: "row",
-          marginBottom: 8,
+          marginBottom: normalize(8),
           alignItems: "center",
         }}
       >
@@ -36,7 +36,7 @@ export function TicketHeader({
           source={require("@/assets/images/plane-jade.png")}
           style={{ marginRight: 16 }}
         />
-        <Text style={{ fontSize: 16 }}>
+        <Text style={{ fontSize: normalize(16) }}>
           {departure} to {arrival}
         </Text>
       </View>
@@ -50,7 +50,7 @@ export function TicketHeader({
           source={require("@/assets/images/calendar-jade.png")}
           style={{ marginRight: 16 }}
         />
-        <Text style={{ fontSize: 16 }}>{date}</Text>
+        <Text style={{ fontSize: normalize(16) }}>{date}</Text>
       </View>
     </View>
   );
