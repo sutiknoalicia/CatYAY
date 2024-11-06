@@ -29,70 +29,118 @@ const PassengerModal = ({ isVisible, onClose, onConfirm }) => {
           }}
         >
           <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 20 }}>
-            选择舱位及乘客数量
+            Select cabin and number of passengers
           </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 20,
-            }}
-          >
-            <TouchableOpacity
+          <View style={{ marginBottom: 24 }}>
+            <View
               style={{
-                backgroundColor: cabinClass === "经济舱" ? "#006E6D" : "#eee",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 5,
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 20,
               }}
-              onPress={() => setCabinClass("经济舱")}
             >
-              <Text
+              <TouchableOpacity
                 style={{
-                  color: cabinClass === "经济舱" ? "white" : "black",
-                  fontSize: 18,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  flex: 1,
+                  paddingVertical: 15,
+                  paddingHorizontal: 20,
+                  backgroundColor:
+                    cabinClass === "Economy Class" ? "#006E6D" : "white",
+                  borderRadius: 10,
+                  marginRight: 10,
                 }}
+                onPress={() => setCabinClass("Economy Class")}
               >
-                经济舱
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor:
-                  cabinClass === "特选经济舱" ? "#006E6D" : "#eee",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 5,
-              }}
-              onPress={() => setCabinClass("特选经济舱")}
-            >
-              <Text
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: cabinClass === "Economy Class" ? "white" : "#006E6D",
+                  }}
+                >
+                  Economy Class
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
                 style={{
-                  color: cabinClass === "特选经济舱" ? "white" : "black",
-                  fontSize: 18,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  flex: 1,
+                  paddingVertical: 15,
+                  paddingHorizontal: 20,
+                  backgroundColor:
+                    cabinClass === "Premium Economy Class"
+                      ? "#006E6D"
+                      : "white",
+                  borderRadius: 10,
                 }}
+                onPress={() => setCabinClass("Premium Economy Class")}
               >
-                特选经济舱
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: cabinClass === "公务舱" ? "#006E6D" : "#eee",
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 5,
-              }}
-              onPress={() => setCabinClass("公务舱")}
-            >
-              <Text
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color:
+                      cabinClass === "Premium Economy Class"
+                        ? "white"
+                        : "#006E6D",
+                  }}
+                >
+                  Premium Economy Class
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TouchableOpacity
                 style={{
-                  color: cabinClass === "公务舱" ? "white" : "black",
-                  fontSize: 18,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  flex: 1,
+                  paddingVertical: 15,
+                  paddingHorizontal: 20,
+                  backgroundColor:
+                    cabinClass === "Business Class" ? "#006E6D" : "white",
+                  borderRadius: 10,
+                  marginRight: 10,
                 }}
+                onPress={() => setCabinClass("Business Class")}
               >
-                公务舱
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color:
+                      cabinClass === "Business Class" ? "white" : "#006E6D",
+                  }}
+                >
+                  Business Class
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  flex: 1,
+                  paddingVertical: 15,
+                  paddingHorizontal: 20,
+                  backgroundColor:
+                    cabinClass === "First Class" ? "#006E6D" : "white",
+                  borderRadius: 10,
+                }}
+                onPress={() => setCabinClass("First Class")}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: cabinClass === "First Class" ? "white" : "#006E6D",
+                  }}
+                >
+                  First Class
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View
             style={{
@@ -102,7 +150,7 @@ const PassengerModal = ({ isVisible, onClose, onConfirm }) => {
               marginBottom: 20,
             }}
           >
-            <Text style={{ fontSize: 18 }}>成人（>12岁）</Text>
+            <Text style={{ fontSize: 18 }}>Adult（>12 Years Old）</Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity
                 style={{
@@ -137,7 +185,7 @@ const PassengerModal = ({ isVisible, onClose, onConfirm }) => {
               marginBottom: 20,
             }}
           >
-            <Text style={{ fontSize: 18 }}>儿童（2-11岁）</Text>
+            <Text style={{ fontSize: 18 }}>Babies（2-11 Years Old）</Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity
                 style={{
@@ -172,7 +220,7 @@ const PassengerModal = ({ isVisible, onClose, onConfirm }) => {
               marginBottom: 20,
             }}
           >
-            <Text style={{ fontSize: 18 }}>婴儿（未满2岁）</Text>
+            <Text style={{ fontSize: 18 }}>Infants（>2 Years Old）</Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TouchableOpacity
                 style={{
@@ -209,7 +257,7 @@ const PassengerModal = ({ isVisible, onClose, onConfirm }) => {
               }}
               onPress={handleConfirm}
             >
-              <Text style={{ color: "white", fontSize: 18 }}>确定</Text>
+              <Text style={{ color: "white", fontSize: 18 }}>Confirm</Text>
             </TouchableOpacity>
           </View>
         </View>
