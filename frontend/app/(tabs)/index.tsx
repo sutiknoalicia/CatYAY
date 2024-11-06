@@ -2,15 +2,16 @@ import { Image, ScrollView, View, Text } from 'react-native';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import Feather from '@expo/vector-icons/Feather';
 import { FontFamilies } from '@/helpers/FontFamiles';
+import { normalize } from '@/helpers/useScaling';
 
 export default function HomeScreen() {
   return (
     <>
       <View
         style={{
-          paddingTop: 64,
-          paddingHorizontal: 20,
-          paddingBottom: 16,
+          paddingTop: normalize(64),
+          paddingHorizontal: normalize(20),
+          paddingBottom: normalize(16),
           backgroundColor: "#F8F7F7",
         }}
       >
@@ -18,21 +19,21 @@ export default function HomeScreen() {
           source={require('../../assets/images/cathay-logo.png')}
           style={{
             position: "absolute",
-            top: 64,
+            top: normalize(64),
             alignSelf: "center",
           }}
         />
         <View
           style={{
-            paddingTop: 8,
+            paddingTop: normalize(8),
             flexDirection: "row",
             justifyContent: "space-between",
             alignSelf: "flex-end",
-            gap: 24,
+            gap: normalize(24),
           }}
         >
-          <SimpleLineIcons name="bell" size={24} color="black" />
-          <Feather name="menu" size={24} color="black" />
+          <SimpleLineIcons name="bell" size={normalize(24)} color="black" />
+          <Feather name="menu" size={normalize(24)} color="black" />
         </View>
       </View>
       <ScrollView
@@ -44,16 +45,16 @@ export default function HomeScreen() {
           style={{
             flexDirection: "column",
             justifyContent: "space-between",
-            paddingTop: 16,
-            paddingHorizontal: 20,
-            paddingBottom: 24,
-            gap: 8,
+            paddingTop: normalize(16),
+            paddingHorizontal: normalize(20),
+            paddingBottom: normalize(24),
+            gap: normalize(8),
           }}
         >
           <Text
             style={{
-              fontSize: 24,
-              lineHeight: 22,
+              fontSize: normalize(24),
+              lineHeight: normalize(22),
               fontFamily: FontFamilies.GTWalsheimRegular,
             }}
           >Hello Mr Howard!
@@ -68,16 +69,16 @@ export default function HomeScreen() {
             <Image
               source={require("../../assets/images/asia-miles.png")}
               style={{
-                width: 13.33,
-                height: 16,
+                width: normalize(13.33),
+                height: normalize(16),
                 alignSelf: "center",
               }}
             />
             <Text
               style={{
                 fontFamily: FontFamilies.GTWalsheimBold,
-                fontSize: 16,
-                lineHeight: 22,
+                fontSize: normalize(16),
+                lineHeight: normalize(22),
               }}
             >
               156,188
@@ -85,7 +86,7 @@ export default function HomeScreen() {
             <Text
               style={{
                 fontFamily: FontFamilies.GTWalsheimUltraLight,
-                fontSize: 16,
+                fontSize: normalize(16),
                 color: "#8E96A4"
               }}
             >
@@ -94,8 +95,8 @@ export default function HomeScreen() {
             <Text
               style={{
                 fontFamily: FontFamilies.GTWalsheimRegular,
-                fontSize: 14,
-                lineHeight: 22,
+                fontSize: normalize(14),
+                lineHeight: normalize(22),
                 color: "#444A54"
               }}
             >
@@ -104,8 +105,8 @@ export default function HomeScreen() {
             <Text
               style={{
                 fontFamily: FontFamilies.GTWalsheimBold,
-                fontSize: 16,
-                lineHeight: 22,
+                fontSize: normalize(16),
+                lineHeight: normalize(22),
               }}
             >
               532
