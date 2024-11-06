@@ -1,4 +1,11 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import { FontFamilies } from "@/helpers/FontFamiles";
 import { normalize } from "@/helpers/useScaling";
 
@@ -16,6 +23,7 @@ type TicketCardProps = {
   price: number;
   onSelect?: () => void;
   onViewDetails?: () => void;
+  style?: StyleProp<ViewStyle>;
 };
 
 export function TicketCard({
@@ -32,6 +40,7 @@ export function TicketCard({
   price,
   onSelect,
   onViewDetails,
+  style,
 }: TicketCardProps) {
   const getJourneyImage = (type: any) => {
     switch (type) {
@@ -47,13 +56,16 @@ export function TicketCard({
   };
   return (
     <View
-      style={{
-        flexDirection: "row",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 20,
-      }}
+      style={[
+        {
+          flexDirection: "row",
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.1,
+          shadowRadius: 20,
+        },
+        style,
+      ]}
     >
       <View
         style={{
@@ -93,7 +105,9 @@ export function TicketCard({
           }}
         >
           <View>
-            <Text style={{ fontSize: normalize(20) }}>{departureTime}</Text>
+            <Text style={{ fontSize: 20, marginBottom: 4 }}>
+              {departureTime}
+            </Text>
             <Text
               style={{
                 fontSize: normalize(20),
@@ -114,7 +128,7 @@ export function TicketCard({
             <Image source={getJourneyImage(transportType)} />
           </View>
           <View style={{ alignItems: "flex-end" }}>
-            <Text style={{ fontSize: normalize(20) }}>{arrivalTime}</Text>
+            <Text style={{ fontSize: 20, marginBottom: 4 }}>{arrivalTime}</Text>
             <Text
               style={{
                 fontSize: normalize(20),
@@ -161,10 +175,21 @@ export function TicketCard({
           alignItems: "center",
         }}
       >
-        <Text style={{ color: "#E6E7E8", fontSize: normalize(10) }}>{transportClass}</Text>
-        <Text style={{ color: "#E6E7E8", fontSize: normalize(12) }}>From</Text>
-        <Text style={{ color: "#fff", fontSize: normalize(14) }}>{currency}</Text>
-        <Text style={{ color: "#fff", fontSize: normalize(14), fontWeight: "bold" }}>
+
+        <Text style={{ color: "#E6E7E8", fontSize: 10 }}>{transportClass}</Text>
+        <Text style={{ color: "#E6E7E8", fontSize: 12 }}>From</Text>
+        <Text style={{ color: "#fff", fontSize: 14 }}>{currency}</Text>
+        <Text
+          style={{
+            color: "#fff",
+            fontSize: 16,
+            fontWeight: "bold",
+            textAlign: "center",
+            paddingHorizontal: 4,
+          }}
+          numberOfLines={1}
+          adjustsFontSizeToFit
+        >
           +{price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
         </Text>
         <TouchableOpacity
