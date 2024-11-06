@@ -34,3 +34,6 @@ backend/venv/
 .coverage
 htmlcov/
 node_modules
+
+env/
+

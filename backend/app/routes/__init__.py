@@ -9,4 +9,4 @@ from .transport.transport_apis import router as transport_router
 # Register other routers
 router.include_router(chatbot_router, prefix="/api/chatbot", tags=["chatbot"])
 
-router.include_router(transport_router, prefix="/api/transort", tags=["transport"])
+router.include_router(transport_router, prefix="/api/transport", tags=["transport"])
