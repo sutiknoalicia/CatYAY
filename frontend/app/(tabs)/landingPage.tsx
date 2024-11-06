@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  SafeAreaView,
   Image,
   TouchableOpacity,
   ScrollView,
@@ -10,16 +9,13 @@ import {
   Modal,
   FlatList,
   TextInput,
+  Dimensions,
 } from "react-native";
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  FontAwesome5,
-  AntDesign,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import PassengerModal from "../../components/PassengerModal.js";
 import { useRouter } from "expo-router";
+import Carousel from "react-native-reanimated-carousel";
 
 const DiscountCodeModal = ({ visible, onClose, onConfirm }) => {
   const [discountCode, setDiscountCode] = useState("");
@@ -225,18 +221,37 @@ export default function FlightBookingScreen() {
     setModalVisible(false);
   };
 
+  const { width } = Dimensions.get("window");
+  const carouselImages = [
+    require("../../assets/images/Cathay-Pacific-Cabin-Crew.jpg"),
+    require("../../assets/images/cathay-wing-tip.jpg"),
+    require("../../assets/images/cathay-promotion.jpg"),
+  ];
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <StatusBar barStyle="dark-content" />
       <ScrollView>
-        {/* Hero Section with Background */}
+        {/* Hero Section with Carousel */}
         <View style={{ height: 280 }}>
-          <Image
-            source={{ uri: "https://via.placeholder.com/600x600" }}
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "absolute",
+          <Carousel
+            loop
+            width={width}
+            height={280}
+            autoPlay={false}
+            data={carouselImages}
+            renderItem={({ index }) => {
+              const image = carouselImages[index];
+              return (
+                <Image
+                  source={typeof image === "string" ? { uri: image } : image}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  resizeMode="cover"
+                />
+              );
             }}
           />
         </View>
