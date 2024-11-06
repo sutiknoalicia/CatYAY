@@ -1,4 +1,4 @@
-import { Image, ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { Image, ScrollView, View, Text, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import Feather from '@expo/vector-icons/Feather';
 import { FontFamilies } from '@/helpers/FontFamiles';
@@ -11,10 +11,49 @@ import { useState } from 'react';
 import VeraModal from '@/components/VeraModal';
 import VeraSvg from '@/assets/svgs/vera-svg';
 import { router } from 'expo-router';
+import SuggestHeader from '../(suggest)/SuggestHeader';
+import JourneySegment from '../(suggest)/JourneySegment';
+import SmartSuggestions from '../(suggest)/SmartSuggestions';
+import { useLocalSearchParams } from 'expo-router';
 
 export default function HomeScreen() {
+  
+  const { origin, destination } = useLocalSearchParams();
+  const journeySegments = [
+    {
+      from: {
+        code: "CGK",
+        name: "Soekarno-Hatta Int'l",
+        terminal: "Terminal 3",
+      },
+      to: {
+        code: "HKG",
+        name: "Hong Kong Int'l (HKG)",
+        terminal: "Terminal 1",
+      },
+      departureTime: "08:10",
+      arrivalTime: "14:15",
+      duration: "5h 15m",
+      transportType: "plane" as const,
+      carbonEmissions: 180,
+      flightNumber: "CX718",
+    },
+    {
+      from: { code: "HKG", name: "HKIA Port", terminal: "Gate 30" },
+      to: { code: "FYG", name: "Airport Ferry Terminal", terminal: "Gate 21" },
+      departureTime: "16:20",
+      arrivalTime: "17:10",
+      duration: "50m",
+      transportType: "ferry" as const,
+      carbonEmissions: 15,
+    },
+  ];
 
-  const [veraOpen, setVeraOpen] = useState(true);
+  const handleProceed = () => {
+    router.push("/ticket");
+  };
+
+  const [veraOpen, setVeraOpen] = useState(() => !(origin && destination));
   const {height: screenHeight} = useWindowDimensions();
 
   function handleMenuPress(): void {
@@ -78,77 +117,149 @@ export default function HomeScreen() {
           backgroundColor: "#F8F7F7",
         }}
       >
-        <View
-          style={{
-            flexDirection: "column",
-            justifyContent: "space-between",
-            paddingTop: normalize(16),
-            paddingHorizontal: normalize(20),
-            paddingBottom: normalize(24),
-            gap: normalize(8),
-          }}
-        >
-          <Text
-            style={{
-              fontSize: normalize(24),
-              lineHeight: normalize(22),
-              fontFamily: FontFamilies.GTWalsheimRegular,
-            }}
-          >Hello Mr Howard!
-          </Text>
+        {origin && destination ? (
+          <SafeAreaView style={{ backgroundColor: "#F8F7F7", flex: 1 }}>
+            <ScrollView>
+              <SuggestHeader name="Mr Howard" />
+      
+              <View style={styles.journeyCard}>
+                <Text style={styles.date}>
+                  Fri 01 Nov 2024 {""} | {""} CX718
+                </Text>
+                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                  <Text
+                    style={{
+                      fontFamily: FontFamilies.GTWalsheimBold,
+                      color: "#006564",
+                      fontSize: 16,
+                    }}
+                  >
+                    Jakarta
+                  </Text>
+                  <Text
+                    style={{
+                      color: "black",
+                      fontSize: 16,
+                      fontFamily: FontFamilies.GTWalsheimRegular,
+                    }}
+                  >
+                    {" "}
+                    to{" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: FontFamilies.GTWalsheimBold,
+                      color: "#006564",
+                      fontSize: 16,
+                    }}
+                  >
+                    Shenzhen
+                  </Text>
+                </View>
+      
+                {journeySegments.map((segment, index) => (
+                  <JourneySegment key={index} {...segment} />
+                ))}
+                <Text style={styles.transferTime}>
+                  Transit:{" "}
+                  <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>
+                    2h 5m{" "}
+                  </Text>
+                  <Text>at </Text>
+                  <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>HKG</Text>
+                </Text>
+              </View>
+      
+              <TouchableOpacity style={styles.proceedButton}>
+                <Text style={styles.proceedText}>Proceed with this Journey</Text>
+              </TouchableOpacity>
+      
+              <TouchableOpacity
+                style={styles.alternativeButton}
+                onPress={handleProceed}
+              >
+                <Text style={styles.alternativeText}>Or</Text>
+                <Text style={styles.alternativeText}>
+                  View Alternative Routes{" "}
+                  <Feather name="chevron-right" size={14} color="black" />
+                </Text>
+              </TouchableOpacity>
+              <SmartSuggestions />
+            </ScrollView>
+          </SafeAreaView>
+        ) : (
           <View
             style={{
-              flexDirection: "row",
-              gap: 4,
+              flexDirection: "column",
+              justifyContent: "space-between",
+              paddingTop: normalize(16),
+              paddingHorizontal: normalize(20),
+              paddingBottom: normalize(24),
+              gap: normalize(8),
             }}
           >
-            <Image
-              source={require("../../assets/images/asia-miles.png")}
-              style={{
-                width: normalize(13.33),
-                height: normalize(16),
-                alignSelf: "center",
-              }}
-            />
             <Text
               style={{
-                fontFamily: FontFamilies.GTWalsheimBold,
-                fontSize: normalize(16),
+                fontSize: normalize(24),
                 lineHeight: normalize(22),
-              }}
-            >
-              156,188
-            </Text>
-            <Text
-              style={{
-                fontFamily: FontFamilies.GTWalsheimUltraLight,
-                fontSize: normalize(16),
-                color: "#8E96A4"
-              }}
-            >
-              |
-            </Text>
-            <Text
-              style={{
                 fontFamily: FontFamilies.GTWalsheimRegular,
-                fontSize: normalize(14),
-                lineHeight: normalize(22),
-                color: "#444A54"
               }}
-            >
-              Status points
+            >Hello Mr Howard!
             </Text>
-            <Text
+            <View
               style={{
-                fontFamily: FontFamilies.GTWalsheimBold,
-                fontSize: normalize(16),
-                lineHeight: normalize(22),
+                flexDirection: "row",
+                gap: 4,
               }}
             >
-              532
-            </Text>
+              <Image
+                source={require("../../assets/images/asia-miles.png")}
+                style={{
+                  width: normalize(13.33),
+                  height: normalize(16),
+                  alignSelf: "center",
+                }}
+              />
+              <Text
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimBold,
+                  fontSize: normalize(16),
+                  lineHeight: normalize(22),
+                }}
+              >
+                156,188
+              </Text>
+              <Text
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimUltraLight,
+                  fontSize: normalize(16),
+                  color: "#8E96A4"
+                }}
+              >
+                |
+              </Text>
+              <Text
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimRegular,
+                  fontSize: normalize(14),
+                  lineHeight: normalize(22),
+                  color: "#444A54"
+                }}
+              >
+                Status points
+              </Text>
+              <Text
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimBold,
+                  fontSize: normalize(16),
+                  lineHeight: normalize(22),
+                }}
+              >
+                532
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
         <View
           style={{
             width: "100%",
@@ -352,3 +463,112 @@ export default function HomeScreen() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  journeyCard: {
+    backgroundColor: "white",
+    marginHorizontal: 16,
+    marginBottom: 16,
+    borderRadius: 14,
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    paddingTop: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  date: {
+    color: "#444A54",
+    fontSize: 14,
+  },
+  transferTime: {
+    position: "absolute",
+    bottom: 146,
+    left: 120,
+    fontSize: 12,
+    color: "#303436",
+    fontFamily: FontFamilies.GTWalsheimRegular,
+    textAlign: "center",
+  },
+  proceedButton: {
+    backgroundColor: "#367D79",
+    padding: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 24,
+    marginHorizontal: 16,
+  },
+  proceedText: {
+    color: "white",
+    fontSize: normalize(16),
+    fontWeight: "600",
+    fontFamily: FontFamilies.GTWalsheimBold,
+  },
+  alternativeButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  alternativeText: {
+    color: "#444A54",
+    fontSize: normalize(16),
+    paddingVertical: 4,
+    fontFamily: FontFamilies.GTWalsheimRegular,
+  },
+  suggestions: {
+    padding: 20,
+  },
+  suggestionsTitle: {
+    fontSize: normalize(20),
+    fontWeight: "600",
+    color: "#303436",
+    marginBottom: 16,
+    fontFamily: FontFamilies.GTWalsheimRegular,
+  },
+  suggestionBox: {
+    backgroundColor: "white",
+    padding: 16,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  weatherAlert: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  weatherText: {
+    fontSize: normalize(14),
+    color: "#303436",
+    fontFamily: FontFamilies.GTWalsheimRegular,
+  },
+  umbrellaText: {
+    fontSize: normalize(12),
+    marginTop: 12,
+    paddingHorizontal: 2,
+    color: "#303436",
+    fontFamily: FontFamilies.GTWalsheimLight,
+  },
+  transferButton: {
+    backgroundColor: "#367D79",
+    padding: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 20,
+  },
+  transferText: {
+    color: "#006064",
+    fontSize: 16,
+  },
+  helpText: {
+    fontSize: normalize(14),
+    color: "#0F7490",
+    marginTop: 14,
+    textAlign: "center",
+    fontFamily: FontFamilies.GTWalsheimRegular,
+  },
+});

@@ -1,5 +1,6 @@
 import { FontFamilies } from "@/helpers/FontFamiles";
 import { normalize } from "@/helpers/useScaling";
+import { router } from "expo-router";
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Keyboard } from "react-native";
 
@@ -114,12 +115,12 @@ const ChatScreen: React.FC = () => {
               <Text style={{ fontSize: normalize(16), color: message.type === "user" ? "#FFFFFF" : "#000000"  }}>{message.text}</Text>
               {message.cta && (
                 <TouchableOpacity
-                  // onPress={() => {
-                  //   navigation.navigate("JourneySuggestion", {
-                  //     origin: origin,
-                  //     destination: destination,
-                  //   });
-                  // }}
+                  onPress={() => {
+                    router.push({
+                      pathname: "/(tabs)",
+                      params: { origin, destination },
+                    });
+                  }}
                   style={{
                     marginTop: 10,
                     backgroundColor: "#006564",
