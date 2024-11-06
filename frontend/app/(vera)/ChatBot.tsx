@@ -1,3 +1,4 @@
+import { FontFamilies } from "@/helpers/FontFamiles";
 import { normalize } from "@/helpers/useScaling";
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Keyboard } from "react-native";
@@ -48,10 +49,10 @@ const ChatScreen: React.FC = () => {
                 borderRadius: 8,
                 maxWidth: "80%",
                 alignSelf: message.type === "user" ? "flex-end" : "flex-start",
-                backgroundColor: message.type === "user" ? "#DCF8C6" : "#f0f0f0",
+                backgroundColor: message.type === "user" ? "#006564" : "#f0f0f0",
               }}
             >
-              <Text style={{ fontSize: 16, color: "#333" }}>{message.text}</Text>
+              <Text style={{ fontSize: 16, color: message.type === "user" ? "#FFFFFF" : "#000000"  }}>{message.text}</Text>
             </View>
           ))}
         </ScrollView>
@@ -59,9 +60,9 @@ const ChatScreen: React.FC = () => {
         <View
           style={{
             flexDirection: "row",
-            padding: 8,
+            padding: normalize(12),
             borderTopWidth: 1,
-            marginBottom: 24,
+            marginBottom: normalize(24),
             borderTopColor: "#ddd",
             alignItems: "center",
           }}
@@ -73,7 +74,7 @@ const ChatScreen: React.FC = () => {
               paddingHorizontal: 12,
               backgroundColor: "#f0f0f0",
               borderRadius: 20,
-              fontSize: 16,
+              fontSize: normalize(16),
             }}
             placeholder="Type your message here"
             value={input}
@@ -84,8 +85,8 @@ const ChatScreen: React.FC = () => {
             style={{
               marginLeft: 8,
               backgroundColor: "#006564",
-              paddingVertical: 10,
-              paddingHorizontal: 20,
+              paddingVertical: normalize(12),
+              paddingHorizontal: normalize(20),
               borderRadius: 20,
             }}
           >
