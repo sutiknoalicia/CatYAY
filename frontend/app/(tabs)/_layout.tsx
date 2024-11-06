@@ -55,6 +55,12 @@ export default function TabLayout() {
         name="journey"
         options={{
           title: "Journey",
+        }}
+      />
+      <Tabs.Screen
+        name="suggest"
+        options={{
+          title: "Suggestions",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "code-slash" : "code-slash-outline"}
