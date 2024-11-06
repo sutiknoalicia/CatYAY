@@ -306,7 +306,7 @@ export default function HomeScreen() {
                   height: screenHeight * 0.1,
                   padding: 12,
                 }}
-                onPress={() => console.log("Booking pressed")}
+                onPress={() => router.push("/(ticket)/landingPage")}
               >
                 <View
                   style={{
