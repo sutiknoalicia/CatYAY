@@ -24,6 +24,8 @@ const getWeatherIcon = (
 };
 
 export default function WeatherCard({ destinations }: WeatherCardProps) {
+  const isTwoDestinations = destinations.length === 2;
+
   return (
     <View
       style={{
@@ -47,12 +49,13 @@ export default function WeatherCard({ destinations }: WeatherCardProps) {
           <View
             key={dest.location}
             style={{
-              alignItems:
-                index === 0
-                  ? "flex-start"
-                  : index === destinations.length - 1
-                  ? "flex-end"
-                  : "center",
+              alignItems: isTwoDestinations
+                ? "center"
+                : index === 0
+                ? "flex-start"
+                : index === destinations.length - 1
+                ? "flex-end"
+                : "center",
               flex: 1,
             }}
           >

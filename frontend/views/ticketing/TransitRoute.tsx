@@ -1,7 +1,13 @@
 // TransitRoute.tsx
 import { FontFamilies } from "@/helpers/FontFamiles";
 import React from "react";
-import { View, Text, Image, ImageSourcePropType } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+} from "react-native";
 
 type TransportType = "flight" | "ferry" | "train" | "bus";
 
@@ -31,7 +37,6 @@ export function TransitRoute({ transits }: TransitRouteProps) {
     }
   };
 
-  // Create an array of all unique locations in order
   const locations = transits.reduce((acc: string[], transit, index) => {
     if (index === 0) {
       acc.push(transit.from);
@@ -41,66 +46,81 @@ export function TransitRoute({ transits }: TransitRouteProps) {
   }, []);
 
   return (
-    <View style={{ marginVertical: 20 }}>
-      <View style={{ flexDirection: "column", paddingHorizontal: 16 }}>
-        {/* Icons and Lines */}
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 4,
-          }}
-        >
+    <View style={styles.container}>
+      <View style={styles.routeContainer}>
+        <View style={styles.iconsRow}>
           {locations.map((_, index) => (
             <React.Fragment key={`transport-${index}`}>
-              <View style={{ width: 40, alignItems: "center" }}>
+              <View style={styles.iconWrapper}>
                 {index === locations.length - 1 ? (
                   <Image
                     source={require("@/assets/images/pin-grey.png")}
-                    style={{ width: 40, height: 40 }}
+                    style={styles.icon}
                   />
                 ) : (
                   <Image
                     source={getTransportImage(transits[index].transportType)}
-                    style={{ width: 40, height: 40 }}
+                    style={styles.icon}
                   />
                 )}
               </View>
-              {index < locations.length - 1 && (
-                <View
-                  style={{
-                    flex: 1,
-                    height: 3,
-                    backgroundColor: "#E5E6E7",
-                  }}
-                />
-              )}
+              {index < locations.length - 1 && <View style={styles.line} />}
             </React.Fragment>
           ))}
         </View>
 
-        {/* Text Labels */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 8,
-          }}
-        >
+        <View style={styles.textRow}>
           {locations.map((location, index) => (
-            <Text
-              key={`location-${index}`}
-              style={{
-                fontFamily: FontFamilies.GTWalsheimBold,
-                color: "#E5E6E7",
-                fontSize: 16,
-              }}
-            >
-              {location}
-            </Text>
+            <View key={`location-${index}`} style={styles.textWrapper}>
+              <Text style={styles.text}>{location}</Text>
+            </View>
           ))}
         </View>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 20,
+    paddingHorizontal: 16,
+  },
+  routeContainer: {
+    flexDirection: "column",
+  },
+  iconsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+  },
+  iconWrapper: {
+    width: 40,
+    alignItems: "center",
+  },
+  icon: {
+    width: 40,
+    height: 40,
+  },
+  line: {
+    flex: 1,
+    height: 3,
+    backgroundColor: "#E5E6E7",
+  },
+  textRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 8,
+  },
+  textWrapper: {
+    width: 40,
+    alignItems: "center",
+  },
+  text: {
+    fontFamily: FontFamilies.GTWalsheimBold,
+    color: "#E5E6E7",
+    fontSize: 16,
+    textAlign: "center",
+  },
+});
