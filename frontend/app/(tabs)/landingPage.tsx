@@ -41,7 +41,7 @@ const DiscountCodeModal = ({ visible, onClose, onConfirm }) => {
           }}
         >
           <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 16 }}>
-            使用优惠代码
+            Coupon Code
           </Text>
           <TextInput
             style={{
@@ -51,16 +51,16 @@ const DiscountCodeModal = ({ visible, onClose, onConfirm }) => {
               marginBottom: 16,
               paddingHorizontal: 12,
             }}
-            placeholder="请输入优惠代码"
+            placeholder="Please enter discount code"
             value={discountCode}
             onChangeText={(text) => setDiscountCode(text)}
           />
           <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
             <TouchableOpacity onPress={onClose} style={{ marginRight: 16 }}>
-              <Text style={{ fontSize: 18, color: "#006E6D" }}>取消</Text>
+              <Text style={{ fontSize: 18, color: "#006E6D" }}>Confirm</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => onConfirm(discountCode)}>
-              <Text style={{ fontSize: 18, color: "#006E6D" }}>确定</Text>
+              <Text style={{ fontSize: 18, color: "#006E6D" }}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -117,9 +117,11 @@ const AirportSelectionModal = ({
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>选择出发地</Text>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Choose Destination
+          </Text>
           <TouchableOpacity onPress={onClose}>
-            <Text style={{ fontSize: 18, color: "#006E6D" }}>取消</Text>
+            <Text style={{ fontSize: 18, color: "#006E6D" }}>Cancel</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -275,7 +277,7 @@ export default function FlightBookingScreen() {
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <AntDesign name="user" size={24} color="#666" />
-            <Text style={{ color: "#666" }}>微信用户，您好</Text>
+            <Text style={{ color: "#666" }}>Hello WeChat user!</Text>
           </View>
           <TouchableOpacity
             style={{
@@ -286,7 +288,7 @@ export default function FlightBookingScreen() {
               borderRadius: 20,
             }}
           >
-            <Text style={{ color: "#006E6D" }}>登录/注册</Text>
+            <Text style={{ color: "#006E6D" }}>Login / Register</Text>
           </TouchableOpacity>
         </View>
 
@@ -323,7 +325,7 @@ export default function FlightBookingScreen() {
                   fontSize: 16,
                 }}
               >
-                单程
+                Single Trip
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -344,7 +346,7 @@ export default function FlightBookingScreen() {
                   fontSize: 16,
                 }}
               >
-                多程
+                Multi-way Trip
               </Text>
             </TouchableOpacity>
           </View>
@@ -363,11 +365,11 @@ export default function FlightBookingScreen() {
               onPress={() => handleAirportPress("from")}
               style={{ flex: 1 }}
             >
-              <Text style={{ color: "#666", marginBottom: 8 }}>出发地</Text>
+              <Text style={{ color: "#666", marginBottom: 8 }}>From</Text>
               <Text style={{ fontSize: 18 }}>
                 {fromAirport
                   ? `${fromAirport.name} (${fromAirport.code})`
-                  : "请选择"}
+                  : "Please Choose"}
               </Text>
             </TouchableOpacity>
 
@@ -400,10 +402,10 @@ export default function FlightBookingScreen() {
               <Text
                 style={{ color: "#666", marginBottom: 8, textAlign: "right" }}
               >
-                目的地
+                To
               </Text>
               <Text style={{ fontSize: 18, textAlign: "right" }}>
-                {toAirport ? `${toAirport.name}` : "请选择"}
+                {toAirport ? `${toAirport.name}` : "Please Choose"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -420,12 +422,12 @@ export default function FlightBookingScreen() {
                     fontSize: 12,
                   }}
                 >
-                  出发日期
+                  Departure Date
                 </Text>
                 <Text style={{ fontSize: 16, marginHorizontal: 12 }}>
                   {selectedDepartureDate
                     ? selectedDepartureDate.toLocaleDateString()
-                    : "请选择"}
+                    : "Please Choose"}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -441,7 +443,7 @@ export default function FlightBookingScreen() {
                         fontSize: 12,
                       }}
                     >
-                      返回日期
+                      Return Date
                     </Text>
                     <Text
                       style={{
@@ -451,7 +453,7 @@ export default function FlightBookingScreen() {
                     >
                       {selectedReturnDate
                         ? selectedReturnDate.toLocaleDateString()
-                        : "请选择"}
+                        : "Please Choose"}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -464,10 +466,11 @@ export default function FlightBookingScreen() {
             <Text
               style={{ color: "#666", marginBottom: 8, marginHorizontal: 12 }}
             >
-              舱位和乘客
+              Cabins and Passengers
             </Text>
             <Text style={{ fontSize: 18, marginHorizontal: 12 }}>
-              {cabinClass}，{adults} 成人 {children} 儿童 {infants} 婴儿
+              {cabinClass}，{adults} Adults {children} Childrens {infants}{" "}
+              Infants
             </Text>
           </TouchableOpacity>
 
@@ -481,7 +484,7 @@ export default function FlightBookingScreen() {
             onPress={() => setDiscountCodeModalVisible(true)}
           >
             <Text style={{ color: "#006E6D", marginRight: 8 }}>
-              使用优惠代码
+              Discount Code
             </Text>
             <AntDesign name="right" size={16} color="#006E6D" />
           </TouchableOpacity>
@@ -498,7 +501,7 @@ export default function FlightBookingScreen() {
               }}
               onPress={() => router.push("/(tabs)/ticket")}
             >
-              <Text style={{ color: "white", fontSize: 12 }}>搜索</Text>
+              <Text style={{ color: "white", fontSize: 12 }}>Search</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -520,9 +523,9 @@ export default function FlightBookingScreen() {
         mode="date"
         onConfirm={handleDateConfirm}
         onCancel={hideDatePicker}
-        locale="zh-CN"
-        confirmTextIOS="确定"
-        cancelTextIOS="取消"
+        locale="English"
+        confirmTextIOS="Confirm"
+        cancelTextIOS="Cancel"
       />
       <PassengerModal
         isVisible={isPassengerModalVisible}
