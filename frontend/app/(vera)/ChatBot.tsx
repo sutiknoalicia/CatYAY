@@ -1,25 +1,85 @@
 import { FontFamilies } from "@/helpers/FontFamiles";
 import { normalize } from "@/helpers/useScaling";
+import { router } from "expo-router";
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Keyboard } from "react-native";
 
 const ChatScreen: React.FC = () => {
   const [messages, setMessages] = useState([
-    { type: "bot", text: "We have searched all flights from 10 Nov to 14 Dec. Unfortunately, we cannot locate any available flights." },
-    { type: "user", text: "What about a flight from Jakarta to Hong Kong?" },
-    { type: "bot", text: "Based on your previous enquiry, I'll check the flight status from Jakarta (CGK) to Hong Kong (HKG) - No date specified." },
-    { type: "user", text: "For tomorrow, it’s urgent" },
-    { type: "bot", text: "You are searching the flight from CGK to HKG on Thu 07 Nov 2024. There are 2 flights in total." },
+    { type: "bot", text: "Hi, i'm Vera - your virtual assistant. How may I help you today?" },
+    { type: "bot", text: "Simply share your desired destination, and I'll provide you with the most efficient routes, highlighting options with the lowest carbon emissions and the most affordable prices." },
   ]);
   const [input, setInput] = useState("");
-  
+  const [destination, setDestination] = useState(null);
+  const [origin, setOrigin] = useState(null);
+  const [awaitingOrigin, setAwaitingOrigin] = useState(false);
+  const [awaitingDestination, setAwaitingDestination] = useState(true);
+
   const scrollViewRef = useRef<ScrollView>(null);
 
+  const locationMap = {
+    "shenzhen": "SZX",
+    "szx": "SZX",
+    "fyg": "FYG",
+    "jakarta": "CGK",
+  };
+
+  const normalizeLocation = (input: string): string | null => {
+    const lowerInput = input.toLowerCase();
+    
+    for (const key in locationMap) {
+      if (lowerInput.includes(key)) {
+        return locationMap[key];
+      }
+    }
+    
+    return null;
+  };
+  
   const sendMessage = () => {
     if (input.trim().length === 0) return;
     setMessages((prevMessages) => [...prevMessages, { type: "user", text: input }]);
+    const standardizedLocation = normalizeLocation(input);
+
+    if (awaitingDestination) {
+      if (standardizedLocation) {
+        setDestination(standardizedLocation);
+        setAwaitingDestination(false);
+        setAwaitingOrigin(true);
+
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { type: "bot", text: `Great! You're heading to ${standardizedLocation}. Where are you departing from?` },
+        ]);
+      } else {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { type: "bot", text: `I didn't recognize that destination. Please enter a valid location.` },
+        ]);
+      }
+    } else if (awaitingOrigin) {
+      if (standardizedLocation) {
+        setOrigin(standardizedLocation);
+        setAwaitingOrigin(false);
+
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            type: "bot",
+            text: `I've found the most optimal route from ${standardizedLocation} to ${destination} with the least carbon emissions and the cheapest fare.`,
+            cta: true,
+          },
+        ]);
+      } else {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { type: "bot", text: `I didn't recognize that origin. Please enter a valid location.` },
+        ]);
+      }
+    } else {
+      // Reset or handle other inputs
+    }
     setInput("");
-    // Here you can add bot response logic or API calls to generate bot responses
   };
 
   useEffect(() => {
@@ -52,7 +112,27 @@ const ChatScreen: React.FC = () => {
                 backgroundColor: message.type === "user" ? "#006564" : "#f0f0f0",
               }}
             >
-              <Text style={{ fontSize: 16, color: message.type === "user" ? "#FFFFFF" : "#000000"  }}>{message.text}</Text>
+              <Text style={{ fontSize: normalize(16), color: message.type === "user" ? "#FFFFFF" : "#000000"  }}>{message.text}</Text>
+              {message.cta && (
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push({
+                      pathname: "/(tabs)",
+                      params: { origin, destination },
+                    });
+                  }}
+                  style={{
+                    marginTop: 10,
+                    backgroundColor: "#006564",
+                    paddingVertical: 10,
+                    paddingHorizontal: 20,
+                    borderRadius: 20,
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ color: "#fff", fontWeight: "600" }}>View Suggested Journey</Text>
+                </TouchableOpacity>
+              )}
             </View>
           ))}
         </ScrollView>

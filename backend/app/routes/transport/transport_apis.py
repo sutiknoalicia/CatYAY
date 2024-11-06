@@ -1,536 +1,318 @@
 from fastapi import APIRouter, HTTPException
 from typing import List, Dict
 from datetime import datetime, timedelta
-from enum import Enum
 import random
-
-
-class GBACities(str, Enum):
-    HONG_KONG = "Hong Kong"
-    SHENZHEN = "Shenzhen"
-    GUANGZHOU = "Guangzhou"
-    MACAU = "Macau"
-    ZHUHAI = "Zhuhai"
-    DONGGUAN = "Dongguan"
-    ZHONGSHAN = "Zhongshan"
-    FOSHAN = "Foshan"
-    HUIZHOU = "Huizhou"
-    JIANGMEN = "Jiangmen"
-
-class Terminals(str, Enum):
-    # Hong Kong Terminals
-    HK_AIRPORT = "Hong Kong International Airport"
-    HK_MACAU_FERRY = "Hong Kong Macau Ferry Terminal"
-    CHINA_FERRY = "China Ferry Terminal"
-    WEST_KOWLOON = "West Kowloon Station"
-    ELEMENTS = "Elements Coach Terminal"
-    PRINCE_EDWARD = "Prince Edward Station"
-    
-    # Shenzhen Terminals
-    SZ_AIRPORT = "Shenzhen Bao'an International Airport"
-    SZ_SHEKOU = "Shekou Port"
-    SZ_NORTH = "Shenzhen North Station"
-    SZ_FUTIAN = "Futian Station"
-    
-    # Guangzhou Terminals
-    GZ_SOUTH = "Guangzhou South Railway Station"
-    GZ_EAST = "Guangzhou East Railway Station"
-    GZ_AIRPORT = "Guangzhou Baiyun International Airport"
-    
-    # Macau Terminals
-    MACAU_OUTER = "Macau Outer Harbour Ferry Terminal"
-    MACAU_TAIPA = "Macau Taipa Ferry Terminal"
-    
-    # Zhuhai Terminals
-    ZHUHAI_JIUZHOU = "Zhuhai Jiuzhou Port"
-    ZHUHAI_GONGBEI = "Zhuhai Gongbei Port"
-
-ferry_routes = [
-    {
-        "route_id": "F001",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.MACAU,
-        "terminal_from": Terminals.HK_MACAU_FERRY,
-        "terminal_to": Terminals.MACAU_OUTER,
-        "duration_minutes": 60,
-        "price": 171,
-        "operator": "TurboJET"
-    },
-    {
-        "route_id": "F002",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.ZHUHAI,
-        "terminal_from": Terminals.CHINA_FERRY,
-        "terminal_to": Terminals.ZHUHAI_JIUZHOU,
-        "duration_minutes": 70,
-        "price": 165,
-        "operator": "CotaiJet"
-    },
-    {
-        "route_id": "F003",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.MACAU,
-        "terminal_from": Terminals.HK_MACAU_FERRY,
-        "terminal_to": Terminals.MACAU_TAIPA,
-        "duration_minutes": 65,
-        "price": 175,
-        "operator": "CotaiJet"
-    },
-    {
-        "route_id": "F004",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.SHENZHEN,
-        "terminal_from": Terminals.CHINA_FERRY,
-        "terminal_to": Terminals.SZ_SHEKOU,
-        "duration_minutes": 30,
-        "price": 120,
-        "operator": "CKS"
-    },
-    {
-        "route_id": "F005",
-        "from": GBACities.ZHUHAI,
-        "to": GBACities.MACAU,
-        "terminal_from": Terminals.ZHUHAI_GONGBEI,
-        "terminal_to": Terminals.MACAU_OUTER,
-        "duration_minutes": 20,
-        "price": 80,
-        "operator": "Yuet Tung"
-    }
-]
-
-bus_routes = [
-    {
-        "route_id": "B001",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.SHENZHEN,
-        "terminal_from": Terminals.ELEMENTS,
-        "terminal_to": "Huanggang Port",
-        "duration_minutes": 45,
-        "price": 90,
-        "operator": "Cross Boundary Coach"
-    },
-    {
-        "route_id": "B002",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.GUANGZHOU,
-        "terminal_from": Terminals.PRINCE_EDWARD,
-        "terminal_to": Terminals.GZ_EAST,
-        "duration_minutes": 180,
-        "price": 250,
-        "operator": "China Travel Bus"
-    },
-    {
-        "route_id": "B003",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.DONGGUAN,
-        "terminal_from": Terminals.ELEMENTS,
-        "terminal_to": "Dongguan Bus Terminal",
-        "duration_minutes": 120,
-        "price": 160,
-        "operator": "Trans-Island Bus"
-    },
-    {
-        "route_id": "B004",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.FOSHAN,
-        "terminal_from": Terminals.PRINCE_EDWARD,
-        "terminal_to": "Foshan Central",
-        "duration_minutes": 210,
-        "price": 280,
-        "operator": "China Travel Bus"
-    },
-    {
-        "route_id": "B005",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.ZHONGSHAN,
-        "terminal_from": Terminals.ELEMENTS,
-        "terminal_to": "Zhongshan Bus Terminal",
-        "duration_minutes": 150,
-        "price": 200,
-        "operator": "Trans-Island Bus"
-    }
-]
-
-train_routes = [
-    {
-        "route_id": "T001",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.GUANGZHOU,
-        "terminal_from": Terminals.WEST_KOWLOON,
-        "terminal_to": Terminals.GZ_SOUTH,
-        "duration_minutes": 48,
-        "price": 215,
-        "train_type": "High-Speed Rail"
-    },
-    {
-        "route_id": "T002",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.SHENZHEN,
-        "terminal_from": Terminals.WEST_KOWLOON,
-        "terminal_to": Terminals.SZ_NORTH,
-        "duration_minutes": 15,
-        "price": 80,
-        "train_type": "High-Speed Rail"
-    },
-    {
-        "route_id": "T003",
-        "from": GBACities.HONG_KONG,
-        "to": GBACities.DONGGUAN,
-        "terminal_from": Terminals.WEST_KOWLOON,
-        "terminal_to": "Dongguan South Station",
-        "duration_minutes": 30,
-        "price": 120,
-        "train_type": "High-Speed Rail"
-    },
-    {
-        "route_id": "T004",
-        "from": GBACities.SHENZHEN,
-        "to": GBACities.GUANGZHOU,
-        "terminal_from": Terminals.SZ_NORTH,
-        "terminal_to": Terminals.GZ_SOUTH,
-        "duration_minutes": 35,
-        "price": 150,
-        "train_type": "High-Speed Rail"
-    },
-    {
-        "route_id": "T005",
-        "from": GBACities.GUANGZHOU,
-        "to": GBACities.FOSHAN,
-        "terminal_from": Terminals.GZ_SOUTH,
-        "terminal_to": "Foshan West Station",
-        "duration_minutes": 20,
-        "price": 45,
-        "train_type": "High-Speed Rail"
-    }
-]
-
-cathay_flights = [
-    {
-        "flight_number": "CX750",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "SIN",
-            "city": "Singapore",
-            "airport": "Changi Airport",
-            "terminal": "Terminal 4"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "4h 05m",
-        "departure_time": "09:45",
-        "arrival_time": "13:50",
-        "carbon_emissions": "165kg CO2"
-    },
-    {
-        "flight_number": "CX734",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "SIN",
-            "city": "Singapore",
-            "airport": "Changi Airport",
-            "terminal": "Terminal 4"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "4h 05m",
-        "departure_time": "14:15",
-        "arrival_time": "18:20",
-        "carbon_emissions": "165kg CO2"
-    },
-    {
-        "flight_number": "CX736",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "SIN",
-            "city": "Singapore",
-            "airport": "Changi Airport",
-            "terminal": "Terminal 4"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "4h 05m",
-        "departure_time": "20:35",
-        "arrival_time": "00:40",
-        "carbon_emissions": "165kg CO2"
-    }, 
-    {
-        "flight_number": "CX683",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "BKK",
-            "city": "Bangkok",
-            "airport": "Suvarnabhumi Airport",
-            "terminal": "Terminal D"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "3h 05m",
-        "departure_time": "15:30",
-        "arrival_time": "18:35",
-        "carbon_emissions": "145kg CO2"
-    },
-    {
-        "flight_number": "CX617",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "BKK",
-            "city": "Bangkok",
-            "airport": "Suvarnabhumi Airport",
-            "terminal": "Terminal D"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "3h 05m",
-        "departure_time": "08:00",
-        "arrival_time": "11:05",
-        "carbon_emissions": "145kg CO2"
-    },
-    {
-        "flight_number": "CX654",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "BKK",
-            "city": "Bangkok",
-            "airport": "Suvarnabhumi Airport",
-            "terminal": "Terminal D"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "3h 05m",
-        "departure_time": "20:45",
-        "arrival_time": "23:50",
-        "carbon_emissions": "145kg CO2"
-    },
-    {
-        "flight_number": "CX500",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "NRT",
-            "city": "Tokyo",
-            "airport": "Narita International",
-            "terminal": "Terminal 2"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "4h 45m",
-        "departure_time": "14:15",
-        "arrival_time": "19:00",
-        "carbon_emissions": "170kg CO2"
-    },
-    {
-        "flight_number": "CX509",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "NRT",
-            "city": "Tokyo",
-            "airport": "Narita International",
-            "terminal": "Terminal 2"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "4h 45m",
-        "departure_time": "09:30",
-        "arrival_time": "14:15",
-        "carbon_emissions": "170kg CO2"
-    },
-    {
-        "flight_number": "CX521",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "NRT",
-            "city": "Tokyo",
-            "airport": "Narita International",
-            "terminal": "Terminal 2"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "4h 45m",
-        "departure_time": "18:45",
-        "arrival_time": "23:30",
-        "carbon_emissions": "170kg CO2"
-    },
-    {
-        "flight_number": "CX731",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "TPE",
-            "city": "Taipei",
-            "airport": "Taoyuan International",
-            "terminal": "Terminal 1"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "1h 55m",
-        "departure_time": "11:55",
-        "arrival_time": "13:50",
-        "carbon_emissions": "95kg CO2"
-    },
-    {
-        "flight_number": "CX467",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "TPE",
-            "city": "Taipei",
-            "airport": "Taoyuan International",
-            "terminal": "Terminal 1"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "1h 55m",
-        "departure_time": "07:30",
-        "arrival_time": "09:25",
-        "carbon_emissions": "95kg CO2"
-    },
-    {
-        "flight_number": "CX474",
-        "operator": "Cathay Pacific",
-        "origin": {
-            "code": "TPE",
-            "city": "Taipei",
-            "airport": "Taoyuan International",
-            "terminal": "Terminal 1"
-        },
-        "destination": {
-            "code": "HKG",
-            "city": "Hong Kong",
-            "airport": "Hong Kong Int'l (HKG)",
-            "terminal": "Terminal 1"
-        },
-        "duration": "1h 55m",
-        "departure_time": "15:40",
-        "arrival_time": "17:35",
-        "carbon_emissions": "95kg CO2"
-    }
-]
+from .transport_data import train_routes, cathay_flights, bus_routes, ferry_routes
 
 router = APIRouter()
 
-# API Endpoints
 @router.get("/ferry/routes")
 async def get_ferry_routes():
     return {"routes": ferry_routes}
 
-@router.get("/ferry/schedules/{route_id}")
-async def get_ferry_schedules(route_id: str):
-    route = next((r for r in ferry_routes if r["route_id"] == route_id), None)
+@router.get("/ferry/schedules/{identifier}")
+async def get_ferry_schedules(identifier: str):
+    route = next((r for r in ferry_routes if r["identifier"] == identifier), None)
     if not route:
         raise HTTPException(status_code=404, detail="Route not found")
     
-    # Generate mock schedules for the next 24 hours
-    current_time = datetime.now()
-    schedules = []
-    for i in range(8):  # 8 departures per day
-        departure_time = current_time + timedelta(hours=i*3)
-        schedules.append({
-            "schedule_id": f"{route_id}-{i}",
-            "departure_time": departure_time.strftime("%Y-%m-%d %H:%M"),
-            "arrival_time": (departure_time + timedelta(minutes=route["duration_minutes"])).strftime("%Y-%m-%d %H:%M"),
-            "available_seats": random.randint(0, 200),
-            "price": route["price"]
-        })
-    return {"schedules": schedules}
+    return {
+        "transportType": "ferry",
+        "identifier": route["identifier"],
+        "duration": route["duration"],
+        "departureTime": route["departureTime"],
+        "departureLocation": route["departureLocation"],
+        "arrivalTime": route["arrivalTime"],
+        "arrivalLocation": route["arrivalLocation"],
+        "carbonEmissions": route["carbonEmissions"],
+        "class": route["class"],
+        "currency": route["currency"],
+        "price": route["price"]
+    }
 
 @router.get("/bus/routes")
 async def get_bus_routes():
     return {"routes": bus_routes}
 
-@router.get("/bus/schedules/{route_id}")
-async def get_bus_schedules(route_id: str):
-    route = next((r for r in bus_routes if r["route_id"] == route_id), None)
+@router.get("/bus/schedules/{identifier}")
+async def get_bus_schedules(identifier: str):
+    route = next((r for r in bus_routes if r["identifier"] == identifier), None)
     if not route:
         raise HTTPException(status_code=404, detail="Route not found")
     
-    # Generate mock schedules
-    schedules = []
-    current_time = datetime.now()
-    for i in range(12):  # 12 departures per day
-        departure_time = current_time + timedelta(hours=i*2)
-        schedules.append({
-            "schedule_id": f"{route_id}-{i}",
-            "departure_time": departure_time.strftime("%Y-%m-%d %H:%M"),
-            "arrival_time": (departure_time + timedelta(minutes=route["duration_minutes"])).strftime("%Y-%m-%d %H:%M"),
-            "available_seats": random.randint(0, 45),
-            "price": route["price"]
-        })
-    return {"schedules": schedules}
+    return {
+        "transportType": "bus",
+        "identifier": route["identifier"],
+        "duration": route["duration"],
+        "departureTime": route["departureTime"],
+        "departureLocation": route["departureLocation"],
+        "arrivalTime": route["arrivalTime"],
+        "arrivalLocation": route["arrivalLocation"],
+        "carbonEmissions": route["carbonEmissions"],
+        "class": route["class"],
+        "currency": route["currency"],
+        "price": route["price"]
+    }
 
 @router.get("/train/routes")
 async def get_train_routes():
     return {"routes": train_routes}
 
-@router.get("/train/schedules/{route_id}")
-async def get_train_schedules(route_id: str):
-    route = next((r for r in train_routes if r["route_id"] == route_id), None)
+@router.get("/train/schedules/{identifier}")
+async def get_train_schedules(identifier: str):
+    route = next((r for r in train_routes if r["identifier"] == identifier), None)
     if not route:
         raise HTTPException(status_code=404, detail="Route not found")
     
-    # Generate mock schedules
-    schedules = []
-    current_time = datetime.now()
-    for i in range(10):  # 24 departures per day
-        departure_time = current_time + timedelta(hours=i)
-        schedules.append({
-            "schedule_id": f"{route_id}-{i}",
-            "departure_time": departure_time.strftime("%Y-%m-%d %H:%M"),
-            "arrival_time": (departure_time + timedelta(minutes=route["duration_minutes"])).strftime("%Y-%m-%d %H:%M"),
-            "available_seats": random.randint(0, 120),
-            "price": route["price"]
-        })
-    return {"schedules": schedules}
+    return {
+        "transportType": "train",
+        "identifier": route["identifier"],
+        "duration": route["duration"],
+        "departureTime": route["departureTime"],
+        "departureLocation": route["departureLocation"],
+        "arrivalTime": route["arrivalTime"],
+        "arrivalLocation": route["arrivalLocation"],
+        "carbonEmissions": route["carbonEmissions"],
+        "class": route["class"],
+        "currency": route["currency"],
+        "price": route["price"]
+    }
 
 @router.get("/flights/{origin}/{destination}")
-async def get_route_summary(origin: str, destination: str):
+async def get_flights(origin: str, destination: str):
     filtered_flights = [
         f for f in cathay_flights 
-        if f["origin"]["code"].upper() == origin.upper() 
-        and f["destination"]["code"].upper() == destination.upper()
+        if f["departureLocation"] == origin.upper() 
+        and f["arrivalLocation"] == destination.upper()
     ]
     
     if not filtered_flights:
         raise HTTPException(status_code=404, detail="No flights found for this route")
     
     return filtered_flights
+
+
+# from typing import List, Optional
+# from pydantic import BaseModel
+
+# class RouteOption(BaseModel):
+#     transportType: str
+#     identifier: str
+#     duration: str
+#     departureTime: str
+#     departureLocation: str
+#     arrivalTime: str
+#     arrivalLocation: str
+#     carbonEmissions: int
+#     class_type: str
+#     currency: str
+#     original_price: float
+#     converted_price: Optional[float] = None
+#     number_of_transfers: int
+#     transfer_locations: List[str] = []
+
+# Currency conversion rates
+CURRENCY_RATES = {
+    "IDR": {
+        "HKD": 2037.71,
+        "CNY": 2208.17,
+    },
+    "SGD": {
+        "HKD": 0.17,
+        "CNY": 0.19,
+    }
+}
+from datetime import datetime, timedelta
+
+def parse_time(time_str: str) -> datetime:
+    """Convert time string (HH:MM) to datetime object"""
+    current_date = datetime.now().date()
+    return datetime.strptime(f"{current_date} {time_str}", "%Y-%m-%d %H:%M")
+
+def calculate_time_difference(departure: str, arrival: str) -> int:
+    """Calculate minutes between departure and arrival, handling day crossover"""
+    dep_time = parse_time(departure)
+    arr_time = parse_time(arrival)
+    if arr_time < dep_time:  # Handles flights crossing midnight
+        arr_time += timedelta(days=1)
+    return int((arr_time - dep_time).total_seconds() / 60)
+
+@router.get("/routes/search/{origin}/{destination}")
+async def search_all_routes(origin: str, destination: str):
+    """
+    Search for all possible routes between origin and destination,
+    including direct routes and routes with transfers.
+    Considers timing constraints and ensures feasible connections.
+    """
+    all_options = []
+    origin = origin.upper()
+    destination = destination.upper()
+    
+    # Determine source currency based on origin
+    source_currency = None
+    if origin == "SIN":
+        source_currency = "SGD"
+    elif origin == "CGK":
+        source_currency = "IDR"
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail="Only routes from Singapore (SIN) and Jakarta (CGK) are supported"
+        )
+
+    def convert_to_source_currency(price: float, current_currency: str) -> float:
+        if current_currency == source_currency:
+            return price
+        if source_currency == "SGD":
+            if current_currency in CURRENCY_RATES["SGD"]:
+                return price * CURRENCY_RATES["SGD"][current_currency]
+        elif source_currency == "IDR":
+            if current_currency in CURRENCY_RATES["IDR"]:
+                return price * CURRENCY_RATES["IDR"][current_currency]
+        return price
+
+    # Process direct flights
+    direct_flights = [
+        f for f in cathay_flights 
+        if f["departureLocation"] == origin 
+        and f["arrivalLocation"] == destination
+    ]
+    
+    for flight in direct_flights:
+        option = {
+            **flight,
+            "number_of_transfers": 0,
+            "transfer_locations": [],
+            "original_currency": flight["currency"],
+            "source_currency": source_currency,
+            "original_price": flight["price"],
+            "converted_price": convert_to_source_currency(flight["price"], flight["currency"]),
+            "total_duration_minutes": calculate_time_difference(
+                flight["departureTime"], 
+                flight["arrivalTime"]
+            )
+        }
+        all_options.append(option)
+
+    # Process transfers through Hong Kong
+    transfer_flights = [
+        f for f in cathay_flights 
+        if f["departureLocation"] == origin 
+        and f["arrivalLocation"] == "HKG"
+    ]
+
+    for first_leg in transfer_flights:
+        first_leg_arrival = parse_time(first_leg["arrivalTime"])
+        
+        # Add 45 minutes minimum transfer time
+        min_transfer_time = first_leg_arrival + timedelta(minutes=45)
+
+        # Find connecting transport options from HKG
+        connecting_options = []
+        
+        # Add train options with timing check
+        connecting_trains = [
+            t for t in train_routes 
+            if t["departureLocation"] == "HKG" 
+            and t["arrivalLocation"] == destination
+            and parse_time(t["departureTime"]) >= min_transfer_time
+            and parse_time(t["departureTime"]) <= first_leg_arrival + timedelta(hours=6)  # Max 6 hours waiting
+        ]
+        connecting_options.extend(connecting_trains)
+        
+        # Add ferry options with timing check
+        connecting_ferries = [
+            f for f in ferry_routes 
+            if f["departureLocation"] == "HKG" 
+            and f["arrivalLocation"] == destination
+            and parse_time(f["departureTime"]) >= min_transfer_time
+            and parse_time(f["departureTime"]) <= first_leg_arrival + timedelta(hours=6)
+        ]
+        connecting_options.extend(connecting_ferries)
+        
+        # Add bus options with timing check
+        connecting_buses = [
+            b for b in bus_routes 
+            if b["departureLocation"] == "HKG" 
+            and b["arrivalLocation"] == destination
+            and parse_time(b["departureTime"]) >= min_transfer_time
+            and parse_time(b["departureTime"]) <= first_leg_arrival + timedelta(hours=6)
+        ]
+        connecting_options.extend(connecting_buses)
+
+        # Create combined routes
+        for second_leg in connecting_options:
+            # Calculate total duration
+            total_duration = (
+                calculate_time_difference(first_leg["departureTime"], first_leg["arrivalTime"]) +  # First leg duration
+                calculate_time_difference(first_leg["arrivalTime"], second_leg["departureTime"]) +  # Transfer time
+                calculate_time_difference(second_leg["departureTime"], second_leg["arrivalTime"])   # Second leg duration
+            )
+
+            # Calculate prices
+            first_leg_price = convert_to_source_currency(
+                first_leg["price"], 
+                first_leg["currency"]
+            )
+            second_leg_price = convert_to_source_currency(
+                second_leg["price"], 
+                second_leg["currency"]
+            )
+            total_price = first_leg_price + second_leg_price
+
+            transfer_option = {
+                "transportType": f"{first_leg['transportType']}+{second_leg['transportType']}",
+                "identifier": f"{first_leg['identifier']}+{second_leg['identifier']}",
+                "duration": f"{total_duration}m",
+                "departureTime": first_leg["departureTime"],
+                "departureLocation": origin,
+                "transferLocation": "HKG",
+                "transferArrivalTime": first_leg["arrivalTime"],
+                "transferDepartureTime": second_leg["departureTime"],
+                "transferWaitTime": calculate_time_difference(
+                    first_leg["arrivalTime"], 
+                    second_leg["departureTime"]
+                ),
+                "arrivalTime": second_leg["arrivalTime"],
+                "arrivalLocation": destination,
+                "carbonEmissions": first_leg["carbonEmissions"] + second_leg["carbonEmissions"],
+                "class": f"{first_leg['class']}/{second_leg['class']}",
+                "source_currency": source_currency,
+                "original_price": first_leg["price"] + second_leg["price"],
+                "converted_price": total_price,
+                "number_of_transfers": 1,
+                "transfer_locations": ["HKG"],
+                "total_duration_minutes": total_duration,
+                "first_leg": {
+                    "transport_type": first_leg["transportType"],
+                    "identifier": first_leg["identifier"],
+                    "departure": first_leg["departureTime"],
+                    "arrival": first_leg["arrivalTime"],
+                    "price": first_leg_price
+                },
+                "second_leg": {
+                    "transport_type": second_leg["transportType"],
+                    "identifier": second_leg["identifier"],
+                    "departure": second_leg["departureTime"],
+                    "arrival": second_leg["arrivalTime"],
+                    "price": second_leg_price
+                }
+            }
+            all_options.append(transfer_option)
+
+    # Sort options by total duration and price
+    all_options.sort(key=lambda x: (x["total_duration_minutes"], x["converted_price"]))
+
+    if not all_options:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No routes found from {origin} to {destination}"
+        )
+
+    return {
+        "origin": origin,
+        "destination": destination,
+        "source_currency": source_currency,
+        "number_of_options": len(all_options),
+        "routes": all_options
+    }
