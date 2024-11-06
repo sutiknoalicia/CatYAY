@@ -1,23 +1,30 @@
-import { Image, ScrollView, View, Text, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import Feather from '@expo/vector-icons/Feather';
-import { FontFamilies } from '@/helpers/FontFamiles';
-import { normalize } from '@/helpers/useScaling';
-import Button from '@/components/button';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { useWindowDimensions } from 'react-native';
-import PromoDestinationCard from '@/components/PromoDestinationCard';
-import { useState } from 'react';
-import VeraModal from '@/components/VeraModal';
-import VeraSvg from '@/assets/svgs/vera-svg';
-import { router } from 'expo-router';
-import SuggestHeader from '../(suggest)/SuggestHeader';
-import JourneySegment from '../(suggest)/JourneySegment';
-import SmartSuggestions from '../(suggest)/SmartSuggestions';
-import { useLocalSearchParams } from 'expo-router';
+import {
+  Image,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import Feather from "@expo/vector-icons/Feather";
+import { FontFamilies } from "@/helpers/FontFamiles";
+import { normalize } from "@/helpers/useScaling";
+import Button from "@/components/button";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { useWindowDimensions } from "react-native";
+import PromoDestinationCard from "@/components/PromoDestinationCard";
+import { useState } from "react";
+import VeraModal from "@/components/VeraModal";
+import VeraSvg from "@/assets/svgs/vera-svg";
+import { router } from "expo-router";
+import SuggestHeader from "../(suggest)/SuggestHeader";
+import JourneySegment from "../(suggest)/JourneySegment";
+import SmartSuggestions from "../(suggest)/SmartSuggestions";
+import { useLocalSearchParams } from "expo-router";
 
 export default function HomeScreen() {
-  
   const { origin, destination } = useLocalSearchParams();
   const journeySegments = [
     {
@@ -54,23 +61,23 @@ export default function HomeScreen() {
   };
 
   const [veraOpen, setVeraOpen] = useState(() => !(origin && destination));
-  const {height: screenHeight} = useWindowDimensions();
+  const { height: screenHeight } = useWindowDimensions();
 
   function handleMenuPress(): void {
-    console.log("notifications pressed")
+    console.log("notifications pressed");
   }
 
   function handleNotificationPress(): void {
-    console.log("menu pressed")
+    console.log("menu pressed");
   }
 
-  function handleVeraPress() : void {
+  function handleVeraPress(): void {
     router.push("/(vera)/ChatBot");
   }
 
   function handleVeraBot(): void {
     setVeraOpen(false);
-    router.push("/(vera)/ChatBot")
+    router.push("/(vera)/ChatBot");
   }
 
   return (
@@ -84,7 +91,7 @@ export default function HomeScreen() {
         }}
       >
         <Image
-          source={require('../../assets/images/cathay-logo.png')}
+          source={require("../../assets/images/cathay-logo.png")}
           style={{
             position: "absolute",
             top: normalize(64),
@@ -100,14 +107,10 @@ export default function HomeScreen() {
             gap: normalize(24),
           }}
         >
-          <TouchableOpacity
-            onPress={handleNotificationPress}
-          >
+          <TouchableOpacity onPress={handleNotificationPress}>
             <SimpleLineIcons name="bell" size={normalize(24)} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handleMenuPress}
-          >
+          <TouchableOpacity onPress={handleMenuPress}>
             <Feather name="menu" size={normalize(24)} color="black" />
           </TouchableOpacity>
         </View>
@@ -121,7 +124,7 @@ export default function HomeScreen() {
           <SafeAreaView style={{ backgroundColor: "#F8F7F7", flex: 1 }}>
             <ScrollView>
               <SuggestHeader name="Mr Howard" />
-      
+
               <View style={styles.journeyCard}>
                 <Text style={styles.date}>
                   Fri 01 Nov 2024 {""} | {""} CX718
@@ -156,7 +159,7 @@ export default function HomeScreen() {
                     Shenzhen
                   </Text>
                 </View>
-      
+
                 {journeySegments.map((segment, index) => (
                   <JourneySegment key={index} {...segment} />
                 ))}
@@ -166,14 +169,21 @@ export default function HomeScreen() {
                     2h 5m{" "}
                   </Text>
                   <Text>at </Text>
-                  <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>HKG</Text>
+                  <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>
+                    HKG
+                  </Text>
                 </Text>
               </View>
-      
-              <TouchableOpacity style={styles.proceedButton}>
-                <Text style={styles.proceedText}>Proceed with this Journey</Text>
+
+              <TouchableOpacity
+                style={styles.proceedButton}
+                onPress={() => router.push("/(ticket)/checkout")}
+              >
+                <Text style={styles.proceedText}>
+                  Proceed with this Journey
+                </Text>
               </TouchableOpacity>
-      
+
               <TouchableOpacity
                 style={styles.alternativeButton}
                 onPress={handleProceed}
@@ -204,7 +214,8 @@ export default function HomeScreen() {
                 lineHeight: normalize(22),
                 fontFamily: FontFamilies.GTWalsheimRegular,
               }}
-            >Hello Mr Howard!
+            >
+              Hello Mr Howard!
             </Text>
             <View
               style={{
@@ -233,7 +244,7 @@ export default function HomeScreen() {
                 style={{
                   fontFamily: FontFamilies.GTWalsheimUltraLight,
                   fontSize: normalize(16),
-                  color: "#8E96A4"
+                  color: "#8E96A4",
                 }}
               >
                 |
@@ -243,7 +254,7 @@ export default function HomeScreen() {
                   fontFamily: FontFamilies.GTWalsheimRegular,
                   fontSize: normalize(14),
                   lineHeight: normalize(22),
-                  color: "#444A54"
+                  color: "#444A54",
                 }}
               >
                 Status points
@@ -357,7 +368,11 @@ export default function HomeScreen() {
                     flexWrap: "wrap",
                   }}
                 >
-                  <MaterialIcons name="format-list-bulleted-add" size={24} color="#006564" />
+                  <MaterialIcons
+                    name="format-list-bulleted-add"
+                    size={24}
+                    color="#006564"
+                  />
                   <Text
                     style={{
                       fontFamily: FontFamilies.GTWalsheimRegular,
@@ -380,12 +395,12 @@ export default function HomeScreen() {
             backgroundColor: "#F0F4F1",
           }}
         >
-          <View 
+          <View
             style={{
               justifyContent: "space-between",
               paddingVertical: normalize(32),
               paddingHorizontal: normalize(20),
-              gap: normalize(12)
+              gap: normalize(12),
             }}
           >
             <Text
@@ -393,12 +408,13 @@ export default function HomeScreen() {
                 fontSize: normalize(22),
                 fontFamily: FontFamilies.GTWalsheimRegular,
               }}
-            >Our latest offers
+            >
+              Our latest offers
             </Text>
-            <View 
+            <View
               style={{
                 flexDirection: "row",
-                gap: normalize(4)
+                gap: normalize(4),
               }}
             >
               <Text
@@ -406,30 +422,65 @@ export default function HomeScreen() {
                   fontSize: normalize(16),
                   fontFamily: FontFamilies.GTWalsheimRegular,
                 }}
-              >From:  
+              >
+                From:
               </Text>
               <Text
                 style={{
                   fontSize: normalize(16),
                   fontFamily: FontFamilies.GTWalsheimBold,
-                  color: "#006564"
+                  color: "#006564",
                 }}
-              >Hong Kong 
+              >
+                Hong Kong
               </Text>
             </View>
           </View>
           <PromoDestinationCard
-            data={
-              [
-                {destination: "Taipei", class: "Economy", price: "1,659", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
-                {destination: "Kaohsiung", class: "Economy", price: "1,559", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
-                {destination: "Singapore", class: "Economy", price: "2,323", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
-                {destination: "Seoul", class: "Economy", price: "2,128", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
-                {destination: "Christchurch", class: "Economy", price: "8,771", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
-                {destination: "Tokyo", class: "Economy", price: "2,920", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
-                {destination: "Osaka", class: "Economy", price: "2,697", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
-              ]
-            }
+            data={[
+              {
+                destination: "Taipei",
+                class: "Economy",
+                price: "1,659",
+                imageUrl: require("../../assets/images/singapore-picture.jpeg"),
+              },
+              {
+                destination: "Kaohsiung",
+                class: "Economy",
+                price: "1,559",
+                imageUrl: require("../../assets/images/singapore-picture.jpeg"),
+              },
+              {
+                destination: "Singapore",
+                class: "Economy",
+                price: "2,323",
+                imageUrl: require("../../assets/images/singapore-picture.jpeg"),
+              },
+              {
+                destination: "Seoul",
+                class: "Economy",
+                price: "2,128",
+                imageUrl: require("../../assets/images/singapore-picture.jpeg"),
+              },
+              {
+                destination: "Christchurch",
+                class: "Economy",
+                price: "8,771",
+                imageUrl: require("../../assets/images/singapore-picture.jpeg"),
+              },
+              {
+                destination: "Tokyo",
+                class: "Economy",
+                price: "2,920",
+                imageUrl: require("../../assets/images/singapore-picture.jpeg"),
+              },
+              {
+                destination: "Osaka",
+                class: "Economy",
+                price: "2,697",
+                imageUrl: require("../../assets/images/singapore-picture.jpeg"),
+              },
+            ]}
           />
         </View>
       </ScrollView>
@@ -444,9 +495,7 @@ export default function HomeScreen() {
           shadowRadius: 3.84,
         }}
       >
-        <TouchableOpacity
-          onPress={handleVeraPress}
-        >
+        <TouchableOpacity onPress={handleVeraPress}>
           <View
             style={{
               flexDirection: "row",
@@ -455,11 +504,16 @@ export default function HomeScreen() {
               gap: 8,
             }}
           >
-            <VeraSvg/>
+            <VeraSvg />
           </View>
         </TouchableOpacity>
       </View>
-      <VeraModal first_name={"Howard"} open={veraOpen} setOpen={setVeraOpen} onPress={handleVeraBot} />
+      <VeraModal
+        first_name={"Howard"}
+        open={veraOpen}
+        setOpen={setVeraOpen}
+        onPress={handleVeraBot}
+      />
     </>
   );
 }
