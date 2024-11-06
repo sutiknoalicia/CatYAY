@@ -70,8 +70,8 @@ const ChatScreen: React.FC = () => {
           <TextInput
             style={{
               flex: 1,
-              paddingVertical: 8,
-              paddingHorizontal: 12,
+              paddingVertical: normalize(8),
+              paddingHorizontal: normalize(12),
               backgroundColor: "#f0f0f0",
               borderRadius: 20,
               fontSize: normalize(16),
@@ -84,9 +84,11 @@ const ChatScreen: React.FC = () => {
             onPress={sendMessage}
             style={{
               marginLeft: 8,
+              width: "20%",
+              alignItems: "center",
               backgroundColor: "#006564",
-              paddingVertical: normalize(12),
-              paddingHorizontal: normalize(20),
+              paddingVertical: normalize(8),
+              paddingHorizontal: normalize(12),
               borderRadius: 20,
             }}
           >
