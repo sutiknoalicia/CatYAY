@@ -67,7 +67,7 @@ const WelcomeModal: FC<WelcomeModalProps> = ({ open, setOpen, first_name, onPres
                     fontSize: normalize(16),
                   }}
                 >
-                  Perfect
+                  Chat with Vera
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
