@@ -24,6 +24,7 @@ type TicketCardProps = {
   onSelect?: () => void;
   onViewDetails?: () => void;
   style?: StyleProp<ViewStyle>;
+  variant?: "journey" | "ticket";
 };
 
 export function TicketCard({
@@ -41,6 +42,7 @@ export function TicketCard({
   onSelect,
   onViewDetails,
   style,
+  variant = "ticket",
 }: TicketCardProps) {
   const getJourneyImage = (type: any) => {
     switch (type) {
@@ -54,6 +56,7 @@ export function TicketCard({
         return require("@/assets/images/plane-journey.png");
     }
   };
+
   return (
     <View
       style={[
@@ -144,7 +147,12 @@ export function TicketCard({
           <Text style={{ color: "#5E967E", fontSize: normalize(12) }}>
             Carbon emissions: {carbonEmissions}kg C
             <Text>
-              O<Text style={{ fontSize: normalize(10), lineHeight: normalize(10) }}>2</Text>
+              O
+              <Text
+                style={{ fontSize: normalize(10), lineHeight: normalize(10) }}
+              >
+                2
+              </Text>
             </Text>
           </Text>
           <TouchableOpacity
@@ -152,7 +160,11 @@ export function TicketCard({
             onPress={onViewDetails}
           >
             <Text
-              style={{ color: "#116F9A", fontSize: normalize(12), fontWeight: "bold" }}
+              style={{
+                color: "#116F9A",
+                fontSize: normalize(12),
+                fontWeight: "bold",
+              }}
             >
               View Details
             </Text>
@@ -169,15 +181,17 @@ export function TicketCard({
           backgroundColor: "#006564",
           borderTopRightRadius: 8,
           borderBottomRightRadius: 8,
-          paddingVertical: normalize(16),
+          paddingVertical: variant === "journey" ? normalize(8) : normalize(16),
           paddingHorizontal: normalize(8),
-          justifyContent: "space-between",
+          justifyContent: variant === "journey" ? "center" : "space-between",
           alignItems: "center",
+          gap: variant === "journey" ? normalize(4) : normalize(8),
         }}
       >
-
         <Text style={{ color: "#E6E7E8", fontSize: 10 }}>{transportClass}</Text>
-        <Text style={{ color: "#E6E7E8", fontSize: 12 }}>From</Text>
+        {variant === "ticket" && (
+          <Text style={{ color: "#E6E7E8", fontSize: 12 }}>From</Text>
+        )}
         <Text style={{ color: "#fff", fontSize: 14 }}>{currency}</Text>
         <Text
           style={{
@@ -192,21 +206,25 @@ export function TicketCard({
         >
           +{price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
         </Text>
-        <TouchableOpacity
-          style={{
-            borderRadius: 4,
-            borderWidth: 0.75,
-            borderColor: "#fff",
-            paddingHorizontal: 16,
-            paddingVertical: 8,
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={onSelect}
-        >
-          <Text style={{ fontSize: normalize(12), color: "#fff" }}>Select</Text>
-        </TouchableOpacity>
+        {variant === "ticket" && (
+          <TouchableOpacity
+            style={{
+              borderRadius: 4,
+              borderWidth: 0.75,
+              borderColor: "#fff",
+              paddingHorizontal: 16,
+              paddingVertical: 8,
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={onSelect}
+          >
+            <Text style={{ fontSize: normalize(12), color: "#fff" }}>
+              Select
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

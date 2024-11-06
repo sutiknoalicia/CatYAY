@@ -1,6 +1,6 @@
 import { TicketCard } from "@/views/ticketing/TicketCard";
 import { TransportFilters } from "@/views/ticketing/TransportFilters";
-import { Image, SafeAreaView, ScrollView, View, Text } from "react-native";
+import { SafeAreaView, ScrollView, View, Text } from "react-native";
 import { useState } from "react";
 import { TicketSorting } from "@/views/ticketing/TicketSorting";
 import { TicketHeader } from "@/views/ticketing/TicketHeader";
@@ -156,6 +156,7 @@ export default function TicketScreen() {
               <TicketCard
                 key={index}
                 {...ticket}
+                variant="ticket"
                 style={{ marginHorizontal: 20, marginBottom: 16 }}
               />
             ))}
