@@ -38,6 +38,7 @@ def call_gemini_api(api_key, message):
 # Example usage
 if __name__ == "__main__":
     api_key = os.getenv("API_KEY")
+    print(api_key)
     message = "welcome to cathay hackathon!"
     
     response = call_gemini_api(api_key, message)
