@@ -59,10 +59,6 @@ export default function TicketScreen() {
     train: "train",
   };
 
-  const handleFilterSelect = (filterId: string) => {
-    setSelectedFilter(filterId);
-  };
-
   const handlePriceSort = () => {
     setIsPriceSorted(!isPriceSorted);
   };
@@ -99,13 +95,6 @@ export default function TicketScreen() {
     setSelectedFilter(filterId);
   };
 
-  const filteredTickets = allTickets.filter((ticket) => {
-    if (selectedFilter === "all") {
-      return true;
-    }
-    return ticket.transportType === filterToTransportType[selectedFilter];
-  });
-
   return (
     <SafeAreaView style={{ backgroundColor: "#F8F7F7", flex: 1 }}>
       <ScrollView style={{ paddingTop: 16 }}>
@@ -124,48 +113,53 @@ export default function TicketScreen() {
         >
           Price displayed is the fare per adult including taxes/fees/charges.
         </Text>
-      <View style={{ paddingTop: 12 }}>
-        <TransportFilters
-          filters={transportFilters}
-          onFilterSelect={handleFilterSelect}
-        />
-        <View style={{ paddingVertical: 16 }}>
-          <Text
-            style={{ marginBottom: 12, fontWeight: 300, paddingHorizontal: 20 }}
-          >
-            <Text style={{ fontWeight: "bold" }}>
-              {getDisplayCount(selectedFilter)}
+        <View style={{ paddingTop: 12 }}>
+          <TransportFilters
+            filters={transportFilters}
+            onFilterSelect={handleFilterSelect}
+          />
+          <View style={{ paddingVertical: 16 }}>
+            <Text
+              style={{
+                marginBottom: 12,
+                fontWeight: 300,
+                paddingHorizontal: 20,
+              }}
+            >
+              <Text style={{ fontWeight: "bold" }}>
+                {getDisplayCount(selectedFilter)}
+              </Text>
+              {` ${
+                selectedFilter === "all"
+                  ? getDisplayCount(selectedFilter) === 1
+                    ? "ticket"
+                    : "tickets"
+                  : selectedFilter === "rail"
+                  ? getDisplayCount(selectedFilter) === 1
+                    ? "high speed rail"
+                    : "high speed rails"
+                  : selectedFilter === "bus"
+                  ? getDisplayCount(selectedFilter) === 1
+                    ? "bus"
+                    : "buses"
+                  : selectedFilter === "ferry"
+                  ? getDisplayCount(selectedFilter) === 1
+                    ? "ferry"
+                    : "ferries"
+                  : getDisplayCount(selectedFilter) === 1
+                  ? selectedFilter
+                  : `${selectedFilter}s`
+              } found`}
             </Text>
-            {` ${
-              selectedFilter === "all"
-                ? getDisplayCount(selectedFilter) === 1
-                  ? "ticket"
-                  : "tickets"
-                : selectedFilter === "rail"
-                ? getDisplayCount(selectedFilter) === 1
-                  ? "high speed rail"
-                  : "high speed rails"
-                : selectedFilter === "bus"
-                ? getDisplayCount(selectedFilter) === 1
-                  ? "bus"
-                  : "buses"
-                : selectedFilter === "ferry"
-                ? getDisplayCount(selectedFilter) === 1
-                  ? "ferry"
-                  : "ferries"
-                : getDisplayCount(selectedFilter) === 1
-                ? selectedFilter
-                : `${selectedFilter}s`
-            } found`}
-          </Text>
 
-          {filteredTickets.map((ticket, index) => (
-            <TicketCard
-              key={index}
-              {...ticket}
-              style={{ marginHorizontal: 20, marginBottom: 16 }}
-            />
-          ))}
+            {filteredTickets.map((ticket, index) => (
+              <TicketCard
+                key={index}
+                {...ticket}
+                style={{ marginHorizontal: 20, marginBottom: 16 }}
+              />
+            ))}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
