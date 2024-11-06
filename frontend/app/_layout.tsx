@@ -34,6 +34,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(vera)" options={{ headerShown: false }} />
         <Stack.Screen name="(ticket)" options={{ headerShown: false }} />
+        <Stack.Screen name="(journey)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>

@@ -5,6 +5,7 @@ import {
   Image,
 } from "react-native";
 import { FontFamilies } from "@/helpers/FontFamiles";
+import { normalize } from "@/helpers/useScaling";
 
 interface JourneySegmentProps {
   from: {
@@ -146,9 +147,9 @@ const styles = StyleSheet.create({
   },
   emissions: {
     position: "absolute",
-    bottom: -2,
+    bottom: normalize(-2),
     left: 0,
-    fontSize: 12,
+    fontSize: normalize(12),
     color: "#5E967E",
     fontFamily: FontFamilies.GTWalsheimRegular,
   },

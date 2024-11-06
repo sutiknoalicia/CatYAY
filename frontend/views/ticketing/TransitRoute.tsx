@@ -14,9 +14,10 @@ type Transit = {
 
 type TransitRouteProps = {
   transits: Transit[];
+  position: any;
 };
 
-export function TransitRoute({ transits }: TransitRouteProps) {
+export function TransitRoute({ transits, position }: TransitRouteProps) {
   const getTransportIcon = (type: TransportType): string => {
     switch (type) {
       case "flight":
@@ -40,6 +41,8 @@ export function TransitRoute({ transits }: TransitRouteProps) {
     return acc;
   }, []);
 
+  const locationIndex = locations.indexOf(position);
+
   return (
     <View style={styles.container}>
       <View style={styles.routeContainer}>
@@ -48,16 +51,16 @@ export function TransitRoute({ transits }: TransitRouteProps) {
             <React.Fragment key={`transport-${index}`}>
               <View style={styles.iconWrapper}>
                 {index === locations.length - 1 ? (
-                  <Ionicons name="pin" size={normalize(36)} color="#E5E6E7" />
+                  <Ionicons name="pin" size={normalize(36)} color={index <= locationIndex ? "#006564" : "#E5E6E7"} />
                 ) : (
                   <Ionicons
                     name={getTransportIcon(transits[index].transportType)}
                     size={normalize(36)}
-                    color="#E5E6E7"
+                    color={index <= locationIndex ? "#006564" : "#E5E6E7"}
                   />
                 )}
               </View>
-              {index < locations.length - 1 && <View style={styles.line} />}
+              {index < locations.length - 1 && <View style={[styles.line, { backgroundColor: index < locationIndex ? "#006564" : "#E5E6E7" }]} />}
             </React.Fragment>
           ))}
         </View>
@@ -65,7 +68,7 @@ export function TransitRoute({ transits }: TransitRouteProps) {
         <View style={styles.textRow}>
           {locations.map((location, index) => (
             <View key={`location-${index}`} style={styles.textWrapper}>
-              <Text style={styles.text}>{location}</Text>
+              <Text style={[styles.text, { color: index <= locationIndex ? "#006564" : "#E5E6E7" }]}>{location}</Text>
             </View>
           ))}
         </View>
@@ -95,7 +98,7 @@ const styles = StyleSheet.create({
   line: {
     flex: 1,
     height: 3,
-    backgroundColor: "#E5E6E7",
+    backgroundColor: "#006564",
   },
   textRow: {
     flexDirection: "row",
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: FontFamilies.GTWalsheimBold,
-    color: "#E5E6E7",
+    color: "#006564",
     fontSize: normalize(14),
     textAlign: "center",
   },
