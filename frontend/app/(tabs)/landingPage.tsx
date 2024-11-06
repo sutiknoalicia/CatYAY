@@ -176,7 +176,7 @@ export default function FlightBookingScreen() {
   const [selectedDepartureDate, setSelectedDepartureDate] = useState(null);
   const [selectedReturnDate, setSelectedReturnDate] = useState(null);
   const [currentDateSelection, setCurrentDateSelection] = useState(null);
-  const [cabinClass, setCabinClass] = useState("经济舱");
+  const [cabinClass, setCabinClass] = useState("Economy Class");
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
