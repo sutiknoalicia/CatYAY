@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { TouchableOpacity, Text, ViewToken, FlatList } from "react-native";
 import Animated from "react-native-reanimated";
+import { normalize } from "@/helpers/useScaling";
 
 type TransportFilter = {
   id: string;
@@ -52,7 +53,7 @@ export function TransportFilters({
           shadowOpacity: 0.1,
           shadowRadius: 8,
           elevation: 5,
-          marginBottom: 16,
+          marginBottom: normalize(16),
         },
         index === 0 && { marginLeft: 16 },
         index === filters.length - 1 && { marginRight: 16 },
@@ -64,7 +65,10 @@ export function TransportFilters({
     >
       <Text
         style={[
-          { fontSize: 16, color: "#000" },
+          {
+            fontSize: normalize(14),
+            color: "#000",
+          },
           selectedFilter === item.id && { color: "#fff" },
         ]}
       >

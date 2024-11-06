@@ -1,5 +1,6 @@
 import { View, Text, Image, ImageSourcePropType } from "react-native";
 import { FontFamilies } from "@/helpers/FontFamiles";
+import { normalize } from "@/helpers/useScaling";
 
 export type WeatherInfo = {
   location: string;
@@ -29,7 +30,8 @@ export default function WeatherCard({ destinations }: WeatherCardProps) {
   return (
     <View
       style={{
-        padding: 32,
+        paddingVertical: normalize(24),
+        paddingHorizontal: 24,
         backgroundColor: "#fff",
         borderRadius: 16,
         shadowColor: "#000",
@@ -63,7 +65,7 @@ export default function WeatherCard({ destinations }: WeatherCardProps) {
               <Text
                 style={{
                   color: "#006564",
-                  fontSize: 16,
+                  fontSize: normalize(16),
                   fontFamily: FontFamilies.GTWalsheimBold,
                 }}
               >
@@ -72,15 +74,15 @@ export default function WeatherCard({ destinations }: WeatherCardProps) {
               <Image
                 source={getWeatherIcon(dest.condition)}
                 style={{
-                  width: 24,
-                  height: 24,
-                  marginVertical: 8,
+                  width: normalize(24),
+                  height: normalize(24),
+                  marginVertical: normalize(8),
                 }}
                 resizeMode="contain"
               />
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: normalize(16),
                   fontFamily: FontFamilies.GTWalsheimBold,
                   color: "#303436",
                 }}

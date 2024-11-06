@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { normalize } from "@/helpers/useScaling";
 
 export default function SuccessScreen() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function SuccessScreen() {
         {/* Success Message */}
         <Text
           style={{
-            fontSize: 24,
+            fontSize: normalize(24),
             color: "#444A54",
             fontWeight: "600",
             marginBottom: 12,
@@ -33,7 +34,7 @@ export default function SuccessScreen() {
         </Text>
         <Text
           style={{
-            fontSize: 16,
+            fontSize: normalize(16),
             color: "#666",
             textAlign: "center",
             marginBottom: 32,
@@ -44,7 +45,6 @@ export default function SuccessScreen() {
           your email address.
         </Text>
 
-        {/* Booking Reference */}
         <View
           style={{
             backgroundColor: "#fff",
@@ -57,12 +57,17 @@ export default function SuccessScreen() {
           <Text style={{ color: "#666", marginBottom: 8 }}>
             Booking reference
           </Text>
-          <Text style={{ fontSize: 24, color: "#444A54", fontWeight: "600" }}>
+          <Text
+            style={{
+              fontSize: normalize(24),
+              color: "#444A54",
+              fontWeight: "600",
+            }}
+          >
             ABCD123
           </Text>
         </View>
 
-        {/* View Booking Button */}
         <TouchableOpacity
           style={{
             backgroundColor: "#006564",
@@ -74,7 +79,13 @@ export default function SuccessScreen() {
           }}
           onPress={() => router.replace("/")}
         >
-          <Text style={{ color: "#fff", fontSize: 16, fontWeight: "500" }}>
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: normalize(16),
+              fontWeight: "500",
+            }}
+          >
             View booking
           </Text>
         </TouchableOpacity>

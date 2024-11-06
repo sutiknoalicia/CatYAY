@@ -1,5 +1,5 @@
-// TransitRoute.tsx
 import { FontFamilies } from "@/helpers/FontFamiles";
+import { normalize } from "@/helpers/useScaling";
 import React from "react";
 import {
   View,
@@ -96,12 +96,12 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   iconWrapper: {
-    width: 40,
+    width: normalize(36),
     alignItems: "center",
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: normalize(36),
+    height: normalize(36),
   },
   line: {
     flex: 1,
@@ -114,13 +114,13 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   textWrapper: {
-    width: 40,
+    width: normalize(36),
     alignItems: "center",
   },
   text: {
     fontFamily: FontFamilies.GTWalsheimBold,
     color: "#E5E6E7",
-    fontSize: 16,
+    fontSize: normalize(14),
     textAlign: "center",
   },
 });

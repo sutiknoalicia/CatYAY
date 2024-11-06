@@ -4,6 +4,7 @@ import { SafeAreaView, ScrollView, View, Text } from "react-native";
 import { useState } from "react";
 import { TicketSorting } from "@/views/ticketing/TicketSorting";
 import { TicketHeader } from "@/views/ticketing/TicketHeader";
+import { normalize } from "@/helpers/useScaling";
 
 export default function TicketScreen() {
   const [selectedFilter, setSelectedFilter] = useState("all");
@@ -109,24 +110,35 @@ export default function TicketScreen() {
           onPriceSort={handlePriceSort}
         />
         <Text
-          style={{ marginBottom: 20, paddingHorizontal: 20, fontWeight: "300" }}
+          style={{
+            marginBottom: normalize(20),
+            paddingHorizontal: 20,
+            fontWeight: "300",
+            fontSize: normalize(14),
+          }}
         >
           Price displayed is the fare per adult including taxes/fees/charges.
         </Text>
-        <View style={{ paddingTop: 12 }}>
+        <View>
           <TransportFilters
             filters={transportFilters}
             onFilterSelect={handleFilterSelect}
           />
-          <View style={{ paddingVertical: 16 }}>
+          <View style={{ paddingVertical: normalize(16) }}>
             <Text
               style={{
                 marginBottom: 12,
-                fontWeight: 300,
+                fontWeight: "300",
                 paddingHorizontal: 20,
+                fontSize: normalize(14), // Added normalize
               }}
             >
-              <Text style={{ fontWeight: "bold" }}>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: normalize(14), // Added normalize
+                }}
+              >
                 {getDisplayCount(selectedFilter)}
               </Text>
               {` ${

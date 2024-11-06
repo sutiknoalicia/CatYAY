@@ -1,4 +1,5 @@
 import { Image, TouchableOpacity, View, Text } from "react-native";
+import { normalize } from "@/helpers/useScaling";
 
 type TicketSortingProps = {
   isPriceSorted: boolean;
@@ -15,9 +16,9 @@ export function TicketSorting({
         style={{
           flexDirection: "row",
           backgroundColor: "#fff",
-          paddingVertical: 16,
+          paddingVertical: normalize(16),
           paddingHorizontal: 24,
-          marginBottom: 20,
+          marginBottom: normalize(20),
         }}
       >
         <View
@@ -34,6 +35,7 @@ export function TicketSorting({
             <Text
               style={{
                 color: isPriceSorted ? "#006564" : "rgba(68, 74, 84, 0.6)",
+                fontSize: normalize(14),
               }}
             >
               Price low to high
@@ -44,7 +46,10 @@ export function TicketSorting({
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <TouchableOpacity>
-            <Image source={require("@/assets/images/filter-fill.png")} />
+            <Image
+              source={require("@/assets/images/filter-fill.png")}
+              style={{ width: normalize(24), height: normalize(24) }}
+            />
           </TouchableOpacity>
         </View>
       </View>

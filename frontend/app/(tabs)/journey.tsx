@@ -1,8 +1,16 @@
 import { FontFamilies } from "@/helpers/FontFamiles";
+import { normalize } from "@/helpers/useScaling";
 import { TicketCard } from "@/views/ticketing/TicketCard";
 import { TransitRoute } from "@/views/ticketing/TransitRoute";
 import WeatherCard from "@/views/ticketing/WeatherCard";
-import { ScrollView, Text, View } from "react-native";
+import { router } from "expo-router";
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function JourneyScreen() {
   const selectedTickets = [
@@ -17,7 +25,7 @@ export default function JourneyScreen() {
       carbonEmissions: 8,
       class: "Economy",
       currency: "IDR",
-      price: 260000.0,
+      price: 8600000.0,
       onViewDetails: () => console.log("Flight details viewed"),
     },
     {
@@ -31,7 +39,7 @@ export default function JourneyScreen() {
       carbonEmissions: 8,
       class: "Economy",
       currency: "IDR",
-      price: 360000000.0,
+      price: 26000000.0,
       onViewDetails: () => console.log("Flight details viewed"),
     },
   ];
@@ -52,7 +60,6 @@ export default function JourneyScreen() {
       }, [] as string[])
     )
   ).map((location) => {
-    // This is mock weather data - in a real app, you'd fetch this from an API
     const mockWeatherData = {
       CGK: { temperature: 27, condition: "sunny" as const },
       HKG: { temperature: 23, condition: "rainy" as const },
@@ -66,51 +73,79 @@ export default function JourneyScreen() {
   });
 
   return (
-    <ScrollView style={{ backgroundColor: "#F8F7F7" }}>
-      <View style={{ marginHorizontal: 20 }}>
-        <Text
-          style={{
-            fontSize: 24,
-            fontFamily: FontFamilies.GTWalsheimRegular,
-            marginTop: 124,
-            color: "#303436",
-          }}
-        >
-          View your Journey
-        </Text>
-        <TransitRoute transits={transits} />
-        {selectedTickets.map((ticket, index) => (
-          <TicketCard
-            key={index}
-            {...ticket}
-            variant="journey"
-            style={{ marginBottom: 16 }}
-          />
-        ))}
-        <Text
-          style={{
-            fontSize: 24,
-            fontFamily: FontFamilies.GTWalsheimRegular,
-            marginTop: 16,
-            color: "#303436",
-          }}
-        >
-          Weather Updates
-        </Text>
-        <Text
-          style={{
-            fontSize: 20,
-            fontFamily: FontFamilies.GTWalsheimMedium,
-            marginVertical: 8,
-            color: "#B0B2B3",
-          }}
-        >
-          01 Nov
-        </Text>
-        <View>
-          <WeatherCard destinations={destinations} />
+    <SafeAreaView style={{ backgroundColor: "#F8F7F7", flex: 1 }}>
+      <ScrollView style={{ paddingTop: 16 }}>
+        <View style={{ marginHorizontal: 20, marginVertical: normalize(32) }}>
+          <Text
+            style={{
+              fontSize: normalize(24),
+              color: "rgba(68, 74, 84, 0.74)",
+            }}
+          >
+            View your journey
+          </Text>
+          <TransitRoute transits={transits} />
+          {selectedTickets.map((ticket, index) => (
+            <TicketCard
+              key={index}
+              {...ticket}
+              variant="journey"
+              style={{ marginBottom: normalize(16) }}
+            />
+          ))}
+          <Text
+            style={{
+              fontSize: normalize(24),
+              color: "rgba(68, 74, 84, 0.74)",
+              marginTop: normalize(16),
+            }}
+          >
+            Weather updates
+          </Text>
+          <Text
+            style={{
+              fontSize: normalize(20),
+              marginVertical: normalize(8),
+              color: "#B0B2B3",
+            }}
+          >
+            01 Nov
+          </Text>
+          <View style={{ marginBottom: normalize(16) }}>
+            <WeatherCard destinations={destinations} />
+          </View>
         </View>
+      </ScrollView>
+      <View
+        style={{
+          paddingHorizontal: 20,
+          paddingTop: 16,
+          borderTopWidth: 1,
+          borderTopColor: "#E5E5E5",
+          backgroundColor: "#fff",
+          paddingBottom: 32,
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#006564",
+            paddingVertical: 16,
+            borderRadius: 4,
+            alignItems: "center",
+          }}
+          onPress={() => router.push("../(ticket)/checkout")}
+        >
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: normalize(16),
+              fontWeight: "500",
+            }}
+          >
+            Checkout
+          </Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }

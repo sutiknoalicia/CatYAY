@@ -6,6 +6,8 @@ import {
 import { Stack } from "expo-router";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { normalize } from "@/helpers/useScaling";
+import BackButton from "@/components/navigation/BackButton";
 
 export default function TicketLayout() {
   const colorScheme = useColorScheme();
@@ -13,16 +15,17 @@ export default function TicketLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="checkout"
           options={{
             title: "Summary and payment",
             headerTintColor: "#444A54",
             headerTitleStyle: {
-              fontSize: 20,
+              fontSize: normalize(16),
             },
+            headerLeft: () => <BackButton />,
           }}
-        /> */}
+        />
         <Stack.Screen
           name="success"
           options={{
