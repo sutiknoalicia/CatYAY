@@ -1,4 +1,5 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { FontFamilies } from "@/helpers/FontFamiles";
 
 type TicketCardProps = {
   transportType: "plane" | "ferry" | "train";
@@ -44,134 +45,142 @@ export function TicketCard({
     }
   };
   return (
-    <View style={{ backgroundColor: "#fff", flex: 1 }}>
+    <View
+      style={{
+        flexDirection: "row",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 20,
+      }}
+    >
       <View
         style={{
-          flexDirection: "row",
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 0.1,
-          shadowRadius: 20,
+          flex: 7,
+          backgroundColor: "#fff",
+          borderTopLeftRadius: 8,
+          borderBottomLeftRadius: 8,
+          paddingVertical: 8,
+          paddingHorizontal: 20,
         }}
       >
-        <View
-          style={{
-            flex: 7,
-            backgroundColor: "#fff",
-            borderTopLeftRadius: 8,
-            borderBottomLeftRadius: 8,
-            paddingVertical: 8,
-            paddingHorizontal: 20,
-          }}
-        >
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text
-              style={{
-                color: "rgba(68, 74, 84, 0.8)",
-                fontSize: 12,
-                alignItems: "flex-start",
-              }}
-            >
-              {identifier}
-            </Text>
-            <Text
-              style={{
-                color: "rgba(68, 74, 84, 0.8)",
-                fontSize: 12,
-                alignItems: "flex-end",
-              }}
-            >
-              {duration}
-            </Text>
-          </View>
-          <View
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginVertical: 20,
+              color: "rgba(68, 74, 84, 0.8)",
+              fontSize: 12,
+              alignItems: "flex-start",
             }}
           >
-            <View>
-              <Text style={{ fontSize: 20 }}>{departureTime}</Text>
-              <Text style={{ fontSize: 20, color: "#006564" }}>
-                {departureLocation}
-              </Text>
-            </View>
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                flex: 1,
-              }}
-            >
-              <Image source={getJourneyImage(transportType)} />
-            </View>
-            <View style={{ alignItems: "flex-end" }}>
-              <Text style={{ fontSize: 20 }}>{arrivalTime}</Text>
-              <Text style={{ fontSize: 20, color: "#006564" }}>
-                {arrivalLocation}
-              </Text>
-            </View>
-          </View>
-          <View>
-            <Text style={{ color: "#5E967E", fontSize: 12 }}>
-              Carbon emissions: {carbonEmissions}kg C
-              <Text>
-                O<Text style={{ fontSize: 10, lineHeight: 10 }}>2</Text>
-              </Text>
-            </Text>
-            <TouchableOpacity
-              style={{ flexDirection: "row", gap: 4 }}
-              onPress={onViewDetails}
-            >
-              <Text style={{ color: "#116F9A", fontSize: 12 }}>
-                View Details
-              </Text>
-              <Image
-                source={require("@/assets/images/chevron-up.png")}
-                style={{ justifyContent: "center" }}
-              />
-            </TouchableOpacity>
-          </View>
+            {identifier}
+          </Text>
+          <Text
+            style={{
+              color: "rgba(68, 74, 84, 0.8)",
+              fontSize: 12,
+              alignItems: "flex-end",
+            }}
+          >
+            {duration}
+          </Text>
         </View>
         <View
           style={{
-            flex: 3,
-            backgroundColor: "#006564",
-            borderTopRightRadius: 8,
-            borderBottomRightRadius: 8,
-            paddingVertical: 16,
-            paddingHorizontal: 8,
+            flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
+            marginVertical: 20,
           }}
         >
-          <Text style={{ color: "#E6E7E8", fontSize: 10 }}>
-            {transportClass}
-          </Text>
-          <Text style={{ color: "#E6E7E8", fontSize: 12 }}>From</Text>
-          <Text style={{ color: "#fff", fontSize: 14 }}>{currency}</Text>
-          <Text style={{ color: "#fff", fontSize: 16 }}>
-            +{price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </Text>
-          <TouchableOpacity
+          <View>
+            <Text style={{ fontSize: 20 }}>{departureTime}</Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "#006564",
+                fontFamily: FontFamilies.GTWalsheimBold,
+              }}
+            >
+              {departureLocation}
+            </Text>
+          </View>
+          <View
             style={{
-              borderRadius: 4,
-              borderWidth: 0.75,
-              borderColor: "#fff",
-              paddingHorizontal: 16,
-              paddingVertical: 8,
-              width: "100%",
               justifyContent: "center",
               alignItems: "center",
+              flex: 1,
             }}
-            onPress={onSelect}
           >
-            <Text style={{ fontSize: 12, color: "#fff" }}>Select</Text>
+            <Image source={getJourneyImage(transportType)} />
+          </View>
+          <View style={{ alignItems: "flex-end" }}>
+            <Text style={{ fontSize: 20 }}>{arrivalTime}</Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "#006564",
+                fontFamily: FontFamilies.GTWalsheimBold,
+              }}
+            >
+              {arrivalLocation}
+            </Text>
+          </View>
+        </View>
+        <View>
+          <Text style={{ color: "#5E967E", fontSize: 12 }}>
+            Carbon emissions: {carbonEmissions}kg C
+            <Text>
+              O<Text style={{ fontSize: 10, lineHeight: 10 }}>2</Text>
+            </Text>
+          </Text>
+          <TouchableOpacity
+            style={{ flexDirection: "row", gap: 4 }}
+            onPress={onViewDetails}
+          >
+            <Text
+              style={{ color: "#116F9A", fontSize: 12, fontWeight: "bold" }}
+            >
+              View Details
+            </Text>
+            <Image
+              source={require("@/assets/images/chevron-up.png")}
+              style={{ justifyContent: "center" }}
+            />
           </TouchableOpacity>
         </View>
+      </View>
+      <View
+        style={{
+          flex: 3,
+          backgroundColor: "#006564",
+          borderTopRightRadius: 8,
+          borderBottomRightRadius: 8,
+          paddingVertical: 16,
+          paddingHorizontal: 8,
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ color: "#E6E7E8", fontSize: 10 }}>{transportClass}</Text>
+        <Text style={{ color: "#E6E7E8", fontSize: 12 }}>From</Text>
+        <Text style={{ color: "#fff", fontSize: 14 }}>{currency}</Text>
+        <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold" }}>
+          +{price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+        </Text>
+        <TouchableOpacity
+          style={{
+            borderRadius: 4,
+            borderWidth: 0.75,
+            borderColor: "#fff",
+            paddingHorizontal: 16,
+            paddingVertical: 8,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={onSelect}
+        >
+          <Text style={{ fontSize: 12, color: "#fff" }}>Select</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
