@@ -39,12 +39,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="journey"
-        options={{
-          title: "Journey",
-        }}
-      />
-      <Tabs.Screen
         name="navigation"
         options={{
           title: "navigation",
