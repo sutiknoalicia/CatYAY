@@ -7,6 +7,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { FontFamilies } from "@/helpers/FontFamiles";
+import { normalize } from "@/helpers/useScaling";
 
 type TicketCardProps = {
   transportType: "plane" | "ferry" | "train";
@@ -73,14 +74,14 @@ export function TicketCard({
           borderTopLeftRadius: 8,
           borderBottomLeftRadius: 8,
           paddingVertical: 8,
-          paddingHorizontal: 20,
+          paddingHorizontal: normalize(20),
         }}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text
             style={{
               color: "rgba(68, 74, 84, 0.8)",
-              fontSize: 12,
+              fontSize: normalize(12),
               alignItems: "flex-start",
             }}
           >
@@ -89,7 +90,7 @@ export function TicketCard({
           <Text
             style={{
               color: "rgba(68, 74, 84, 0.8)",
-              fontSize: 12,
+              fontSize: normalize(12),
               alignItems: "flex-end",
             }}
           >
@@ -100,7 +101,7 @@ export function TicketCard({
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            marginVertical: 20,
+            marginVertical: normalize(20),
           }}
         >
           <View>
@@ -109,7 +110,7 @@ export function TicketCard({
             </Text>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: normalize(20),
                 color: "#006564",
                 fontFamily: FontFamilies.GTWalsheimBold,
               }}
@@ -130,7 +131,7 @@ export function TicketCard({
             <Text style={{ fontSize: 20, marginBottom: 4 }}>{arrivalTime}</Text>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: normalize(20),
                 color: "#006564",
                 fontFamily: FontFamilies.GTWalsheimBold,
               }}
@@ -140,10 +141,10 @@ export function TicketCard({
           </View>
         </View>
         <View>
-          <Text style={{ color: "#5E967E", fontSize: 12 }}>
+          <Text style={{ color: "#5E967E", fontSize: normalize(12) }}>
             Carbon emissions: {carbonEmissions}kg C
             <Text>
-              O<Text style={{ fontSize: 10, lineHeight: 10 }}>2</Text>
+              O<Text style={{ fontSize: normalize(10), lineHeight: normalize(10) }}>2</Text>
             </Text>
           </Text>
           <TouchableOpacity
@@ -151,7 +152,7 @@ export function TicketCard({
             onPress={onViewDetails}
           >
             <Text
-              style={{ color: "#116F9A", fontSize: 12, fontWeight: "bold" }}
+              style={{ color: "#116F9A", fontSize: normalize(12), fontWeight: "bold" }}
             >
               View Details
             </Text>
@@ -168,12 +169,13 @@ export function TicketCard({
           backgroundColor: "#006564",
           borderTopRightRadius: 8,
           borderBottomRightRadius: 8,
-          paddingVertical: 16,
-          paddingHorizontal: 8,
+          paddingVertical: normalize(16),
+          paddingHorizontal: normalize(8),
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
+
         <Text style={{ color: "#E6E7E8", fontSize: 10 }}>{transportClass}</Text>
         <Text style={{ color: "#E6E7E8", fontSize: 12 }}>From</Text>
         <Text style={{ color: "#fff", fontSize: 14 }}>{currency}</Text>
@@ -203,7 +205,7 @@ export function TicketCard({
           }}
           onPress={onSelect}
         >
-          <Text style={{ fontSize: 12, color: "#fff" }}>Select</Text>
+          <Text style={{ fontSize: normalize(12), color: "#fff" }}>Select</Text>
         </TouchableOpacity>
       </View>
     </View>

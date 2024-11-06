@@ -95,6 +95,17 @@ export default function TicketScreen() {
     return ticketCounts[transportType] || 0;
   };
 
+  const handleFilterSelect = (filterId: string) => {
+    setSelectedFilter(filterId);
+  };
+
+  const filteredTickets = allTickets.filter((ticket) => {
+    if (selectedFilter === "all") {
+      return true;
+    }
+    return ticket.transportType === filterToTransportType[selectedFilter];
+  });
+
   return (
     <SafeAreaView style={{ backgroundColor: "#F8F7F7", flex: 1 }}>
       <ScrollView style={{ paddingTop: 16 }}>
@@ -113,6 +124,7 @@ export default function TicketScreen() {
         >
           Price displayed is the fare per adult including taxes/fees/charges.
         </Text>
+      <View style={{ paddingTop: 12 }}>
         <TransportFilters
           filters={transportFilters}
           onFilterSelect={handleFilterSelect}
