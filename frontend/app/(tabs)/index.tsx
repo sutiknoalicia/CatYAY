@@ -1,10 +1,23 @@
-import { Image, ScrollView, View, Text } from 'react-native';
+import { Image, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import Feather from '@expo/vector-icons/Feather';
 import { FontFamilies } from '@/helpers/FontFamiles';
 import { normalize } from '@/helpers/useScaling';
+import Button from '@/components/button';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { useWindowDimensions } from 'react-native';
+import PromoDestinationCard from '@/components/PromoDestinationCard';
 
 export default function HomeScreen() {
+  const {height: screenHeight} = useWindowDimensions();
+  function handleMenuPress(): void {
+    console.log("notifications pressed")
+  }
+
+  function handleNotificationPress(): void {
+    console.log("menu pressed")
+  }
+
   return (
     <>
       <View
@@ -32,8 +45,16 @@ export default function HomeScreen() {
             gap: normalize(24),
           }}
         >
-          <SimpleLineIcons name="bell" size={normalize(24)} color="black" />
-          <Feather name="menu" size={normalize(24)} color="black" />
+          <TouchableOpacity
+            onPress={handleNotificationPress}
+          >
+            <SimpleLineIcons name="bell" size={normalize(24)} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleMenuPress}
+          >
+            <Feather name="menu" size={normalize(24)} color="black" />
+          </TouchableOpacity>
         </View>
       </View>
       <ScrollView
@@ -62,7 +83,6 @@ export default function HomeScreen() {
           <View
             style={{
               flexDirection: "row",
-              // justifyContent: "space-between",
               gap: 4,
             }}
           >
@@ -112,6 +132,178 @@ export default function HomeScreen() {
               532
             </Text>
           </View>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            height: normalize(204),
+          }}
+        >
+          <View
+            style={{
+              width: "100%",
+              height: normalize(142),
+            }}
+          >
+            <Image
+              source={require("../../assets/images/cathay-wing-tip.jpg")}
+              style={{
+                width: "100%",
+                height: "100%",
+                aspectRatio: 550 / 170,
+              }}
+            />
+            <View
+              style={{
+                position: "absolute",
+                top: 76,
+                flexDirection: "row",
+                marginBottom: 8,
+                marginHorizontal: normalize(20),
+                gap: 16,
+              }}
+            >
+              <Button
+                title="Book a trip"
+                theme="light"
+                containerStyles={{
+                  flex: 1,
+                  borderRadius: 8,
+                  borderColor: "rgba(0, 0, 0, 0.08)",
+                  borderSize: 1,
+                  shadowColor: "rgba(0, 0, 0, 0.05)",
+                  shadowOffset: { width: 0, height: 3 },
+                  shadowOpacity: 1,
+                  shadowRadius: 4,
+                  elevation: 8,
+                  height: screenHeight * 0.1,
+                  padding: 12,
+                }}
+                onPress={() => console.log("Booking pressed")}
+              >
+                <View
+                  style={{
+                    flexDirection: "column",
+                    alignSelf: "center",
+                    alignItems: "center",
+                    gap: normalize(8),
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <Ionicons name="airplane-sharp" size={24} color="#006564" />
+                  <Text
+                    style={{
+                      fontFamily: FontFamilies.GTWalsheimRegular,
+                      fontSize: normalize(16),
+                      lineHeight: normalize(16),
+                      maxWidth: "100%",
+                    }}
+                  >
+                    Book a trip
+                  </Text>
+                </View>
+              </Button>
+              <Button
+                title="Manage Booking"
+                theme="light"
+                containerStyles={{
+                  flex: 1,
+                  borderRadius: 8,
+                  borderColor: "rgba(0, 0, 0, 0.08)",
+                  borderSize: 1,
+                  shadowColor: "rgba(0, 0, 0, 0.05)",
+                  shadowOffset: { width: 0, height: 3 },
+                  shadowOpacity: 1,
+                  shadowRadius: 4,
+                  elevation: 8,
+                  height: screenHeight * 0.1,
+                  padding: 12,
+                }}
+                onPress={() => console.log("Manage Booking Pressed")}
+              >
+                <View
+                  style={{
+                    flexDirection: "column",
+                    alignSelf: "center",
+                    alignItems: "center",
+                    gap: normalize(8),
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <MaterialIcons name="format-list-bulleted-add" size={24} color="#006564" />
+                  <Text
+                    style={{
+                      fontFamily: FontFamilies.GTWalsheimRegular,
+                      fontSize: normalize(16),
+                      lineHeight: normalize(16),
+                      maxWidth: "100%",
+                    }}
+                  >
+                    Manage booking
+                  </Text>
+                </View>
+              </Button>
+            </View>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            height: normalize(460),
+            backgroundColor: "#F0F4F1",
+          }}
+        >
+          <View 
+            style={{
+              justifyContent: "space-between",
+              paddingVertical: normalize(32),
+              paddingHorizontal: normalize(20),
+              gap: normalize(12)
+            }}
+          >
+            <Text
+              style={{
+                fontSize: normalize(22),
+                fontFamily: FontFamilies.GTWalsheimRegular,
+              }}
+            >Our latest offers
+            </Text>
+            <View 
+              style={{
+                flexDirection: "row",
+                gap: normalize(4)
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: normalize(16),
+                  fontFamily: FontFamilies.GTWalsheimRegular,
+                }}
+              >From:  
+              </Text>
+              <Text
+                style={{
+                  fontSize: normalize(16),
+                  fontFamily: FontFamilies.GTWalsheimBold,
+                  color: "#006564"
+                }}
+              >Hong Kong 
+              </Text>
+            </View>
+          </View>
+          <PromoDestinationCard
+            data={
+              [
+                {destination: "Taipei", class: "Economy", price: "1,659", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
+                {destination: "Kaohsiung", class: "Economy", price: "1,559", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
+                {destination: "Singapore", class: "Economy", price: "2,323", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
+                {destination: "Seoul", class: "Economy", price: "2,128", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
+                {destination: "Christchurch", class: "Economy", price: "8,771", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
+                {destination: "Tokyo", class: "Economy", price: "2,920", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
+                {destination: "Osaka", class: "Economy", price: "2,697", imageUrl: require("../../assets/images/singapore-picture.jpeg")}, 
+              ]
+            }
+          />
         </View>
       </ScrollView>
     </>
