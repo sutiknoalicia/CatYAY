@@ -21,7 +21,15 @@ frontend/expo-env.d.ts
 .DS_Store
 
 # Backend
-backend/__pycache__/
-backend/*.pyc
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/*.py[cod]
+**/*$py.class
 backend/.env
 backend/venv/
+.pytest_cache/
+.coverage
+htmlcov/
