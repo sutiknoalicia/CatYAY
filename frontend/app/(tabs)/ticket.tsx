@@ -5,6 +5,7 @@ import { useState } from "react";
 import { TicketSorting } from "@/views/ticketing/TicketSorting";
 import { TicketHeader } from "@/views/ticketing/TicketHeader";
 import { normalize } from "@/helpers/useScaling";
+import { router } from "expo-router";
 
 export default function TicketScreen() {
   const [selectedFilter, setSelectedFilter] = useState("all");
@@ -23,7 +24,7 @@ export default function TicketScreen() {
       class: "Economy",
       currency: "IDR",
       price: 260000.0,
-      onSelect: () => console.log("Flight selected"),
+      onSelect: () => router.push("/(ticket)/journey"),
       onViewDetails: () => console.log("Flight details viewed"),
     },
     {
@@ -38,7 +39,7 @@ export default function TicketScreen() {
       class: "Economy",
       currency: "IDR",
       price: 190000.0,
-      onSelect: () => console.log("Flight selected"),
+      onSelect: () => router.push("/(ticket)/journey"),
       onViewDetails: () => console.log("Flight details viewed"),
     },
   ];

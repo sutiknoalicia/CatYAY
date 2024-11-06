@@ -11,10 +11,10 @@ import { normalize } from "@/helpers/useScaling";
 
 export default function CheckoutScreen() {
   return (
-    <SafeAreaView style={{ backgroundColor: "#F8F7F7", flex: 1 }}>
-      <ScrollView>
-        <View style={{ backgroundColor: "#fff", marginBottom: 16 }}>
-          <View style={{ marginHorizontal: 20, marginTop: 24 }}>
+    <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
+      <ScrollView style={{ backgroundColor: "#F8F7F7" }}>
+        <View style={{ backgroundColor: "#fff", marginBottom: normalize(16) }}>
+          <View style={{ marginHorizontal: 20, marginTop: normalize(20) }}>
             <Text
               style={{
                 fontSize: normalize(20),
@@ -30,7 +30,7 @@ export default function CheckoutScreen() {
               style={{
                 marginHorizontal: 20,
                 color: "#006564",
-                paddingVertical: 8,
+                paddingVertical: normalize(8),
                 fontSize: normalize(16),
               }}
             >
@@ -40,10 +40,14 @@ export default function CheckoutScreen() {
               </Text>
             </Text>
           </View>
-          <View style={{ marginHorizontal: 20, marginVertical: 16 }}>
+          <View style={{ marginHorizontal: 20, marginVertical: normalize(16) }}>
             <Text style={{ color: "#006564" }}>Economy | Class N</Text>
             <View
-              style={{ marginTop: 8, marginBottom: 4, flexDirection: "row" }}
+              style={{
+                marginTop: normalize(8),
+                marginBottom: normalize(4),
+                flexDirection: "row",
+              }}
             >
               <View
                 style={{
@@ -120,13 +124,13 @@ export default function CheckoutScreen() {
             </View>
           </View>
         </View>
-        <View style={{ backgroundColor: "#fff", marginBottom: 16 }}>
-          <View style={{ marginTop: 24, marginHorizontal: 20 }}>
+        <View style={{ backgroundColor: "#fff", marginBottom: normalize(16) }}>
+          <View style={{ marginTop: normalize(20), marginHorizontal: 20 }}>
             <Text
               style={{
                 fontSize: normalize(20),
                 color: "rgba(68, 74, 84, 0.74)",
-                marginBottom: 8,
+                marginBottom: normalize(8),
               }}
             >
               Returning flight
@@ -137,7 +141,7 @@ export default function CheckoutScreen() {
               style={{
                 marginHorizontal: 20,
                 color: "#006564",
-                paddingVertical: 8,
+                paddingVertical: normalize(8),
                 fontSize: normalize(16),
               }}
             >
@@ -147,10 +151,14 @@ export default function CheckoutScreen() {
               </Text>
             </Text>
           </View>
-          <View style={{ marginHorizontal: 20, marginVertical: 16 }}>
+          <View style={{ marginHorizontal: 20, marginVertical: normalize(16) }}>
             <Text style={{ color: "#006564" }}>Economy | Class N</Text>
             <View
-              style={{ marginTop: 8, marginBottom: 4, flexDirection: "row" }}
+              style={{
+                marginTop: normalize(8),
+                marginBottom: normalize(4),
+                flexDirection: "row",
+              }}
             >
               <View
                 style={{
@@ -238,12 +246,12 @@ export default function CheckoutScreen() {
           </View>
         </View>
         {/* Passengers */}
-        <View style={{ marginBottom: 16 }}>
+        <View style={{ marginBottom: normalize(16) }}>
           <Text
             style={{
               fontSize: normalize(20),
               color: "rgba(68, 74, 84, 0.74)",
-              marginBottom: 16,
+              marginBottom: normalize(16),
               marginHorizontal: 20,
             }}
           >
@@ -253,7 +261,7 @@ export default function CheckoutScreen() {
             style={{
               flexDirection: "row",
               paddingHorizontal: 20,
-              paddingVertical: 16,
+              paddingVertical: normalize(16),
               backgroundColor: "#fff",
               gap: 8,
               alignItems: "center",
@@ -275,7 +283,7 @@ export default function CheckoutScreen() {
             style={{
               fontSize: normalize(20),
               color: "rgba(68, 74, 84, 0.74)",
-              marginBottom: 16,
+              marginBottom: normalize(16),
               marginHorizontal: 20,
             }}
           >
@@ -284,7 +292,7 @@ export default function CheckoutScreen() {
           <View
             style={{
               paddingHorizontal: 20,
-              paddingVertical: 24,
+              paddingVertical: normalize(24),
               backgroundColor: "#fff",
             }}
           >
@@ -293,7 +301,7 @@ export default function CheckoutScreen() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginBottom: 16,
+                marginBottom: normalize(16),
                 alignItems: "center",
               }}
             >
@@ -310,7 +318,7 @@ export default function CheckoutScreen() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginBottom: 8,
+                marginBottom: normalize(8),
               }}
             >
               <Text style={{ color: "#444A54", fontSize: normalize(16) }}>
@@ -326,7 +334,7 @@ export default function CheckoutScreen() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginBottom: 16,
+                marginBottom: normalize(16),
               }}
             >
               <Text style={{ color: "#444A54", fontSize: normalize(16) }}>
@@ -356,7 +364,7 @@ export default function CheckoutScreen() {
             justifyContent: "space-between",
             alignItems: "center",
             paddingHorizontal: 20,
-            paddingVertical: 16,
+            paddingVertical: normalize(16),
             borderTopWidth: 1,
             borderTopColor: "#E5E5E5",
           }}

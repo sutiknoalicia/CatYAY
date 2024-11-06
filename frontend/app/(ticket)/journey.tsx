@@ -73,9 +73,11 @@ export default function JourneyScreen() {
   });
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#F8F7F7", flex: 1 }}>
-      <ScrollView style={{ paddingTop: 16 }}>
-        <View style={{ marginHorizontal: 20, marginVertical: normalize(32) }}>
+    <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
+      <ScrollView
+        style={{ paddingTop: normalize(24), backgroundColor: "#F8F7F7" }}
+      >
+        <View style={{ marginHorizontal: 20, marginBottom: normalize(32) }}>
           <Text
             style={{
               fontSize: normalize(24),
@@ -116,8 +118,10 @@ export default function JourneyScreen() {
           </View>
         </View>
       </ScrollView>
+
       <View
         style={{
+          width: "100%",
           paddingHorizontal: 20,
           paddingTop: 16,
           borderTopWidth: 1,
