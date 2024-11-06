@@ -1,70 +1,119 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Image, ScrollView, View, Text } from 'react-native';
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
+import Feather from '@expo/vector-icons/Feather';
+import { FontFamilies } from '@/helpers/FontFamiles';
+import { normalize } from '@/helpers/useScaling';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <>
+      <View
+        style={{
+          paddingTop: normalize(64),
+          paddingHorizontal: normalize(20),
+          paddingBottom: normalize(16),
+          backgroundColor: "#F8F7F7",
+        }}
+      >
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('../../assets/images/cathay-logo.png')}
+          style={{
+            position: "absolute",
+            top: normalize(64),
+            alignSelf: "center",
+          }}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <View
+          style={{
+            paddingTop: normalize(8),
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignSelf: "flex-end",
+            gap: normalize(24),
+          }}
+        >
+          <SimpleLineIcons name="bell" size={normalize(24)} color="black" />
+          <Feather name="menu" size={normalize(24)} color="black" />
+        </View>
+      </View>
+      <ScrollView
+        style={{
+          backgroundColor: "#F8F7F7",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "column",
+            justifyContent: "space-between",
+            paddingTop: normalize(16),
+            paddingHorizontal: normalize(20),
+            paddingBottom: normalize(24),
+            gap: normalize(8),
+          }}
+        >
+          <Text
+            style={{
+              fontSize: normalize(24),
+              lineHeight: normalize(22),
+              fontFamily: FontFamilies.GTWalsheimRegular,
+            }}
+          >Hello Mr Howard!
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              // justifyContent: "space-between",
+              gap: 4,
+            }}
+          >
+            <Image
+              source={require("../../assets/images/asia-miles.png")}
+              style={{
+                width: normalize(13.33),
+                height: normalize(16),
+                alignSelf: "center",
+              }}
+            />
+            <Text
+              style={{
+                fontFamily: FontFamilies.GTWalsheimBold,
+                fontSize: normalize(16),
+                lineHeight: normalize(22),
+              }}
+            >
+              156,188
+            </Text>
+            <Text
+              style={{
+                fontFamily: FontFamilies.GTWalsheimUltraLight,
+                fontSize: normalize(16),
+                color: "#8E96A4"
+              }}
+            >
+              |
+            </Text>
+            <Text
+              style={{
+                fontFamily: FontFamilies.GTWalsheimRegular,
+                fontSize: normalize(14),
+                lineHeight: normalize(22),
+                color: "#444A54"
+              }}
+            >
+              Status points
+            </Text>
+            <Text
+              style={{
+                fontFamily: FontFamilies.GTWalsheimBold,
+                fontSize: normalize(16),
+                lineHeight: normalize(22),
+              }}
+            >
+              532
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
