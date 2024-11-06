@@ -26,7 +26,7 @@ export default function HomeScreen() {
   }
 
   function handleVeraPress() : void {
-    setVeraOpen(true);
+    router.push("/(vera)/ChatBot");
   }
 
   function handleVeraBot(): void {
