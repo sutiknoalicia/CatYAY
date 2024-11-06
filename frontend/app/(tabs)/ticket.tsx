@@ -156,6 +156,7 @@ export default function TicketScreen() {
               <TicketCard
                 key={index}
                 {...ticket}
+                variant="ticket"
                 style={{ marginHorizontal: 20, marginBottom: 16 }}
               />
             ))}
