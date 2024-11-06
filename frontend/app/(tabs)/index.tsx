@@ -7,15 +7,31 @@ import Button from '@/components/button';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { useWindowDimensions } from 'react-native';
 import PromoDestinationCard from '@/components/PromoDestinationCard';
+import { useState } from 'react';
+import VeraModal from '@/components/VeraModal';
+import VeraSvg from '@/assets/svgs/vera-svg';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
+
+  const [veraOpen, setVeraOpen] = useState(true);
   const {height: screenHeight} = useWindowDimensions();
+
   function handleMenuPress(): void {
     console.log("notifications pressed")
   }
 
   function handleNotificationPress(): void {
     console.log("menu pressed")
+  }
+
+  function handleVeraPress() : void {
+    setVeraOpen(true);
+  }
+
+  function handleVeraBot(): void {
+    setVeraOpen(false);
+    router.push("/(vera)/ChatBot")
   }
 
   return (
@@ -306,6 +322,33 @@ export default function HomeScreen() {
           />
         </View>
       </ScrollView>
+      <View
+        style={{
+          position: "absolute",
+          right: normalize(32),
+          bottom: normalize(32),
+          shadowColor: "#000000",
+          shadowOffset: { width: 0, height: 5 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+        }}
+      >
+        <TouchableOpacity
+          onPress={handleVeraPress}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+            }}
+          >
+            <VeraSvg/>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <VeraModal first_name={"Howard"} open={veraOpen} setOpen={setVeraOpen} onPress={handleVeraBot} />
     </>
   );
 }
