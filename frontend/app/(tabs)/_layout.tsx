@@ -4,9 +4,11 @@ import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useFonts } from '@/hooks/useFonts';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [fontLoaded] = useFonts();
 
   return (
     <Tabs
