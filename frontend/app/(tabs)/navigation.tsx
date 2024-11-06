@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -469,23 +469,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   stepContainer: {
-    flex: 1,
+    height: "70%",
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
+    marginVertical: normalize(20),
   },
   header: {
-    marginBottom: 24,
+    marginBottom: normalize(24),
     alignItems: "center",
   },
   headerIcon: {
     color: CATHAY_COLORS.primary,
     alignSelf: "center",
-    marginBottom: 16,
+    marginBottom: normalize(16),
   },
   // Route Selector Styles
   routeSelectorContainer: {
-    marginBottom: 20,
+    marginBottom: normalize(20),
     zIndex: 1000,
     position: "relative",
   },
@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 16,
+    padding: normalize(16),
     backgroundColor: CATHAY_COLORS.white,
     borderRadius: 8,
     borderWidth: 1,
@@ -516,20 +516,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    padding: 8,
+    padding: normalize(8),
     zIndex: 1001,
   },
   routeOption: {
-    padding: 16,
+    padding: normalize(16),
     borderBottomWidth: 1,
     borderBottomColor: CATHAY_COLORS.border,
   },
   closeButton: {
-    padding: 16,
+    padding: normalize(16),
     alignItems: "center",
-    marginTop: 8,
+    marginTop: normalize(8),
     backgroundColor: CATHAY_COLORS.lightGray,
-    borderRadius: 8,
+    borderRadius: normalize(8),
   },
   // Step Card Styles
   stepCard: {
@@ -554,13 +554,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 16,
-    borderBottomWidth: 1,
+    padding: normalize(16),
     borderBottomColor: CATHAY_COLORS.border,
   },
   imageContainer: {
     width: "100%",
-    aspectRatio: 1, // Maintains a square aspect ratio
+    aspectRatio: 4/3,
     borderRadius: 16,
     overflow: "hidden",
     marginBottom: normalize(8),
@@ -574,17 +573,17 @@ const styles = StyleSheet.create({
   instruction: {
     fontFamily: FontFamilies.GTWalsheimBold,
     fontSize: normalize(18),
-    lineHeight: 24,
+    lineHeight: normalize(24),
     color: CATHAY_COLORS.darkGray,
     textAlign: "center",
-    marginBottom: 12,
+    marginBottom: normalize(12),
     fontWeight: "600",
   },
   // Progress Styles
   progressWrapper: {
     width: "100%",
-    paddingHorizontal: 24,
-    marginBottom: 20,
+    paddingHorizontal: normalize(24),
+    marginBottom: normalize(20),
   },
   progressContainer: {
     flexDirection: "row",
@@ -592,8 +591,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   progressDot: {
-    width: 12,
-    height: 12,
+    width: normalize(12),
+    height: normalize(12),
     borderRadius: 6,
     backgroundColor: CATHAY_COLORS.lightGray,
   },
@@ -617,14 +616,14 @@ const styles = StyleSheet.create({
   navigationControls: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: normalize(16),
+    paddingTop: normalize(16),
     backgroundColor: CATHAY_COLORS.white,
     borderTopWidth: 1,
     borderTopColor: CATHAY_COLORS.border,
   },
   navButton: {
-    padding: 16,
+    padding: normalize(16),
     backgroundColor: CATHAY_COLORS.primary,
     borderRadius: 8,
     minWidth: 120,
@@ -635,7 +634,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: CATHAY_COLORS.white,
-    fontSize: 16,
+    fontSize: normalize(16),
     fontWeight: "bold",
   },
   // Loading and Error States
@@ -648,17 +647,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: normalize(20),
   },
   noRouteContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: normalize(20),
   },
   retryButton: {
     marginTop: 16,
-    padding: 12,
+    padding: normalize(12),
     backgroundColor: CATHAY_COLORS.primary,
     borderRadius: 8,
   },
