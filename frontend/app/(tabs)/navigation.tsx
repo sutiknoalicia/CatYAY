@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -14,9 +14,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { normalize } from "@/helpers/useScaling";
 import { FontFamilies } from "@/helpers/FontFamiles";
 
+// Define your NavigationScreen component directly
 export default function NavigationRoute() {
   return <NavigationScreen />;
 }
+
 // Type Definitions
 interface NavigationStep {
   id: number;
@@ -28,73 +30,19 @@ interface NavigationStep {
 }
 
 type IconNames =
-  | "directions-sign"
-  | "check-in"
-  | "card-reader"
-  | "ticket"
-  | "train"
-  | "gate";
+  | "navigate-outline"
+  | "boat-outline"
+  | "card-outline"
+  | "ticket-outline"
+  | "train-outline"
+  | "enter-outline";
 
 interface NavigationScreenState {
   currentStep: number;
   totalTime: number;
   isLoading: boolean;
+  selectedRoute: Route | null;
 }
-
-// Route Data
-// Route Data
-const HKIA_TO_SKYPIER_ROUTE: NavigationStep[] = [
-  {
-    id: 1,
-    instruction: "Follow signs to Mainland/Macau Ferries",
-    imageUrl: require("@/assets/images/mainland-ferry-signs.png"),
-    icon: "navigate-outline", // Changed from 'directions-sign'
-    estimatedTime: 5,
-    details:
-      "Look for clear signage directing to Mainland/Macau Ferries, not Transfer gate",
-  },
-  {
-    id: 2,
-    instruction: "Check in at TurboJET counter",
-    imageUrl: require("@/assets/images/turbojet-counter.png"),
-    icon: "boat-outline", // Already correct
-    estimatedTime: 10,
-    details: "Located at Level 5, Transfer Area E2",
-  },
-  {
-    id: 3,
-    instruction: "Use Ferry Ticket Reader at boarding gate",
-    imageUrl: require("@/assets/images/ferry-reader.png"),
-    icon: "card-outline", // Changed from 'card-reader'
-    estimatedTime: 2,
-    details: "Alternative check-in method available at Level 5",
-  },
-  {
-    id: 4,
-    instruction: "Present SkyPier ferry ticket at APM entrance",
-    imageUrl: require("@/assets/images/apm-entrance.png"),
-    icon: "ticket-outline", // Changed to include '-outline'
-    estimatedTime: 3,
-    details: "Have your ticket ready for verification",
-  },
-  {
-    id: 5,
-    instruction: "Take APM to SkyPier",
-    imageUrl: require("@/assets/images/apm.png"),
-    icon: "train-outline", // Changed to include '-outline'
-    estimatedTime: 5,
-    details: "Automated People Mover will transport you to SkyPier",
-  },
-  {
-    id: 6,
-    instruction: "Follow signs to your boarding gate",
-    imageUrl: require("@/assets/images/boarding-gate.png"),
-    icon: "enter-outline", // Changed from 'gate'
-    estimatedTime: 5,
-    details:
-      "Clear directional signs will guide you to your specific boarding gate",
-  },
-];
 
 interface Route {
   id: string;
@@ -104,68 +52,64 @@ interface Route {
   steps: NavigationStep[];
 }
 
-// Create multiple routes
-const AVAILABLE_ROUTES: Route[] = [
-  {
-    id: "hkia-skypier",
-    name: "HKIA to SkyPier",
-    from: "HKIA",
-    to: "SkyPier",
-    steps: HKIA_TO_SKYPIER_ROUTE,
-  },
-  // Add more routes as needed
-];
-
-// Create a Route Selector Component
-interface RouteSelectorProps {
-  selectedRoute: Route | null;
-  onRouteSelect: (route: Route) => void;
-}
-
-const RouteSelector: React.FC<RouteSelectorProps> = ({
-  selectedRoute,
-  onRouteSelect,
-}) => {
-  const [showPicker, setShowPicker] = useState(false);
-
-  return (
-    <ThemedView style={styles.routeSelectorContainer}>
-      <TouchableOpacity
-        style={styles.routeSelector}
-        onPress={() => setShowPicker(true)}
-      >
-        {selectedRoute ? (
-          <ThemedText>{`${selectedRoute.from} → ${selectedRoute.to}`}</ThemedText>
-        ) : (
-          <ThemedText>Select Route</ThemedText>
-        )}
-        <Ionicons name="chevron-down" size={24} color="#4A90E2" />
-      </TouchableOpacity>
-
-      {showPicker && (
-        <ThemedView style={styles.routePickerModal}>
-          {AVAILABLE_ROUTES.map((route) => (
-            <TouchableOpacity
-              key={route.id}
-              style={styles.routeOption}
-              onPress={() => {
-                onRouteSelect(route);
-                setShowPicker(false);
-              }}
-            >
-              <ThemedText>{`${route.from} → ${route.to}`}</ThemedText>
-            </TouchableOpacity>
-          ))}
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setShowPicker(false)}
-          >
-            <ThemedText>Close</ThemedText>
-          </TouchableOpacity>
-        </ThemedView>
-      )}
-    </ThemedView>
-  );
+// Route Data
+const HKIA_TO_SKYPIER_ROUTE: Route = {
+  id: "hkia-skypier",
+  name: "HKIA to SkyPier",
+  from: "HKIA",
+  to: "SkyPier",
+  steps: [
+    {
+      id: 1,
+      instruction: "Follow signs to Mainland/Macau Ferries",
+      imageUrl: require("@/assets/images/mainland-ferry-signs.png"),
+      icon: "navigate-outline",
+      estimatedTime: 5,
+      details:
+        "Look for clear signage directing to Mainland/Macau Ferries, not Transfer gate",
+    },
+    {
+      id: 2,
+      instruction: "Check in at TurboJET counter",
+      imageUrl: require("@/assets/images/turbojet-counter.png"),
+      icon: "boat-outline",
+      estimatedTime: 10,
+      details: "Located at Level 5, Transfer Area E2",
+    },
+    {
+      id: 3,
+      instruction: "Use Ferry Ticket Reader at boarding gate",
+      imageUrl: require("@/assets/images/ferry-reader.png"),
+      icon: "card-outline",
+      estimatedTime: 2,
+      details: "Alternative check-in method available at Level 5",
+    },
+    {
+      id: 4,
+      instruction: "Present SkyPier ferry ticket at APM entrance",
+      imageUrl: require("@/assets/images/apm-entrance.png"),
+      icon: "ticket-outline",
+      estimatedTime: 3,
+      details: "Have your ticket ready for verification",
+    },
+    {
+      id: 5,
+      instruction: "Take APM to SkyPier",
+      imageUrl: require("@/assets/images/apm.png"),
+      icon: "train-outline",
+      estimatedTime: 5,
+      details: "Automated People Mover will transport you to SkyPier",
+    },
+    {
+      id: 6,
+      instruction: "Follow signs to your boarding gate",
+      imageUrl: require("@/assets/images/boarding-gate.png"),
+      icon: "enter-outline",
+      estimatedTime: 5,
+      details:
+        "Clear directional signs will guide you to your specific boarding gate",
+    },
+  ],
 };
 
 // Navigation Step Card Component
@@ -336,36 +280,28 @@ class NavigationErrorBoundary extends React.Component<
 
 // Update the NavigationScreen component
 export const NavigationScreen: React.FC = () => {
-  const [state, setState] = useState<
-    NavigationScreenState & {
-      selectedRoute: Route | null;
-    }
-  >({
+  const [state, setState] = useState<NavigationScreenState>({
     currentStep: 0,
     totalTime: 0,
     isLoading: false,
-    selectedRoute: null,
+    selectedRoute: HKIA_TO_SKYPIER_ROUTE,
   });
 
-  const handleRouteSelect = (route: Route) => {
-    setState((prev) => ({
-      ...prev,
-      selectedRoute: route,
-      currentStep: 0,
-      totalTime: route.steps.reduce((acc, step) => acc + step.estimatedTime, 0),
-    }));
-  };
+  useEffect(() => {
+    if (state.selectedRoute) {
+      const total = state.selectedRoute.steps.reduce(
+        (acc, step) => acc + step.estimatedTime,
+        0
+      );
+      setState((prev) => ({ ...prev, totalTime: total }));
+    }
+  }, [state.selectedRoute]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <NavigationErrorBoundary>
         <ThemedView style={styles.mainContainer}>
           <ScrollView style={styles.container}>
-            <RouteSelector
-              selectedRoute={state.selectedRoute}
-              onRouteSelect={handleRouteSelect}
-            />
-
             {state.selectedRoute ? (
               <>
                 <ThemedView style={styles.header}>
@@ -407,13 +343,16 @@ export const NavigationScreen: React.FC = () => {
               onPrevious={() =>
                 setState((prev) => ({
                   ...prev,
-                  currentStep: prev.currentStep - 1,
+                  currentStep: Math.max(prev.currentStep - 1, 0),
                 }))
               }
               onNext={() =>
                 setState((prev) => ({
                   ...prev,
-                  currentStep: prev.currentStep + 1,
+                  currentStep: Math.min(
+                    prev.currentStep + 1,
+                    prev.selectedRoute!.steps.length - 1
+                  ),
                 }))
               }
             />
@@ -424,6 +363,7 @@ export const NavigationScreen: React.FC = () => {
   );
 };
 
+// Define your color palette
 const CATHAY_COLORS = {
   primary: "#006564", // Cathay's signature teal/green
   secondary: "#8D1D41", // Burgundy red
@@ -435,6 +375,7 @@ const CATHAY_COLORS = {
   disabled: "#C5C5C5",
 };
 
+// Stylesheet
 const styles = StyleSheet.create({
   loaderContainer: {
     position: "absolute",
@@ -483,54 +424,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: normalize(16),
   },
-  // Route Selector Styles
-  routeSelectorContainer: {
-    marginBottom: normalize(20),
-    zIndex: 1000,
-    position: "relative",
-  },
-  routeSelector: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: normalize(16),
-    backgroundColor: CATHAY_COLORS.white,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: CATHAY_COLORS.border,
-    shadowColor: CATHAY_COLORS.darkGray,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  routePickerModal: {
-    position: "absolute",
-    top: "100%",
-    left: 0,
-    right: 0,
-    backgroundColor: CATHAY_COLORS.white,
-    borderRadius: 8,
-    shadowColor: CATHAY_COLORS.darkGray,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    padding: normalize(8),
-    zIndex: 1001,
-  },
-  routeOption: {
-    padding: normalize(16),
-    borderBottomWidth: 1,
-    borderBottomColor: CATHAY_COLORS.border,
-  },
-  closeButton: {
-    padding: normalize(16),
-    alignItems: "center",
-    marginTop: normalize(8),
-    backgroundColor: CATHAY_COLORS.lightGray,
-    borderRadius: normalize(8),
-  },
   // Step Card Styles
   stepCard: {
     width: "100%",
@@ -559,7 +452,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: "100%",
-    aspectRatio: 4/3,
+    aspectRatio: 4 / 3,
     borderRadius: 16,
     overflow: "hidden",
     marginBottom: normalize(8),
