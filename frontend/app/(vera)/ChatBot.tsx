@@ -290,6 +290,7 @@ const ChatScreen: React.FC = () => {
           style={{
             flexDirection: "row",
             padding: normalize(12),
+            paddingBottom: normalize(32),
             borderTopWidth: 1,
             borderTopColor: "#ddd",
             alignItems: "center",
