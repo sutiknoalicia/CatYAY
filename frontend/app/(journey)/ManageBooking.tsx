@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 import JourneySegment from "../(suggest)/JourneySegment";
+import { NavigationGuide } from "@/views/ticketing/NavigationGuide";
 
 export default function ManageBooking() {
   const journeySegments = [
@@ -75,20 +76,24 @@ export default function ManageBooking() {
 
   return (
       <ScrollView
-        style={{ paddingHorizontal: normalize(20), paddingTop: normalize(24), backgroundColor: "#F8F7F7" }}
+        style={{ paddingTop: normalize(24), backgroundColor: "#F8F7F7" }}
       >
         <Text
           style={{
+            marginHorizontal: normalize(20),
             fontSize: normalize(24),
             color: "black",
           }}
         >
           You've arrived in Hong Kong.
         </Text>
-        < TransitRoute transits={transits} position={"HKG"} />
+        <View style={{ paddingHorizontal: normalize(20)}}>
+          < TransitRoute transits={transits} position={"HKG"} />
+        </View>
         <View style={{
           backgroundColor: "white",
           marginBottom: 16,
+          marginHorizontal: normalize(20),
           borderRadius: 14,
           paddingHorizontal: 20,
           paddingBottom: 24,
@@ -164,6 +169,7 @@ export default function ManageBooking() {
             fontSize: normalize(24),
             color: "black",
             marginTop: normalize(16),
+            paddingHorizontal: normalize(20),
           }}
         >
           Weather updates
@@ -171,14 +177,82 @@ export default function ManageBooking() {
         <Text
           style={{
             fontSize: normalize(20),
-            marginVertical: normalize(8),
+            marginTop: normalize(8),
+            marginBottom: normalize(12),
+            paddingHorizontal: normalize(20),
             color: "#B0B2B3",
           }}
         >
           01 Nov
         </Text>
-        <View style={{ paddingBottom: normalize(16) }}>
+        <View style={{ paddingHorizontal: normalize(20), paddingBottom: normalize(16) }}>
           <WeatherCard destinations={destinations} />
+        </View>
+        <Text
+          style={{
+            fontSize: normalize(24),
+            color: "black",
+            marginTop: normalize(16),
+            marginBottom: normalize(12),
+            paddingHorizontal: normalize(20),
+          }}
+        >
+          Navigation guide
+        </Text>
+        <View style={{ paddingBottom: normalize(64) }}>
+          <NavigationGuide steps={[
+              {
+                id: 1,
+                instruction: "Follow signs to Mainland/Macau Ferries",
+                imageUrl: require("@/assets/images/mainland-ferry-signs.png"),
+                icon: "navigate-outline", // Changed from 'directions-sign'
+                estimatedTime: 5,
+                details:
+                  "Look for clear signage directing to Mainland/Macau Ferries, not Transfer gate",
+              },
+              {
+                id: 2,
+                instruction: "Check in at TurboJET counter",
+                imageUrl: require("@/assets/images/turbojet-counter.png"),
+                icon: "boat-outline", // Already correct
+                estimatedTime: 10,
+                details: "Located at Level 5, Transfer Area E2",
+              },
+              {
+                id: 3,
+                instruction: "Use Ferry Ticket Reader at boarding gate",
+                imageUrl: require("@/assets/images/ferry-reader.png"),
+                icon: "card-outline", // Changed from 'card-reader'
+                estimatedTime: 2,
+                details: "Alternative check-in method available at Level 5",
+              },
+              {
+                id: 4,
+                instruction: "Present SkyPier ferry ticket at APM entrance",
+                imageUrl: require("@/assets/images/apm-entrance.png"),
+                icon: "ticket-outline", // Changed to include '-outline'
+                estimatedTime: 3,
+                details: "Have your ticket ready for verification",
+              },
+              {
+                id: 5,
+                instruction: "Take APM to SkyPier",
+                imageUrl: require("@/assets/images/apm.png"),
+                icon: "train-outline", // Changed to include '-outline'
+                estimatedTime: 5,
+                details: "Automated People Mover will transport you to SkyPier",
+              },
+              {
+                id: 6,
+                instruction: "Follow signs to your boarding gate",
+                imageUrl: require("@/assets/images/boarding-gate.png"),
+                icon: "enter-outline", // Changed from 'gate'
+                estimatedTime: 5,
+                details:
+                  "Clear directional signs will guide you to your specific boarding gate",
+              },
+            ]} 
+          />
         </View>
       </ScrollView>
   );

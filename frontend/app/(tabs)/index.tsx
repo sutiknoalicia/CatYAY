@@ -23,9 +23,10 @@ import SuggestHeader from "../(suggest)/SuggestHeader";
 import JourneySegment from "../(suggest)/JourneySegment";
 import SmartSuggestions from "../(suggest)/SmartSuggestions";
 import { useLocalSearchParams } from "expo-router";
+import { NavigationGuide } from "@/views/ticketing/NavigationGuide";
 
 export default function HomeScreen() {
-  const { origin, destination } = useLocalSearchParams();
+  const { origin, destination, success } = useLocalSearchParams();
   const journeySegments = [
     {
       from: {
@@ -60,7 +61,7 @@ export default function HomeScreen() {
     router.push("/ticket");
   };
 
-  const [veraOpen, setVeraOpen] = useState(() => !(origin && destination));
+  const [veraOpen, setVeraOpen] = useState(() => !(origin || destination || success));
   const { height: screenHeight } = useWindowDimensions();
 
   function handleMenuPress(): void {
@@ -204,7 +205,7 @@ export default function HomeScreen() {
               justifyContent: "space-between",
               paddingTop: normalize(16),
               paddingHorizontal: normalize(20),
-              paddingBottom: normalize(24),
+              paddingBottom: normalize(16),
               gap: normalize(8),
             }}
           >
@@ -268,6 +269,133 @@ export default function HomeScreen() {
               >
                 532
               </Text>
+            </View>
+          </View>
+        )}
+        {success === "true" && (
+          <View
+            style={{
+              width: "100%",
+              height: "auto"
+            }}
+          >
+            <TouchableOpacity style={styles.journeyCard} onPress={() => router.push("/(journey)/ManageBooking")}>
+              <Text style={styles.date}>
+                Fri 01 Nov 2024 {""} | {""} CX718
+              </Text>
+              <View style={{ flexDirection: "row", marginTop: 10 }}>
+                <Text
+                  style={{
+                    fontFamily: FontFamilies.GTWalsheimBold,
+                    color: "#006564",
+                    fontSize: 16,
+                  }}
+                >
+                  Jakarta
+                </Text>
+                <Text
+                  style={{
+                    color: "black",
+                    fontSize: 16,
+                    fontFamily: FontFamilies.GTWalsheimRegular,
+                  }}
+                >
+                  {" "}
+                  to{" "}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: FontFamilies.GTWalsheimBold,
+                    color: "#006564",
+                    fontSize: 16,
+                  }}
+                >
+                  Shenzhen
+                </Text>
+              </View>
+
+              {journeySegments.map((segment, index) => (
+                <JourneySegment key={index} {...segment} />
+              ))}
+              <Text style={styles.transferTime}>
+                Transit:{" "}
+                <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>
+                  2h 5m{" "}
+                </Text>
+                <Text>at </Text>
+                <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>
+                  HKG
+                </Text>
+              </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontFamily: FontFamilies.GTWalsheimRegular,
+                fontSize: normalize(24),
+                paddingHorizontal: normalize(20),
+                paddingVertical: normalize(20)
+              }}
+            >
+              Navigation guide
+            </Text>
+            <View
+              style={{
+                paddingBottom: normalize(24)
+              }}
+            >
+              <NavigationGuide steps={[
+                {
+                  id: 1,
+                  instruction: "Follow signs to Mainland/Macau Ferries",
+                  imageUrl: require("@/assets/images/mainland-ferry-signs.png"),
+                  icon: "navigate-outline", // Changed from 'directions-sign'
+                  estimatedTime: 5,
+                  details:
+                    "Look for clear signage directing to Mainland/Macau Ferries, not Transfer gate",
+                },
+                {
+                  id: 2,
+                  instruction: "Check in at TurboJET counter",
+                  imageUrl: require("@/assets/images/turbojet-counter.png"),
+                  icon: "boat-outline", // Already correct
+                  estimatedTime: 10,
+                  details: "Located at Level 5, Transfer Area E2",
+                },
+                {
+                  id: 3,
+                  instruction: "Use Ferry Ticket Reader at boarding gate",
+                  imageUrl: require("@/assets/images/ferry-reader.png"),
+                  icon: "card-outline", // Changed from 'card-reader'
+                  estimatedTime: 2,
+                  details: "Alternative check-in method available at Level 5",
+                },
+                {
+                  id: 4,
+                  instruction: "Present SkyPier ferry ticket at APM entrance",
+                  imageUrl: require("@/assets/images/apm-entrance.png"),
+                  icon: "ticket-outline", // Changed to include '-outline'
+                  estimatedTime: 3,
+                  details: "Have your ticket ready for verification",
+                },
+                {
+                  id: 5,
+                  instruction: "Take APM to SkyPier",
+                  imageUrl: require("@/assets/images/apm.png"),
+                  icon: "train-outline", // Changed to include '-outline'
+                  estimatedTime: 5,
+                  details: "Automated People Mover will transport you to SkyPier",
+                },
+                {
+                  id: 6,
+                  instruction: "Follow signs to your boarding gate",
+                  imageUrl: require("@/assets/images/boarding-gate.png"),
+                  icon: "enter-outline", // Changed from 'gate'
+                  estimatedTime: 5,
+                  details:
+                    "Clear directional signs will guide you to your specific boarding gate",
+                },
+              ]} 
+              />
             </View>
           </View>
         )}

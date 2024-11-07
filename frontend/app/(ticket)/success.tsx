@@ -77,7 +77,12 @@ export default function SuccessScreen() {
             width: "80%",
             alignItems: "center",
           }}
-          onPress={() => router.replace("/")}
+          onPress={() => {
+            router.push({
+              pathname: "/(tabs)",
+              params: { success: "true" },
+            });
+          }}
         >
           <Text
             style={{
