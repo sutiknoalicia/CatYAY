@@ -22,6 +22,7 @@ interface PromoDestinationCardProps {
 
 const PromoDestinationCard: FC<PromoDestinationCardProps> = ({
   data,
+  color,
 }) => {
   return (
     <Fragment>
@@ -41,7 +42,7 @@ const PromoDestinationCard: FC<PromoDestinationCardProps> = ({
                   paddingLeft: normalize(20),
                   gap: 24,
                   flexDirection: "row",
-                  backgroundColor: "#F0F4F1",
+                  backgroundColor: color,
                 }}
               >
                 {data.map((item: any, index: number) => {

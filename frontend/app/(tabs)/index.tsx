@@ -598,6 +598,60 @@ export default function HomeScreen() {
                 price: "2,128",
                 imageUrl: require("../../assets/images/singapore-picture.jpeg"),
               },
+            ]}
+            color="#F0F4F1"
+          />
+        </View>
+        <View
+          style={{
+            width: "100%",
+            height: normalize(460),
+            backgroundColor: "#F8F7F7",
+          }}
+        >
+          <View
+            style={{
+              justifyContent: "space-between",
+              paddingVertical: normalize(32),
+              paddingHorizontal: normalize(20),
+              gap: normalize(12),
+            }}
+          >
+            <Text
+              style={{
+                fontSize: normalize(22),
+                fontFamily: FontFamilies.GTWalsheimRegular,
+              }}
+            >
+              Prepared for you
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: normalize(4),
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: normalize(16),
+                  fontFamily: FontFamilies.GTWalsheimRegular,
+                }}
+              >
+                From:
+              </Text>
+              <Text
+                style={{
+                  fontSize: normalize(16),
+                  fontFamily: FontFamilies.GTWalsheimBold,
+                  color: "#006564",
+                }}
+              >
+                Hong Kong
+              </Text>
+            </View>
+          </View>
+          <PromoDestinationCard
+            data={[
               {
                 destination: "Christchurch",
                 class: "Economy",
@@ -617,6 +671,7 @@ export default function HomeScreen() {
                 imageUrl: require("../../assets/images/singapore-picture.jpeg"),
               },
             ]}
+            color="#F8F7F7"
           />
         </View>
       </ScrollView>
