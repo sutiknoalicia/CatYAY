@@ -61,7 +61,9 @@ export default function HomeScreen() {
     router.push("/ticket");
   };
 
-  const [veraOpen, setVeraOpen] = useState(() => !(origin || destination || success));
+  const [veraOpen, setVeraOpen] = useState(
+    () => !(origin || destination || success)
+  );
   const { height: screenHeight } = useWindowDimensions();
 
   function handleMenuPress(): void {
@@ -276,10 +278,13 @@ export default function HomeScreen() {
           <View
             style={{
               width: "100%",
-              height: "auto"
+              height: "auto",
             }}
           >
-            <TouchableOpacity style={styles.journeyCard} onPress={() => router.push("/(journey)/ManageBooking")}>
+            <TouchableOpacity
+              style={styles.journeyCard}
+              onPress={() => router.push("/(journey)/ManageBooking")}
+            >
               <Text style={styles.date}>
                 Fri 01 Nov 2024 {""} | {""} CX718
               </Text>
@@ -333,68 +338,70 @@ export default function HomeScreen() {
                 fontFamily: FontFamilies.GTWalsheimRegular,
                 fontSize: normalize(24),
                 paddingHorizontal: normalize(20),
-                paddingVertical: normalize(20)
+                paddingVertical: normalize(20),
               }}
             >
               Navigation guide
             </Text>
             <View
               style={{
-                paddingBottom: normalize(24)
+                paddingBottom: normalize(24),
               }}
             >
-              <NavigationGuide steps={[
-                {
-                  id: 1,
-                  instruction: "Follow signs to Mainland/Macau Ferries",
-                  imageUrl: require("@/assets/images/mainland-ferry-signs.png"),
-                  icon: "navigate-outline", // Changed from 'directions-sign'
-                  estimatedTime: 5,
-                  details:
-                    "Look for clear signage directing to Mainland/Macau Ferries, not Transfer gate",
-                },
-                {
-                  id: 2,
-                  instruction: "Check in at TurboJET counter",
-                  imageUrl: require("@/assets/images/turbojet-counter.png"),
-                  icon: "boat-outline", // Already correct
-                  estimatedTime: 10,
-                  details: "Located at Level 5, Transfer Area E2",
-                },
-                {
-                  id: 3,
-                  instruction: "Use Ferry Ticket Reader at boarding gate",
-                  imageUrl: require("@/assets/images/ferry-reader.png"),
-                  icon: "card-outline", // Changed from 'card-reader'
-                  estimatedTime: 2,
-                  details: "Alternative check-in method available at Level 5",
-                },
-                {
-                  id: 4,
-                  instruction: "Present SkyPier ferry ticket at APM entrance",
-                  imageUrl: require("@/assets/images/apm-entrance.png"),
-                  icon: "ticket-outline", // Changed to include '-outline'
-                  estimatedTime: 3,
-                  details: "Have your ticket ready for verification",
-                },
-                {
-                  id: 5,
-                  instruction: "Take APM to SkyPier",
-                  imageUrl: require("@/assets/images/apm.png"),
-                  icon: "train-outline", // Changed to include '-outline'
-                  estimatedTime: 5,
-                  details: "Automated People Mover will transport you to SkyPier",
-                },
-                {
-                  id: 6,
-                  instruction: "Follow signs to your boarding gate",
-                  imageUrl: require("@/assets/images/boarding-gate.png"),
-                  icon: "enter-outline", // Changed from 'gate'
-                  estimatedTime: 5,
-                  details:
-                    "Clear directional signs will guide you to your specific boarding gate",
-                },
-              ]} 
+              <NavigationGuide
+                steps={[
+                  {
+                    id: 1,
+                    instruction: "Follow signs to Mainland/Macau Ferries",
+                    imageUrl: require("@/assets/images/mainland-ferry-signs.png"),
+                    icon: "navigate-outline", // Changed from 'directions-sign'
+                    estimatedTime: 5,
+                    details:
+                      "Look for clear signage directing to Mainland/Macau Ferries, not Transfer gate",
+                  },
+                  {
+                    id: 2,
+                    instruction: "Check in at TurboJET counter",
+                    imageUrl: require("@/assets/images/turbojet-counter.png"),
+                    icon: "boat-outline", // Already correct
+                    estimatedTime: 10,
+                    details: "Located at Level 5, Transfer Area E2",
+                  },
+                  {
+                    id: 3,
+                    instruction: "Use Ferry Ticket Reader at boarding gate",
+                    imageUrl: require("@/assets/images/ferry-reader.png"),
+                    icon: "card-outline", // Changed from 'card-reader'
+                    estimatedTime: 2,
+                    details: "Alternative check-in method available at Level 5",
+                  },
+                  {
+                    id: 4,
+                    instruction: "Present SkyPier ferry ticket at APM entrance",
+                    imageUrl: require("@/assets/images/apm-entrance.png"),
+                    icon: "ticket-outline", // Changed to include '-outline'
+                    estimatedTime: 3,
+                    details: "Have your ticket ready for verification",
+                  },
+                  {
+                    id: 5,
+                    instruction: "Take APM to SkyPier",
+                    imageUrl: require("@/assets/images/apm.png"),
+                    icon: "train-outline", // Changed to include '-outline'
+                    estimatedTime: 5,
+                    details:
+                      "Automated People Mover will transport you to SkyPier",
+                  },
+                  {
+                    id: 6,
+                    instruction: "Follow signs to your boarding gate",
+                    imageUrl: require("@/assets/images/boarding-gate.png"),
+                    icon: "enter-outline", // Changed from 'gate'
+                    estimatedTime: 5,
+                    details:
+                      "Clear directional signs will guide you to your specific boarding gate",
+                  },
+                ]}
               />
             </View>
           </View>
@@ -445,7 +452,7 @@ export default function HomeScreen() {
                   height: screenHeight * 0.1,
                   padding: 12,
                 }}
-                onPress={() => router.push("/(ticket)/landingPage")}
+                onPress={() => router.push("/(ticket)/ticket")}
               >
                 <View
                   style={{
