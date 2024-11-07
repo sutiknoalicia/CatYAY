@@ -39,21 +39,22 @@ export default function HomeScreen() {
         name: "Hong Kong Int'l (HKG)",
         terminal: "Terminal 1",
       },
-      departureTime: "08:10",
-      arrivalTime: "14:15",
-      duration: "5h 15m",
+      departureTime: "10:10",
+      arrivalTime: "15:00",
+      duration: "4h 50m",
       transportType: "plane" as const,
-      carbonEmissions: 180,
-      flightNumber: "CX718",
+      carbonEmissions: 382,
+      flightNumber: "CX 5624",
     },
     {
-      from: { code: "HKG", name: "HKIA Port", terminal: "Gate 30" },
-      to: { code: "FYG", name: "Airport Ferry Terminal", terminal: "Gate 21" },
-      departureTime: "16:20",
-      arrivalTime: "17:10",
-      duration: "50m",
+      from: { code: "HKG", name: "Hong Kong Int'l", terminal: "Terminal 1" },
+      to: { code: "SZX", name: "Shenzhen", terminal: "Ferry Terminal" },
+      departureTime: "16:00",
+      arrivalTime: "17:00",
+      duration: "1h",
       transportType: "ferry" as const,
-      carbonEmissions: 15,
+      carbonEmissions: 12,
+      flightNumber: "TurboJET 516",
     },
   ];
 
@@ -61,7 +62,9 @@ export default function HomeScreen() {
     router.push("/ticket");
   };
 
-  const [veraOpen, setVeraOpen] = useState(() => !(origin || destination || success));
+  const [veraOpen, setVeraOpen] = useState(
+    () => !(origin || destination || success)
+  );
   const { height: screenHeight } = useWindowDimensions();
 
   function handleMenuPress(): void {
@@ -128,7 +131,7 @@ export default function HomeScreen() {
 
               <View style={styles.journeyCard}>
                 <Text style={styles.date}>
-                  Fri 01 Nov 2024 {""} | {""} CX718
+                  Mon 11 Nov 2024 {""} | {""} CX 5624
                 </Text>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                   <Text
@@ -167,7 +170,7 @@ export default function HomeScreen() {
                 <Text style={styles.transferTime}>
                   Transit:{" "}
                   <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>
-                    2h 5m{" "}
+                    1h{" "}
                   </Text>
                   <Text>at </Text>
                   <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>
@@ -276,12 +279,15 @@ export default function HomeScreen() {
           <View
             style={{
               width: "100%",
-              height: "auto"
+              height: "auto",
             }}
           >
-            <TouchableOpacity style={styles.journeyCard} onPress={() => router.push("/(journey)/ManageBooking")}>
+            <TouchableOpacity
+              style={styles.journeyCard}
+              onPress={() => router.push("/(journey)/ManageBooking")}
+            >
               <Text style={styles.date}>
-                Fri 01 Nov 2024 {""} | {""} CX718
+                Mon 11 Nov 2024 {""} | {""} CX 5624
               </Text>
               <View style={{ flexDirection: "row", marginTop: 10 }}>
                 <Text
@@ -320,7 +326,7 @@ export default function HomeScreen() {
               <Text style={styles.transferTime}>
                 Transit:{" "}
                 <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>
-                  2h 5m{" "}
+                  1h{" "}
                 </Text>
                 <Text>at </Text>
                 <Text style={{ fontFamily: FontFamilies.GTWalsheimBold }}>
@@ -333,68 +339,70 @@ export default function HomeScreen() {
                 fontFamily: FontFamilies.GTWalsheimRegular,
                 fontSize: normalize(24),
                 paddingHorizontal: normalize(20),
-                paddingVertical: normalize(20)
+                paddingVertical: normalize(20),
               }}
             >
               Navigation guide
             </Text>
             <View
               style={{
-                paddingBottom: normalize(24)
+                paddingBottom: normalize(24),
               }}
             >
-              <NavigationGuide steps={[
-                {
-                  id: 1,
-                  instruction: "Follow signs to Mainland/Macau Ferries",
-                  imageUrl: require("@/assets/images/mainland-ferry-signs.png"),
-                  icon: "navigate-outline", // Changed from 'directions-sign'
-                  estimatedTime: 5,
-                  details:
-                    "Look for clear signage directing to Mainland/Macau Ferries, not Transfer gate",
-                },
-                {
-                  id: 2,
-                  instruction: "Check in at TurboJET counter",
-                  imageUrl: require("@/assets/images/turbojet-counter.png"),
-                  icon: "boat-outline", // Already correct
-                  estimatedTime: 10,
-                  details: "Located at Level 5, Transfer Area E2",
-                },
-                {
-                  id: 3,
-                  instruction: "Use Ferry Ticket Reader at boarding gate",
-                  imageUrl: require("@/assets/images/ferry-reader.png"),
-                  icon: "card-outline", // Changed from 'card-reader'
-                  estimatedTime: 2,
-                  details: "Alternative check-in method available at Level 5",
-                },
-                {
-                  id: 4,
-                  instruction: "Present SkyPier ferry ticket at APM entrance",
-                  imageUrl: require("@/assets/images/apm-entrance.png"),
-                  icon: "ticket-outline", // Changed to include '-outline'
-                  estimatedTime: 3,
-                  details: "Have your ticket ready for verification",
-                },
-                {
-                  id: 5,
-                  instruction: "Take APM to SkyPier",
-                  imageUrl: require("@/assets/images/apm.png"),
-                  icon: "train-outline", // Changed to include '-outline'
-                  estimatedTime: 5,
-                  details: "Automated People Mover will transport you to SkyPier",
-                },
-                {
-                  id: 6,
-                  instruction: "Follow signs to your boarding gate",
-                  imageUrl: require("@/assets/images/boarding-gate.png"),
-                  icon: "enter-outline", // Changed from 'gate'
-                  estimatedTime: 5,
-                  details:
-                    "Clear directional signs will guide you to your specific boarding gate",
-                },
-              ]} 
+              <NavigationGuide
+                steps={[
+                  {
+                    id: 1,
+                    instruction: "Follow signs to Mainland/Macau Ferries",
+                    imageUrl: require("@/assets/images/mainland-ferry-signs.png"),
+                    icon: "navigate-outline", // Changed from 'directions-sign'
+                    estimatedTime: 5,
+                    details:
+                      "Look for clear signage directing to Mainland/Macau Ferries, not Transfer gate",
+                  },
+                  {
+                    id: 2,
+                    instruction: "Check in at TurboJET counter",
+                    imageUrl: require("@/assets/images/turbojet-counter.png"),
+                    icon: "boat-outline", // Already correct
+                    estimatedTime: 10,
+                    details: "Located at Level 5, Transfer Area E2",
+                  },
+                  {
+                    id: 3,
+                    instruction: "Use Ferry Ticket Reader at boarding gate",
+                    imageUrl: require("@/assets/images/ferry-reader.png"),
+                    icon: "card-outline", // Changed from 'card-reader'
+                    estimatedTime: 2,
+                    details: "Alternative check-in method available at Level 5",
+                  },
+                  {
+                    id: 4,
+                    instruction: "Present SkyPier ferry ticket at APM entrance",
+                    imageUrl: require("@/assets/images/apm-entrance.png"),
+                    icon: "ticket-outline", // Changed to include '-outline'
+                    estimatedTime: 3,
+                    details: "Have your ticket ready for verification",
+                  },
+                  {
+                    id: 5,
+                    instruction: "Take APM to SkyPier",
+                    imageUrl: require("@/assets/images/apm.png"),
+                    icon: "train-outline", // Changed to include '-outline'
+                    estimatedTime: 5,
+                    details:
+                      "Automated People Mover will transport you to SkyPier",
+                  },
+                  {
+                    id: 6,
+                    instruction: "Follow signs to your boarding gate",
+                    imageUrl: require("@/assets/images/boarding-gate.png"),
+                    icon: "enter-outline", // Changed from 'gate'
+                    estimatedTime: 5,
+                    details:
+                      "Clear directional signs will guide you to your specific boarding gate",
+                  },
+                ]}
               />
             </View>
           </View>
@@ -668,7 +676,7 @@ const styles = StyleSheet.create({
   transferTime: {
     position: "absolute",
     bottom: 146,
-    left: 120,
+    left: 130,
     fontSize: 12,
     color: "#303436",
     fontFamily: FontFamilies.GTWalsheimRegular,

@@ -17,30 +17,30 @@ export default function JourneyScreen() {
     {
       transportType: "plane",
       identifier: "CX 5624",
-      duration: "5h",
-      departureTime: "10:01",
+      duration: "4h 50m",
+      departureTime: "10:10",
       departureLocation: "CGK",
-      arrivalTime: "15:01",
+      arrivalTime: "15:00",
       arrivalLocation: "HKG",
-      carbonEmissions: 8,
+      carbonEmissions: 382,
       class: "Economy",
       currency: "IDR",
-      price: 8600000.0,
+      price: 4860000.0,
       onViewDetails: () => console.log("Flight details viewed"),
     },
     {
       transportType: "ferry",
-      identifier: "CX 9324",
-      duration: "15h 13m",
-      departureTime: "15:01",
+      identifier: "TurboJET 516",
+      duration: "1h",
+      departureTime: "16:00",
       departureLocation: "HKG",
-      arrivalTime: "22:14",
-      arrivalLocation: "LHR",
-      carbonEmissions: 8,
+      arrivalTime: "17:00",
+      arrivalLocation: "SZX",
+      carbonEmissions: 12,
       class: "Economy",
       currency: "IDR",
-      price: 26000000.0,
-      onViewDetails: () => console.log("Flight details viewed"),
+      price: 418000.0,
+      onViewDetails: () => console.log("Ferry details viewed"),
     },
   ];
 
@@ -63,7 +63,7 @@ export default function JourneyScreen() {
     const mockWeatherData = {
       CGK: { temperature: 27, condition: "sunny" as const },
       HKG: { temperature: 23, condition: "rainy" as const },
-      LHR: { temperature: 18, condition: "cloudy" as const },
+      SZX: { temperature: 22, condition: "rainy" as const },
     };
 
     return {
@@ -111,7 +111,7 @@ export default function JourneyScreen() {
               color: "#B0B2B3",
             }}
           >
-            01 Nov
+            11 Nov
           </Text>
           <View style={{ marginBottom: normalize(16) }}>
             <WeatherCard destinations={destinations} />
