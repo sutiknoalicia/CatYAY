@@ -552,7 +552,13 @@ export default function FlightBookingScreen() {
                 alignItems: "center",
                 marginHorizontal: 12,
               }}
-              onPress={() => router.push("./ticket")}
+              onPress={() => {
+                const path = "/(tabs)";
+                router.push({
+                  pathname: path,
+                  params: { origin: "CGK", destination: "SZX" },
+                });
+              }}
             >
               <Text
                 style={{
