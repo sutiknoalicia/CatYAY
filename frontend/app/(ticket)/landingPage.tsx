@@ -496,7 +496,13 @@ export default function FlightBookingScreen() {
                 alignItems: "center",
                 marginHorizontal: 12,
               }}
-              onPress={() => router.push("./ticket")}
+              onPress={() => {
+                const path = "/(tabs)";
+                router.push({
+                  pathname: path,
+                  params: { origin: "CGK", destination: "SZX" },
+                });
+              }}
             >
               <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "white", fontSize: normalize(20) }}>Search</Text>
             </TouchableOpacity>
