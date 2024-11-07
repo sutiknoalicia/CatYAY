@@ -15,7 +15,7 @@ type NavigationStep = {
   id: number;
   instruction: string;
   imageUrl: any;
-  icon: string;
+  icon: keyof typeof Ionicons.glyphMap;
   estimatedTime: number;
   details: string;
 };
@@ -41,46 +41,35 @@ export function NavigationGuide({ steps }: NavigationGuideProps) {
       >
         {steps.map((step, index) => (
           <View
-            style={{
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 8,
-              elevation: 3,
-              height: normalize(348),
-            }}
+            key={step.id}
+            style={[
+              styles.card,
+              {
+                width: CARD_WIDTH,
+                marginLeft: index === 0 ? CARD_MARGIN : CARD_MARGIN / 2,
+                marginRight: CARD_MARGIN / 2,
+              },
+            ]}
           >
-            <View
-              key={step.id}
-              style={[
-                styles.card,
-                {
-                  width: CARD_WIDTH,
-                  marginLeft: index === 0 ? CARD_MARGIN : CARD_MARGIN / 2,
-                  marginRight: CARD_MARGIN / 2,
-                },
-              ]}
-            >
-              <View style={styles.header}>
-                <View style={styles.stepIndicator}>
-                  <Text style={styles.stepNumber}>{index + 1}</Text>
-                </View>
-                <View style={styles.instructionContainer}>
-                  <Text style={styles.instruction}>{step.instruction}</Text>
-                  <Text style={styles.estimatedTime}>
-                    {step.estimatedTime} min
-                  </Text>
-                </View>
+            <View style={styles.header}>
+              <View style={styles.stepIndicator}>
+                <Text style={styles.stepNumber}>{index + 1}</Text>
               </View>
-              <Image
-                source={step.imageUrl}
-                style={styles.image}
-                resizeMode="cover"
-              />
-              <View style={styles.footer}>
-                <Ionicons name={step.icon as any} size={24} color="#006564" />
-                <Text style={styles.details}>{step.details}</Text>
+              <View style={styles.instructionContainer}>
+                <Text style={styles.instruction}>{step.instruction}</Text>
+                <Text style={styles.estimatedTime}>
+                  {step.estimatedTime} min
+                </Text>
               </View>
+            </View>
+            <Image
+              source={step.imageUrl}
+              style={styles.image}
+              resizeMode="cover"
+            />
+            <View style={styles.footer}>
+              <Ionicons name={step.icon as any} size={24} color="#006564" />
+              <Text style={styles.details}>{step.details}</Text>
             </View>
           </View>
         ))}
@@ -94,6 +83,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 8,
     overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
   },
   header: {
     flexDirection: "row",
@@ -129,7 +123,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: normalize(200),
+    height: 200,
     backgroundColor: "#f5f5f5",
   },
   footer: {

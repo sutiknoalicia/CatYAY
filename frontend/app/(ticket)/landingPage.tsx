@@ -72,6 +72,7 @@ const DiscountCodeModal = ({ visible, onClose, onConfirm }) => {
 };
 
 const airports = [
+  { code: "CGK", name: "雅加达" },
   { code: "HKG", name: "香港" },
   { code: "MFM", name: "澳门" },
   { code: "CAN", name: "广州" },
@@ -233,7 +234,7 @@ export default function FlightBookingScreen() {
   ];
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff"}}>
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <StatusBar barStyle="dark-content" />
       <View>
         {/* Hero Section with Carousel */}
@@ -279,7 +280,15 @@ export default function FlightBookingScreen() {
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <AntDesign name="user" size={24} color="#666" />
-            <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(20), color: "#666" }}>Hello Mr Howard!</Text>
+            <Text
+              style={{
+                fontFamily: FontFamilies.GTWalsheimRegular,
+                fontSize: normalize(20),
+                color: "#666",
+              }}
+            >
+              Hello Mr Howard!
+            </Text>
           </View>
         </View>
 
@@ -359,8 +368,21 @@ export default function FlightBookingScreen() {
               onPress={() => handleAirportPress("from")}
               style={{ flex: 1 }}
             >
-              <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "#666", marginBottom: 8 }}>From</Text>
-              <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(18) }}>
+              <Text
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimRegular,
+                  color: "#666",
+                  marginBottom: 8,
+                }}
+              >
+                From
+              </Text>
+              <Text
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimRegular,
+                  fontSize: normalize(18),
+                }}
+              >
                 {fromAirport
                   ? `${fromAirport.name} (${fromAirport.code})`
                   : "Please Choose"}
@@ -394,11 +416,22 @@ export default function FlightBookingScreen() {
               style={{ flex: 1, alignItems: "flex-end" }}
             >
               <Text
-                style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "#666", marginBottom: 8, textAlign: "right" }}
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimRegular,
+                  color: "#666",
+                  marginBottom: 8,
+                  textAlign: "right",
+                }}
               >
                 To
               </Text>
-              <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(18), textAlign: "right" }}>
+              <Text
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimRegular,
+                  fontSize: normalize(18),
+                  textAlign: "right",
+                }}
+              >
                 {toAirport ? `${toAirport.name}` : "Please Choose"}
               </Text>
             </TouchableOpacity>
@@ -419,7 +452,13 @@ export default function FlightBookingScreen() {
                 >
                   Departure Date
                 </Text>
-                <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(18), marginHorizontal: 12 }}>
+                <Text
+                  style={{
+                    fontFamily: FontFamilies.GTWalsheimRegular,
+                    fontSize: normalize(18),
+                    marginHorizontal: 12,
+                  }}
+                >
                   {selectedDepartureDate
                     ? selectedDepartureDate.toLocaleDateString()
                     : "Please Choose"}
@@ -461,11 +500,22 @@ export default function FlightBookingScreen() {
           {/* Passengers */}
           <TouchableOpacity onPress={() => setPassengerModalVisible(true)}>
             <Text
-              style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "#666", marginBottom: 8, marginHorizontal: 12 }}
+              style={{
+                fontFamily: FontFamilies.GTWalsheimRegular,
+                color: "#666",
+                marginBottom: 8,
+                marginHorizontal: 12,
+              }}
             >
               Cabins and Passengers
             </Text>
-            <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, fontSize: normalize(18), marginHorizontal: 12 }}>
+            <Text
+              style={{
+                fontFamily: FontFamilies.GTWalsheimRegular,
+                fontSize: normalize(18),
+                marginHorizontal: 12,
+              }}
+            >
               {cabinClass}，{adults} Adults {children} Childrens {infants}{" "}
               Infants
             </Text>
@@ -480,7 +530,13 @@ export default function FlightBookingScreen() {
             }}
             onPress={() => setDiscountCodeModalVisible(true)}
           >
-            <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "#006E6D", marginRight: 8 }}>
+            <Text
+              style={{
+                fontFamily: FontFamilies.GTWalsheimRegular,
+                color: "#006E6D",
+                marginRight: 8,
+              }}
+            >
               Discount Code
             </Text>
             <AntDesign name="right" size={16} color="#006E6D" />
@@ -498,7 +554,15 @@ export default function FlightBookingScreen() {
               }}
               onPress={() => router.push("./ticket")}
             >
-              <Text style={{ fontFamily: FontFamilies.GTWalsheimRegular, color: "white", fontSize: normalize(20) }}>Search</Text>
+              <Text
+                style={{
+                  fontFamily: FontFamilies.GTWalsheimRegular,
+                  color: "white",
+                  fontSize: normalize(20),
+                }}
+              >
+                Search
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
