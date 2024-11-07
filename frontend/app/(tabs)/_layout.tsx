@@ -1,43 +1,35 @@
-import { Tabs } from "expo-router";
+import BackButton from "@/components/navigation/BackButton";
+import { FontFamilies } from "@/helpers/FontFamiles";
+import { normalize } from "@/helpers/useScaling";
+import { Stack } from "expo-router";
+import "react-native-reanimated";
 
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function QuizzesLayout() {
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
-      }}
-    >
-      <Tabs.Screen
+    <Stack>
+      <Stack.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
-          ),
+          headerShown: false,
         }}
       />
-      <Tabs.Screen
+      <Stack.Screen
         name="navigation"
         options={{
-          title: "navigation",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
-              color={color}
-            />
+          title: "Directions",
+          headerTitleStyle: {
+            fontFamily: FontFamilies.GTWalsheimMedium,
+            fontSize: normalize(20),
+          },
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <BackButton/>
           ),
         }}
       />
-    </Tabs>
+    </Stack>
   );
 }

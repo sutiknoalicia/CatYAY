@@ -6,18 +6,18 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingVi
 
 const ChatScreen: React.FC = () => {
   const [messages, setMessages] = useState([
-    { type: "bot", text: "Hi, i'm Vera - your virtual assistant. How may I help you today?" },
+    { type: "bot", text: "Hi, I'm Vera - your virtual assistant. How may I help you today?" },
     { type: "bot", text: "Simply share your desired destination, and I'll provide you with the most efficient routes, highlighting options with the lowest carbon emissions and the most affordable prices." },
   ]);
   const [input, setInput] = useState("");
-  const [destination, setDestination] = useState(null);
-  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState<string | null>(null);
+  const [origin, setOrigin] = useState<string | null>(null);
   const [awaitingOrigin, setAwaitingOrigin] = useState(false);
   const [awaitingDestination, setAwaitingDestination] = useState(true);
 
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const locationMap = {
+  const locationMap: { [key: string]: string } = {
     "shenzhen": "SZX",
     "szx": "SZX",
     "fyg": "FYG",
@@ -35,13 +35,33 @@ const ChatScreen: React.FC = () => {
     
     return null;
   };
-  
+
+  const handleSkyPierQuery = () => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        type: "bot",
+        text: "Sure! I can help you navigate to the Sky Pier.",
+        cta: true,
+        ctaText: "Navigate to Sky Pier",
+        navigationPath: "/(tabs)/navigation",
+      },
+    ]);
+  };
+
   const sendMessage = () => {
     if (input.trim().length === 0) return;
-    setMessages((prevMessages) => [...prevMessages, { type: "user", text: input }]);
-    const standardizedLocation = normalizeLocation(input);
 
-    if (awaitingDestination) {
+    const userInput = input.trim();
+    setMessages((prevMessages) => [...prevMessages, { type: "user", text: userInput }]);
+    const standardizedLocation = normalizeLocation(userInput);
+
+    const lowerInput = userInput.toLowerCase();
+
+    // Check for specific keyword "sky pier"
+    if (lowerInput.includes("sky pier")) {
+      handleSkyPierQuery();
+    } else if (awaitingDestination) {
       if (standardizedLocation) {
         setDestination(standardizedLocation);
         setAwaitingDestination(false);
@@ -68,6 +88,8 @@ const ChatScreen: React.FC = () => {
             type: "bot",
             text: `I've found the most optimal route from ${standardizedLocation} to ${destination} with the least carbon emissions and the cheapest fare.`,
             cta: true,
+            ctaText: "View Suggested Journey",
+            navigationPath: "/(tabs)", // Use existing navigation path
           },
         ]);
       } else {
@@ -77,8 +99,13 @@ const ChatScreen: React.FC = () => {
         ]);
       }
     } else {
-      // Reset or handle other inputs
+      // Handle other inputs or reset the conversation
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { type: "bot", text: `I'm here to help with your travel plans. Please enter your destination or origin.` },
+      ]);
     }
+
     setInput("");
   };
 
@@ -112,12 +139,16 @@ const ChatScreen: React.FC = () => {
                 backgroundColor: message.type === "user" ? "#006564" : "#f0f0f0",
               }}
             >
-              <Text style={{ fontSize: normalize(16), color: message.type === "user" ? "#FFFFFF" : "#000000"  }}>{message.text}</Text>
+              <Text style={{ fontSize: normalize(16), color: message.type === "user" ? "#FFFFFF" : "#000000" }}>
+                {message.text}
+              </Text>
               {message.cta && (
                 <TouchableOpacity
                   onPress={() => {
+                    // Use the specified navigation path if available
+                    const path = (message as any).navigationPath || "/(tabs)";
                     router.push({
-                      pathname: "/(tabs)",
+                      pathname: path,
                       params: { origin, destination },
                     });
                   }}
@@ -130,7 +161,9 @@ const ChatScreen: React.FC = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ color: "#fff", fontWeight: "600" }}>View Suggested Journey</Text>
+                  <Text style={{ color: "#fff", fontWeight: "600" }}>
+                    {message.ctaText || "View Suggested Journey"}
+                  </Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -159,6 +192,8 @@ const ChatScreen: React.FC = () => {
             placeholder="Type your message here"
             value={input}
             onChangeText={setInput}
+            onSubmitEditing={sendMessage} // Allow sending message with the keyboard's submit button
+            returnKeyType="send"
           />
           <TouchableOpacity
             onPress={sendMessage}
