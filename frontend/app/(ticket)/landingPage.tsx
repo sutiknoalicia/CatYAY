@@ -432,7 +432,7 @@ export default function FlightBookingScreen() {
                   textAlign: "right",
                 }}
               >
-                {toAirport ? `${toAirport.name}` : "Please Choose"}
+                {toAirport ? `${toAirport.name} (${toAirport.code})` : "Please Choose"}
               </Text>
             </TouchableOpacity>
           </View>
